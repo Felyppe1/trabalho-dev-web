@@ -12,6 +12,16 @@
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>StatementController</servlet-name>
+        <servlet-class>com.trabalho.devweb.controllers.StatementController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>StatementController</servlet-name>
+        <url-pattern>/extrato</url-pattern>
+    </servlet-mapping>
+
     <servlet>
         <servlet-name>CreateUserController</servlet-name>
         <servlet-class>com.trabalho.devweb.controllers.CreateUserController</servlet-class>

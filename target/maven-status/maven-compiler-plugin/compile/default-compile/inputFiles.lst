@@ -1,2 +1,3 @@
 /app/src/main/java/com/trabalho/devweb/controllers/HomeController.java
 /app/src/main/java/com/trabalho/devweb/controllers/CreateUserController.java
+/app/src/main/java/com/trabalho/devweb/controllers/StatementController.java

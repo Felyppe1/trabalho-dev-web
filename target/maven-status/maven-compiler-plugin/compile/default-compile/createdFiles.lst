@@ -1,2 +1,3 @@
 com/trabalho/devweb/controllers/HomeController.class
 com/trabalho/devweb/controllers/CreateUserController.class
+com/trabalho/devweb/controllers/StatementController.class

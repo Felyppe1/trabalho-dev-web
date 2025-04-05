@@ -27,7 +27,7 @@
     <build>
         <finalName>trabalho-dev-web</finalName>
 
-        <!-- <directory>${project.basedir}/target/generated</directory> -->
+        <directory>${project.basedir}/target</directory>
 
         <plugins>
             <plugin>

@@ -11,8 +11,6 @@
         out.println(" <h1>Bem-vindo ao Trabalho Dev Web!</h1>");
     }
     %>
-    <p><a href="home">Acessar Servlet HomeController</a></p>
-    <a href="ldafs">TESTE</a>
-    
+    <p><a href="/home">Acessar Servlet HomeController</a></p>
 </body>
 </html>

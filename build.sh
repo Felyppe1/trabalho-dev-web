@@ -10,7 +10,7 @@ docker run --rm \
   -v "$PWD":/app \
   -w /app \
   maven:3.8.5-eclipse-temurin-17 \
-  mvn compile
+  mvn package
 
 if [ $? -ne 0 ]; then
   echo "❌ Erro no build!"
