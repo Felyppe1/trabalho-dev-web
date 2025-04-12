@@ -22,6 +22,18 @@
             <version>5.0.0</version> <!-- Use a versão compatível com seu Tomcat -->
             <scope>provided</scope> <!-- Evita conflito com a implementação do Tomcat -->
         </dependency>
+
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.5.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.github.cdimascio</groupId>
+            <artifactId>dotenv-java</artifactId>
+            <version>3.0.0</version>
+        </dependency>
     </dependencies>
 
     <build>

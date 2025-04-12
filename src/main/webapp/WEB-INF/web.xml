@@ -6,7 +6,7 @@
          version="3.0">
     <servlet>
         <servlet-name>HomeController</servlet-name>
-        <servlet-class>com.trabalho.devweb.controllers.HomeController</servlet-class>
+        <servlet-class>com.trabalho.devweb.infrastructure.controllers.HomeController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
@@ -15,7 +15,7 @@
     
     <servlet>
         <servlet-name>StatementController</servlet-name>
-        <servlet-class>com.trabalho.devweb.controllers.StatementController</servlet-class>
+        <servlet-class>com.trabalho.devweb.infrastructure.controllers.StatementController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>StatementController</servlet-name>
@@ -24,7 +24,7 @@
 
     <servlet>
         <servlet-name>CreateAccountController</servlet-name>
-        <servlet-class>com.trabalho.devweb.controllers.CreateAccountController</servlet-class>
+        <servlet-class>com.trabalho.devweb.infrastructure.controllers.CreateAccountController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>CreateAccountController</servlet-name>
