@@ -1,4 +1,4 @@
-package com.trabalho.devweb.controllers;
+package com.trabalho.devweb.infrastructure.controllers;
 
 import java.io.IOException;
 import jakarta.servlet.ServletException;
