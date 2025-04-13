@@ -49,6 +49,6 @@ Abra no navegador: http://localhost:8080/trabalho-dev-web/home
 
 - Luiz Felyppe Nunes dos Santos
 - Mayara Frazão Guaraciaba de Lima
-- Thiago
+- Thiago Pereira Araujo
 - Rodrigo Dias
 - Gabriel
