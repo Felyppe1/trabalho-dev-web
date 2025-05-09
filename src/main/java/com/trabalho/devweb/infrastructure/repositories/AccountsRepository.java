@@ -6,6 +6,7 @@ import com.trabalho.devweb.domain.Account;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.ResultSet;
 
 public class AccountsRepository implements IAccountsRepository {
     private Connection connection;
@@ -34,6 +35,30 @@ public class AccountsRepository implements IAccountsRepository {
             stmt.setString(9, account.getStatus());
             
             stmt.executeUpdate();
+        }
+    }
+
+    @Override
+    public boolean checkIfAlreadyExists(String cpf, String email, String cellphoneNumber) throws SQLException {
+        String sql = """
+            SELECT
+                cpf,
+                email,
+                cellphone_number
+            FROM account
+            WHERE cpf = ?
+            OR email = ?
+            OR cellphone_number = ?
+        """;
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, cpf);
+            stmt.setString(2, email);
+            stmt.setString(3, cellphoneNumber);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                return rs.next();
+            }
         }
     }
 }

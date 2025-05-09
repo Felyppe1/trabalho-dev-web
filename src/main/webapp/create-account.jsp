@@ -14,14 +14,18 @@
     <%@ include file="components/header.jsp" %>
   
     <main class="page">
-        BLABLAaa
       <section class="card transfer">
         <h1 class="transfer__title">Transfer Money</h1>
         <p class="transfer__subtitle">Transfer money between your accounts or to someone else.</p>
   
-        <% String error = request.getParameter("error"); %>
+        <% String error = (String) request.getAttribute("error"); %>
         <% if (error != null) { %>
             <p style="color: red;"><%= error %></p>
+        <% } %>
+
+        <% String success = (String) request.getAttribute("success"); %>
+        <% if (success != null) { %>
+            <p style="color: green;"><%= success %></p>
         <% } %>
 
         <form class="account__form" action="/trabalho-dev-web/criar-conta" method="post">

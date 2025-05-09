@@ -3,6 +3,7 @@ package com.trabalho.devweb.infrastructure.controllers;
 import com.trabalho.devweb.domain.Account;
 import com.trabalho.devweb.infrastructure.databaseconnection.PostgresConnection;
 import com.trabalho.devweb.infrastructure.repositories.AccountsRepository;
+import com.trabalho.devweb.application.CreateAccountService;
 
 import java.sql.Connection;
 import java.math.BigDecimal;
@@ -41,12 +42,9 @@ public class CreateAccountController extends HttpServlet {
         LocalDate birthDate = LocalDate.parse(birthDateStr);
 
         try (Connection connection = PostgresConnection.getConnection()) {
-            // Verificar se já tem alguma conta com email ou cpf
-
             AccountsRepository accountsRepository = new AccountsRepository(connection);
 
-            // User user = new User(name, email);
-            Account account = new Account(
+            new CreateAccountService(accountsRepository).execute(
                 cpf,
                 name,
                 email,
@@ -55,14 +53,12 @@ public class CreateAccountController extends HttpServlet {
                 address,
                 cellphoneNumber
             );
-            
-            accountsRepository.save(account);
 
-            res.sendRedirect(req.getContextPath() + "/criar-conta");
+            req.setAttribute("success", "Conta criada com sucesso");
+            req.getRequestDispatcher("/create-account.jsp").forward(req, res);
         } catch (Exception e) {
-            // Se houver erro, volta para a página de criação com mensagem de erro
             req.setAttribute("error", e.getMessage());
-            res.sendRedirect(req.getContextPath() + "/criar-conta");
+            req.getRequestDispatcher("/create-account.jsp").forward(req, res);
         }
     }
 }
