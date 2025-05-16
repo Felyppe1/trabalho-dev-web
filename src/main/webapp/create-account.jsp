@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Map" %>
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -18,10 +20,18 @@
         <h1 class="transfer__title">Transfer Money</h1>
         <p class="transfer__subtitle">Transfer money between your accounts or to someone else.</p>
   
-        <% String error = (String) request.getAttribute("error"); %>
-        <% if (error != null) { %>
-            <p style="color: red;"><%= error %></p>
-        <% } %>
+        <% 
+            List<Map<String, String>> errors = (List<Map<String, String>>) request.getAttribute("errors");
+            if (errors != null) {
+                for (Map<String, String> error : errors) {
+                    for (Map.Entry<String, String> entry : error.entrySet()) {
+        %>
+            <p style="color: red;"><strong><%= entry.getKey() %>:</strong> <%= entry.getValue() %></p>
+        <%
+                    }
+                }
+            }
+        %>
 
         <% String success = (String) request.getAttribute("success"); %>
         <% if (success != null) { %>
@@ -31,6 +41,8 @@
         <form class="account__form" action="/trabalho-dev-web/criar-conta" method="post">
             <label class="account__form-label">CPF</label>
             <input class="account__form-input" type="text" name="cpf" required maxlength="11" placeholder="12345678900" value="12345678900">
+            
+
 
             <label class="account__form-label">Nome</label>
             <input class="account__form-input" type="text" name="name" required value="João Silva">

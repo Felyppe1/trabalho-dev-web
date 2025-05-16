@@ -4,10 +4,13 @@ import com.trabalho.devweb.domain.Account;
 import com.trabalho.devweb.infrastructure.databaseconnection.PostgresConnection;
 import com.trabalho.devweb.infrastructure.repositories.AccountsRepository;
 import com.trabalho.devweb.application.CreateAccountService;
+import com.trabalho.devweb.application.errors.BusinessRuleException;
+import com.trabalho.devweb.application.errors.ValidationException;
 
 import java.sql.Connection;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Map;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -56,8 +59,12 @@ public class CreateAccountController extends HttpServlet {
 
             req.setAttribute("success", "Conta criada com sucesso");
             req.getRequestDispatcher("/create-account.jsp").forward(req, res);
+        } catch (ValidationException e) {
+            req.setAttribute("errors", e.getErrors());
+
+            req.getRequestDispatcher("/create-account.jsp").forward(req, res);
         } catch (Exception e) {
-            req.setAttribute("error", e.getMessage());
+            req.setAttribute("error", "Erro inesperado: " + e.getMessage());
             req.getRequestDispatcher("/create-account.jsp").forward(req, res);
         }
     }
