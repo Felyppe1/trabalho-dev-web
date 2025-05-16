@@ -1,8 +1,12 @@
 #!/bin/bash
 
-WAR_NAME="trabalho-dev-web.war"
+WAR_NAME="exercicio.war"
 TOMCAT_CONTAINER="trabalho-dev-web-tomcat"
 TOMCAT_DEST="/usr/local/tomcat/webapps/$WAR_NAME"
+
+echo "🧹 Limpando diretório target..."
+
+sudo rm -rf target/
 
 echo "🔧 Rodando build com Maven..."
 
