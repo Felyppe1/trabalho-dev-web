@@ -3,11 +3,11 @@ services:
     image: postgres
     container_name: trabalho-dev-web-db
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: devbank
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
     ports:
-      - "5434:5432"
+      - "5433:5432"
     volumes:
       - trabalho-dev-web:/var/lib/postgresql/data
     networks:
@@ -20,12 +20,9 @@ services:
       - "8080:8080"
     volumes:
       - ./src/main/webapp:/usr/local/tomcat/webapps/ROOT
-      - ./.env:/app/.env
+    env_file:
+      - .env
     working_dir: /app
-    environment:
-      DB_URL: jdbc:postgresql://trabalho-dev-web-db:5432/devbank
-      DB_USER: postgres
-      DB_PASSWORD: postgres
     depends_on:
       - database
     networks:
