@@ -69,10 +69,10 @@ public class CreateAccountController extends HttpServlet {
             req.setAttribute("address", address);
             req.setAttribute("cellphoneNumber", cellphoneNumber);
 
-            req.getRequestDispatcher("/create-account.jsp").forward(req, res);
+            req.getRequestDispatcher("create-account.jsp").forward(req, res);
         } catch (Exception e) {
             req.setAttribute("error", "Erro inesperado: " + e.getMessage());
-            req.getRequestDispatcher("/create-account.jsp").forward(req, res);
+            req.getRequestDispatcher("create-account.jsp").forward(req, res);
         }
     }
 }

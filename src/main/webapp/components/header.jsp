@@ -7,6 +7,6 @@
       <a href="#">Transferência</a>
       <a href="${pageContext.request.contextPath}/extrato">Extrato</a>
       <a href="#">Settings</a>
-      <a href="#">Logout</a>
+      <a href="${pageContext.request.contextPath}/sair">Sair</a>
     </nav>
 </header>

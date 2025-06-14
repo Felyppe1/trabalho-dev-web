@@ -31,6 +31,38 @@
         <url-pattern>/criar-conta</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>LoginController</servlet-name>
+        <servlet-class>com.trabalho.devweb.infrastructure.controllers.LoginController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LoginController</servlet-name>
+        <url-pattern>/login</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>LogoutController</servlet-name>
+        <servlet-class>com.trabalho.devweb.infrastructure.controllers.LogoutController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LogoutController</servlet-name>
+        <url-pattern>/sair</url-pattern>
+    </servlet-mapping>
+
+    <filter>
+        <filter-name>JwtAuthFilter</filter-name>
+        <filter-class>com.trabalho.devweb.infrastructure.controllers.middlewares.JwtAuthFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>JwtAuthFilter</filter-name>
+        <url-pattern>/home</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>JwtAuthFilter</filter-name>
+        <url-pattern>/extrato</url-pattern>
+    </filter-mapping>
+
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
