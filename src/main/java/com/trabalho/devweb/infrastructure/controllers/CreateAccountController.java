@@ -48,19 +48,26 @@ public class CreateAccountController extends HttpServlet {
             AccountsRepository accountsRepository = new AccountsRepository(connection);
 
             new CreateAccountService(accountsRepository).execute(
-                cpf,
-                name,
-                email,
-                password,
-                birthDate,
-                address,
-                cellphoneNumber
-            );
+                    cpf,
+                    name,
+                    email,
+                    password,
+                    birthDate,
+                    address,
+                    cellphoneNumber);
 
             req.setAttribute("success", "Conta criada com sucesso");
             req.getRequestDispatcher("/create-account.jsp").forward(req, res);
         } catch (ValidationException e) {
-            req.setAttribute("errors", e.getErrors());
+            req.setAttribute("fieldErrors", e.getErrors());
+
+            req.setAttribute("cpf", cpf);
+            req.setAttribute("name", name);
+            req.setAttribute("email", email);
+            req.setAttribute("password", password);
+            req.setAttribute("birthDate", birthDateStr);
+            req.setAttribute("address", address);
+            req.setAttribute("cellphoneNumber", cellphoneNumber);
 
             req.getRequestDispatcher("/create-account.jsp").forward(req, res);
         } catch (Exception e) {

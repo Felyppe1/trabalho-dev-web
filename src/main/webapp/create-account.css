@@ -50,6 +50,18 @@
     font-size: 1rem;
 }
 
+.create__form-input--error {
+    border-color: var(--color-danger-text) !important;
+}
+
+.create__input-error-message {
+    color: var(--color-danger-text);
+    font-size: 0.95em;
+    margin-bottom: var(--spacing-sm);
+    margin-top: 0.2rem;
+    display: block;
+}
+
 .create__form-button {
     margin-top: var(--spacing-lg);
     padding: 0.75rem;
