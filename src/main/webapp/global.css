@@ -9,6 +9,9 @@
   --color-light-gray: #f5f6f8;
   --color-text-dark: #000000;
   --color-text-gray: #4a5568;
+  --color-danger-bg: #FEF2F1;
+  --color-danger-muted: #FEE2E2;
+  --color-danger-text: #EF4444;
 
   --radius: 0.5rem;
   --transition: 0.2s ease-in-out;
@@ -18,9 +21,6 @@
   --spacing-sm: 0.5rem;
   --spacing-md: 1rem;
   --spacing-lg: 2rem;
-
-  --radius: 0.5rem;
-  --transition: 0.2s ease-in-out;
 }
 
 * {
@@ -35,6 +35,11 @@ body {
   color: var(--color-text);
   background-color: var(--color-bg);
   line-height: 1.5;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
 }
 
 .container {

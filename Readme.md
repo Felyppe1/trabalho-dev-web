@@ -14,7 +14,7 @@ DevBank é um sistema bancário simples desenvolvido como parte do trabalho da d
 
 ## 🚀 Como rodar o projeto
 
-### ✅ Usando Docker (recomendado)
+### Usando Docker (Recomendado)
 
 > Certifique-se de ter o Docker instalado antes de prosseguir.
 > 

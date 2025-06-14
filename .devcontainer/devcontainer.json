@@ -1,0 +1,11 @@
+{
+    "features": {
+        "ghcr.io/devcontainers/features/java:1": {
+            "version": "17",
+            "installGradle": "true",
+            "installMaven": "true"
+        },
+        "ghcr.io/devcontainers-extra/features/tomcat-sdkman:2": {}
+    },
+    "forwardPorts": [8080, 5433]
+}

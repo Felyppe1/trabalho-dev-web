@@ -1,120 +1,83 @@
-/* ===== Navbar ===== */
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: var(--spacing-md) var(--spacing-lg);
-  background-color: var(--color-white);
-  border-bottom: 1px solid var(--color-border);
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: var(--spacing-lg);
+    gap: var(--spacing-md);
 }
 
-.navbar__logo {
-  font-size: 1.5rem;
-  font-weight: bold;
+.logo {
+    font-weight: bold;
+    font-size: 2rem;
 }
 
-.navbar__logo span {
+.logo span {
     color: var(--color-primary);
 }
 
-.navbar__logo--highlight {
-  color: var(--color-primary);
-}
-
-.navbar__nav a {
-  margin-left: var(--spacing-md);
-  text-decoration: none;
-  color: var(--color-text-gray);
-}
-
-.navbar__logout {
-  font-weight: bold;
-}
-
-/* ===== Container ===== */
-.page {
-  display: flex;
-  justify-content: space-between;
-  padding: var(--spacing-lg);
-}
-
-/* ===== Transfer Section ===== */
-.transfer {
-  width: 60%;
-}
-
-.transfer__title {
-  margin-bottom: 0.5rem;
-  font-size: 1.5rem;
-}
-
-.transfer__subtitle {
-  color: var(--color-text-gray);
-  margin-bottom: var(--spacing-lg);
-}
-
-.account__form {
-  display: flex;
-  flex-direction: column;
-}
-
-.account__form-label {
-  margin: var(--spacing-md) 0 var(--spacing-sm);
-}
-
-.account__form-input,
-.account__form-select {
-  padding: 0.625rem;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius);
-  font-size: 1rem;
-}
-
-.account__form-button {
-  margin-top: var(--spacing-lg);
-  padding: 0.75rem;
-  background-color: var(--color-primary);
-  color: var(--color-white);
-  border: none;
-  border-radius: var(--radius);
-  font-size: 1rem;
-  cursor: pointer;
-}
-
-/* ===== Recipients ===== */
-.recipients {
-  width: 35%;
-}
-
-.recipients__title {
-  margin-bottom: var(--spacing-md);
-  font-size: 1.25rem;
-}
-
-.recipients__list {
+.create {
+    width: 100%;
+    max-width: 40rem;
     display: flex;
     flex-direction: column;
-    gap: .75rem;
 }
 
-.recipients__card {
-  padding: var(--spacing-md);
-  border-radius: var(--radius);
-  border: 1px solid var(--color-border);
-  display: flex;
-  flex-direction: column;
+.create__title {
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
 }
 
-.recipients__card span:first-child {
-    font-weight: 600;
+.create__subtitle {
+    color: var(--color-text-gray);
+    margin-bottom: var(--spacing-lg);
 }
 
-.recipients__card span:last-child {
-    color: var(--color-muted);
-    margin-top: 0.25rem;
+.create__form {
+    display: flex;
+    flex-direction: column;
 }
 
-.recipients__bank {
-  color: var(--color-text-gray);
-  margin-top: 0.25rem;
+.create__form-label {
+    margin: var(--spacing-md) 0 var(--spacing-sm);
+}
+
+.create__form-input,
+.create__form-select {
+    padding: 0.625rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    font-size: 1rem;
+}
+
+.create__form-button {
+    margin-top: var(--spacing-lg);
+    padding: 0.75rem;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+    border-radius: var(--radius);
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.create__login {
+    align-self: center;
+    margin-top: 1rem;
+}
+
+.create__login a {
+    color: var(--color-primary);
+}
+
+@media (max-width: 425px) {
+    .main {
+        padding-inline: var(--spacing-md);
+    }
+}
+
+@media (max-width: 320px) {
+    .create {
+        padding-inline: var(--spacing-md);
+    }
 }
