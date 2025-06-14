@@ -47,19 +47,32 @@ public class LoginController extends HttpServlet {
 
         // TODO: implementar autenticação real com banco de dados
         if ("admin".equals(username) && "1234".equals(password)) {
-            String jwt = Jwts.builder()
+            String accessToken = Jwts.builder()
                     .setSubject(username)
                     .setIssuedAt(new Date())
-                    .setExpiration(new Date(System.currentTimeMillis() + 60 * 60 * 1000)) // 1 hora
+                    .setExpiration(new Date(System.currentTimeMillis() + 60 * 1000)) // 1 minuto
                     .signWith(SECRET_KEY, SignatureAlgorithm.HS256)
                     .compact();
 
-            Cookie jwtCookie = new Cookie("jwt", jwt);
+            String refreshToken = Jwts.builder()
+                    .setSubject(username)
+                    .setIssuedAt(new Date())
+                    .setExpiration(new Date(System.currentTimeMillis() + 7L * 24 * 60 * 60 * 1000)) // 7 dias
+                    .signWith(SECRET_KEY, SignatureAlgorithm.HS256)
+                    .compact();
+
+            Cookie jwtCookie = new Cookie("access_token", accessToken);
             jwtCookie.setHttpOnly(true); // Proteger contra acesso via JavaScript
             jwtCookie.setMaxAge(60 * 60); // 1 hora
             jwtCookie.setPath("/");
             // jwtCookie.setSecure(true); // Só envia via HTTPS
             resp.addCookie(jwtCookie);
+
+            Cookie refreshCookie = new Cookie("refresh_token", refreshToken);
+            refreshCookie.setHttpOnly(true);
+            refreshCookie.setMaxAge(7 * 24 * 60 * 60); // 7 dias
+            refreshCookie.setPath("/");
+            resp.addCookie(refreshCookie);
 
             HttpSession session = req.getSession();
             String redirectUrl = (String) session.getAttribute("redirect");

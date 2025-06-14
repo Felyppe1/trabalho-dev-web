@@ -9,7 +9,7 @@ import jakarta.servlet.http.*;
 import java.io.IOException;
 import java.security.Key;
 
-@WebFilter(filterName = "JwtAuthFilter", urlPatterns = {"/home/*", "/extrato/*"})
+@WebFilter(filterName = "JwtAuthFilter", urlPatterns = { "/home/*", "/extrato/*" })
 public class JwtAuthFilter implements Filter {
     private static final Key SECRET_KEY = Keys.hmacShaKeyFor(
             "sua-chave-super-secreta-que-tem-mais-de-32-caracteres".getBytes());
@@ -23,22 +23,63 @@ public class JwtAuthFilter implements Filter {
 
         HttpSession session = req.getSession();
 
-        String jwt = getJwtFromCookies(req);
+        // String jwt = getJwtFromCookies(req);
+        String accessToken = getCookie("access_token", req);
 
-        if (jwt != null) {
+        if (accessToken != null) {
             try {
                 Jws<Claims> claims = Jwts.parserBuilder()
                         .setSigningKey(SECRET_KEY)
                         .build()
-                        .parseClaimsJws(jwt);
+                        .parseClaimsJws(accessToken);
 
                 req.setAttribute("user", claims.getBody().getSubject());
                 chain.doFilter(request, response);
+                return;
+            } catch (ExpiredJwtException eje) {
+
+                String refreshToken = getCookie("refresh_token", req);
+                if (refreshToken != null) {
+                    try {
+                        Jws<Claims> refreshClaims = Jwts.parserBuilder()
+                                .setSigningKey(SECRET_KEY)
+                                .build()
+                                .parseClaimsJws(refreshToken);
+
+                        // Refresh token válido: gerar novo JWT
+                        String username = refreshClaims.getBody().getSubject();
+
+                        String newAccessToken = Jwts.builder()
+                                .setSubject(username)
+                                .setIssuedAt(new java.util.Date())
+                                .setExpiration(new java.util.Date(System.currentTimeMillis() + 60 * 60 * 1000))
+                                .signWith(SECRET_KEY, SignatureAlgorithm.HS256)
+                                .compact();
+
+                        Cookie jwtCookie = new Cookie("access_token", newAccessToken);
+                        jwtCookie.setHttpOnly(true);
+                        jwtCookie.setMaxAge(60 * 60); // 1 hora
+                        jwtCookie.setPath("/");
+                        resp.addCookie(jwtCookie);
+
+                        req.setAttribute("user", username);
+                        chain.doFilter(request, response);
+
+                        return;
+                    } catch (JwtException e2) {
+                        // Refresh token inválido
+                    }
+                }
+                // Se refresh token não existe ou inválido, segue fluxo normal
+                session.setAttribute("redirect", req.getRequestURI());
+                session.setAttribute("error", "jwt-invalid");
+                resp.sendRedirect(req.getContextPath() + "/login");
                 return;
             } catch (JwtException e) {
                 session.setAttribute("redirect", req.getRequestURI());
                 session.setAttribute("error", "jwt-invalid");
                 resp.sendRedirect(req.getContextPath() + "/login");
+                return;
             }
         }
 
@@ -47,11 +88,11 @@ public class JwtAuthFilter implements Filter {
         resp.sendRedirect(req.getContextPath() + "/login");
     }
 
-    private String getJwtFromCookies(HttpServletRequest request) {
+    private String getCookie(String keyName, HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
-                if ("jwt".equals(cookie.getName())) {
+                if (keyName.equals(cookie.getName())) {
                     return cookie.getValue();
                 }
             }
