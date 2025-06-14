@@ -16,9 +16,10 @@ import java.security.Key;
 import java.io.IOException;
 import java.util.Date;
 
-// @WebServlet(name = "LoginController", urlPatterns = { "/login" })
+@WebServlet(name = "LoginController", urlPatterns = "/login")
 public class LoginController extends HttpServlet {
-    private static final Key SECRET_KEY = Keys.hmacShaKeyFor("sua-chave-super-secreta-que-tem-mais-de-32-caracteres".getBytes());
+    private static final Key SECRET_KEY = Keys
+            .hmacShaKeyFor("sua-chave-super-secreta-que-tem-mais-de-32-caracteres".getBytes());
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -52,14 +53,14 @@ public class LoginController extends HttpServlet {
                     .setExpiration(new Date(System.currentTimeMillis() + 60 * 60 * 1000)) // 1 hora
                     .signWith(SECRET_KEY, SignatureAlgorithm.HS256)
                     .compact();
-            
+
             Cookie jwtCookie = new Cookie("jwt", jwt);
             jwtCookie.setHttpOnly(true); // Proteger contra acesso via JavaScript
             jwtCookie.setMaxAge(60 * 60); // 1 hora
             jwtCookie.setPath("/");
             // jwtCookie.setSecure(true); // Só envia via HTTPS
             resp.addCookie(jwtCookie);
-            
+
             HttpSession session = req.getSession();
             String redirectUrl = (String) session.getAttribute("redirect");
 

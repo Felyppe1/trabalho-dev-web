@@ -21,6 +21,7 @@ import jakarta.servlet.RequestDispatcher;
 
 import java.io.IOException;
 
+@WebServlet(name = "CreateAccountController", urlPatterns = "/criar-conta")
 public class CreateAccountController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -44,23 +45,24 @@ public class CreateAccountController extends HttpServlet {
 
         LocalDate birthDate = LocalDate.parse(birthDateStr);
 
-        try (Connection connection = PostgresConnection.getConnection()) {
-            AccountsRepository accountsRepository = new AccountsRepository(connection);
+        try {
+            try (Connection connection = PostgresConnection.getConnection()) {
+                AccountsRepository accountsRepository = new AccountsRepository(connection);
 
-            new CreateAccountService(accountsRepository).execute(
-                    cpf,
-                    name,
-                    email,
-                    password,
-                    birthDate,
-                    address,
-                    cellphoneNumber);
+                new CreateAccountService(accountsRepository).execute(
+                        cpf,
+                        name,
+                        email,
+                        password,
+                        birthDate,
+                        address,
+                        cellphoneNumber);
 
-            req.setAttribute("success", "Conta criada com sucesso");
-            req.getRequestDispatcher("/create-account.jsp").forward(req, res);
+                req.setAttribute("success", "Conta criada com sucesso");
+                req.getRequestDispatcher("/create-account.jsp").forward(req, res);
+            }
         } catch (ValidationException e) {
             req.setAttribute("fieldErrors", e.getErrors());
-
             req.setAttribute("cpf", cpf);
             req.setAttribute("name", name);
             req.setAttribute("email", email);
@@ -68,11 +70,10 @@ public class CreateAccountController extends HttpServlet {
             req.setAttribute("birthDate", birthDateStr);
             req.setAttribute("address", address);
             req.setAttribute("cellphoneNumber", cellphoneNumber);
-
-            req.getRequestDispatcher("create-account.jsp").forward(req, res);
+            req.getRequestDispatcher("/create-account.jsp").forward(req, res);
         } catch (Exception e) {
             req.setAttribute("error", "Erro inesperado: " + e.getMessage());
-            req.getRequestDispatcher("create-account.jsp").forward(req, res);
+            req.getRequestDispatcher("/create-account.jsp").forward(req, res);
         }
     }
 }

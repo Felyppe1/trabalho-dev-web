@@ -4,65 +4,6 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
          http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
          version="3.0">
-    <servlet>
-        <servlet-name>HomeController</servlet-name>
-        <servlet-class>com.trabalho.devweb.infrastructure.controllers.HomeController</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>HomeController</servlet-name>
-        <url-pattern>/home</url-pattern>
-    </servlet-mapping>
-    
-    <servlet>
-        <servlet-name>StatementController</servlet-name>
-        <servlet-class>com.trabalho.devweb.infrastructure.controllers.StatementController</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>StatementController</servlet-name>
-        <url-pattern>/extrato</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>CreateAccountController</servlet-name>
-        <servlet-class>com.trabalho.devweb.infrastructure.controllers.CreateAccountController</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>CreateAccountController</servlet-name>
-        <url-pattern>/criar-conta</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>LoginController</servlet-name>
-        <servlet-class>com.trabalho.devweb.infrastructure.controllers.LoginController</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>LoginController</servlet-name>
-        <url-pattern>/login</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>LogoutController</servlet-name>
-        <servlet-class>com.trabalho.devweb.infrastructure.controllers.LogoutController</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>LogoutController</servlet-name>
-        <url-pattern>/sair</url-pattern>
-    </servlet-mapping>
-
-    <filter>
-        <filter-name>JwtAuthFilter</filter-name>
-        <filter-class>com.trabalho.devweb.infrastructure.controllers.middlewares.JwtAuthFilter</filter-class>
-    </filter>
-
-    <filter-mapping>
-        <filter-name>JwtAuthFilter</filter-name>
-        <url-pattern>/home</url-pattern>
-    </filter-mapping>
-    <filter-mapping>
-        <filter-name>JwtAuthFilter</filter-name>
-        <url-pattern>/extrato</url-pattern>
-    </filter-mapping>
-
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>

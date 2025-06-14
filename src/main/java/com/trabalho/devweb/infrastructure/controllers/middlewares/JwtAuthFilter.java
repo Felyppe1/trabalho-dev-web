@@ -4,14 +4,15 @@ import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 
 import jakarta.servlet.*;
+import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.*;
 import java.io.IOException;
 import java.security.Key;
 
+@WebFilter(filterName = "JwtAuthFilter", urlPatterns = {"/home/*", "/extrato/*"})
 public class JwtAuthFilter implements Filter {
     private static final Key SECRET_KEY = Keys.hmacShaKeyFor(
-        "sua-chave-super-secreta-que-tem-mais-de-32-caracteres".getBytes()
-    );
+            "sua-chave-super-secreta-que-tem-mais-de-32-caracteres".getBytes());
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
