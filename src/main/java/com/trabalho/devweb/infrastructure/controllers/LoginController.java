@@ -12,9 +12,15 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 
+import com.trabalho.devweb.application.LoginService;
+import com.trabalho.devweb.infrastructure.repositories.AccountsRepository;
+import com.trabalho.devweb.infrastructure.databaseconnection.PostgresConnection;
+import com.trabalho.devweb.domain.Account;
+
 import java.security.Key;
 import java.io.IOException;
 import java.util.Date;
+import java.sql.Connection;
 
 @WebServlet(name = "LoginController", urlPatterns = "/login")
 public class LoginController extends HttpServlet {
@@ -25,17 +31,18 @@ public class LoginController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         String error = (String) session.getAttribute("error");
-        String logout = req.getParameter("logout");
+        String success = (String) session.getAttribute("success");
 
         if ("jwt-invalid".equals(error)) {
             req.setAttribute("error", "Sessão inválida. Faça login novamente.");
         } else if ("jwt-missing".equals(error)) {
             req.setAttribute("error", "Você precisa estar logado para acessar essa página.");
-        } else if (logout != null) {
-            req.setAttribute("success", "Você foi desconectado com sucesso.");
+        } else if (success != null) {
+            req.setAttribute("success", success);
         }
 
         session.removeAttribute("error");
+        session.removeAttribute("success");
 
         req.getRequestDispatcher("login.jsp").forward(req, resp);
     }
@@ -45,17 +52,20 @@ public class LoginController extends HttpServlet {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
 
-        // TODO: implementar autenticação real com banco de dados
-        if ("admin".equals(username) && "1234".equals(password)) {
+        try (Connection conn = PostgresConnection.getConnection()) {
+            AccountsRepository repo = new AccountsRepository(conn);
+            LoginService loginService = new LoginService(repo);
+            Account account = loginService.authenticate(username, password);
+
             String accessToken = Jwts.builder()
-                    .setSubject(username)
+                    .setSubject(account.getEmail())
                     .setIssuedAt(new Date())
                     .setExpiration(new Date(System.currentTimeMillis() + 60 * 1000)) // 1 minuto
                     .signWith(SECRET_KEY, SignatureAlgorithm.HS256)
                     .compact();
 
             String refreshToken = Jwts.builder()
-                    .setSubject(username)
+                    .setSubject(account.getEmail())
                     .setIssuedAt(new Date())
                     .setExpiration(new Date(System.currentTimeMillis() + 7L * 24 * 60 * 60 * 1000)) // 7 dias
                     .signWith(SECRET_KEY, SignatureAlgorithm.HS256)
@@ -83,7 +93,7 @@ public class LoginController extends HttpServlet {
             } else {
                 resp.sendRedirect(req.getContextPath() + "/home");
             }
-        } else {
+        } catch (Exception e) {
             req.setAttribute("error", "Usuário ou senha inválidos.");
             req.getRequestDispatcher("login.jsp").forward(req, resp);
         }

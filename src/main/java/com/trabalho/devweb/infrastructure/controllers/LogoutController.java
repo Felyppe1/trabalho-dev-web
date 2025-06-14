@@ -9,12 +9,20 @@ import java.io.IOException;
 public class LogoutController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Cookie jwtCookie = new Cookie("jwt", "");
-        jwtCookie.setPath("/");
-        jwtCookie.setHttpOnly(true);
-        jwtCookie.setMaxAge(0);
-        resp.addCookie(jwtCookie);
+        Cookie accessToken = new Cookie("access_token", "");
+        accessToken.setPath("/");
+        accessToken.setHttpOnly(true);
+        accessToken.setMaxAge(0);
 
-        resp.sendRedirect(req.getContextPath() + "/login?logout=true");
+        Cookie refreshToken = new Cookie("refresh_token", "");
+        refreshToken.setPath("/");
+        refreshToken.setHttpOnly(true);
+        refreshToken.setMaxAge(0);
+
+        resp.addCookie(accessToken);
+        resp.addCookie(refreshToken);
+
+        req.getSession().setAttribute("success", "Você foi desconectado com sucesso.");
+        resp.sendRedirect(req.getContextPath() + "/login");
     }
 }

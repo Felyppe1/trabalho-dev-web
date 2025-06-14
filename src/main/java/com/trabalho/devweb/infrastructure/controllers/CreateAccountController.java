@@ -58,8 +58,9 @@ public class CreateAccountController extends HttpServlet {
                         address,
                         cellphoneNumber);
 
-                req.setAttribute("success", "Conta criada com sucesso");
-                req.getRequestDispatcher("/create-account.jsp").forward(req, res);
+                req.getSession().setAttribute("success", "Conta criada com sucesso");
+                res.sendRedirect(req.getContextPath() + "/login");
+                return;
             }
         } catch (ValidationException e) {
             req.setAttribute("fieldErrors", e.getErrors());

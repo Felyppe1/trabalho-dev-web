@@ -5,6 +5,7 @@ import com.trabalho.devweb.domain.Account;
 import com.trabalho.devweb.application.errors.BusinessRuleException;
 import com.trabalho.devweb.application.errors.ValidationException;
 import com.trabalho.devweb.application.interfaces.IAccountsRepository;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -42,11 +43,12 @@ public class CreateAccountService {
             throw new ValidationException(fieldErrors);
         }
 
+        String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
         Account account = new Account(
                 cpf,
                 name,
                 email,
-                password,
+                hashedPassword,
                 birthDate,
                 address,
                 cellphoneNumber);
