@@ -47,7 +47,7 @@
                 String addressValue = request.getAttribute("address") != null ? (String) request.getAttribute("address") : "";
                 String cellphoneNumberValue = request.getAttribute("cellphoneNumber") != null ? (String) request.getAttribute("cellphoneNumber") : "";
             %>
-            <form class="create__form" action="/trabalho-dev-web/criar-conta" method="post">
+            <form class="create__form" action="${pageContext.request.contextPath}/criar-conta" method="post">
                 <label class="create__form-label">Nome</label>
                 <input class="create__form-input<%= fieldErrors.containsKey("name") ? " create__form-input--error" : "" %>" type="text" name="name" required value="<%= nameValue %>">
                 <% if (fieldErrors.get("name") != null) { %>
@@ -93,7 +93,7 @@
                 <button class="create__form-button" type="submit">Criar Conta</button>
             </form>
 
-            <span class='create__login'>Já tem uma conta? <a href="">Faça login</a></span>
+            <span class='create__login'>Já tem uma conta? <a href="${pageContext.request.contextPath}/login">Faça login</a></span>
 
         </section>
     </main>

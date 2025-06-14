@@ -49,13 +49,13 @@ public class LoginController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String username = req.getParameter("username");
+        String email = req.getParameter("email");
         String password = req.getParameter("password");
 
         try (Connection conn = PostgresConnection.getConnection()) {
             AccountsRepository repo = new AccountsRepository(conn);
             LoginService loginService = new LoginService(repo);
-            Account account = loginService.authenticate(username, password);
+            Account account = loginService.authenticate(email, password);
 
             String accessToken = Jwts.builder()
                     .setSubject(account.getEmail())
