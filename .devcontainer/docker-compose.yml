@@ -1,13 +1,14 @@
 services:
   app:
-    build: .
+    image: mcr.microsoft.com/devcontainers/java:17
     container_name: trabalho-dev-web-app
-    ports:
-      - "8080:8080"
-    depends_on:
-      - database
+    volumes:
+      - ../:/workspaces/trabalho-dev-web:cached # Montar o diretório no container remoto
+    env_file:
+      - ./.env
     networks:
       - trabalho-dev-web
+    command: sleep infinity
 
   database:
     image: postgres
@@ -19,12 +20,13 @@ services:
     ports:
       - "5433:5432"
     volumes:
-      - trabalho-dev-web:/var/lib/postgresql/data
+      - trabalho-dev-web_db:/var/lib/postgresql/data
+      - ../init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - trabalho-dev-web
 
 volumes:
-  trabalho-dev-web:
+  trabalho-dev-web_db:
 
 networks:
   trabalho-dev-web:

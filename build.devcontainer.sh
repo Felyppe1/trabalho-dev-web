@@ -1,6 +1,6 @@
 #!/bin/bash
 
-WAR_NAME="trabalho-dev-web.war"
+WAR_NAME="ROOT.war"
 
 mvn clean package
 

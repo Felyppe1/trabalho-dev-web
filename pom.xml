@@ -60,8 +60,8 @@
     </dependencies>
 
     <build>
-        <finalName>trabalho-dev-web</finalName>
-
+        <finalName>ROOT</finalName>
+        
         <directory>${project.basedir}/target</directory>
 
         <plugins>

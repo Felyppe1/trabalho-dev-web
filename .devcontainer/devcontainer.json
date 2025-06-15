@@ -1,11 +1,16 @@
 {
+    "dockerComposeFile": [
+        "./docker-compose.yml"
+    ],
+    "service": "app", // Nome do serviço no docker-compose.yml para o ambiente de desenvolvimento
+    "workspaceFolder": "/workspaces/trabalho-dev-web", // Caminho para o seu workspace dentro do contêiner 'app'
+
     "features": {
-        "ghcr.io/devcontainers/features/java:1": {
-            "version": "17",
-            "installGradle": "true",
-            "installMaven": "true"
+        "ghcr.io/devcontainers-extra/features/maven-sdkman:2": {
+            "version": "3.9.10"
         },
         "ghcr.io/devcontainers-extra/features/tomcat-sdkman:2": {}
     },
-    "forwardPorts": [8080, 5433]
+    "forwardPorts": [8080],
+    "postCreateCommand": "rm -rf ${SDKMAN_DIR}/candidates/tomcat/current/webapps/*"
 }

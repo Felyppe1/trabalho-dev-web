@@ -1,8 +1,8 @@
-# 💸 DevBank
+# DevBank
 
 DevBank é um sistema bancário simples desenvolvido como parte do trabalho da disciplina **Desenvolvimento Web**. O projeto utiliza **Java com Servlets e JSP**, conectando-se a um banco de dados PostgreSQL para simular operações básicas bancárias, como login, visualização de extrato e movimentações financeiras.
 
-## 🛠 Tecnologias utilizadas
+## Tecnologias utilizadas
 
 - Java 17+
 - Servlets & JSP
@@ -10,18 +10,47 @@ DevBank é um sistema bancário simples desenvolvido como parte do trabalho da d
 - PostgreSQL
 - Docker
 
----
+## Como rodar o projeto
 
-## 🚀 Como rodar o projeto
-
-### Usando Docker (Recomendado)
-
-> Certifique-se de ter o Docker instalado antes de prosseguir.
-> 
+### Usando Dev Container (faça isso caso queira desenvolver no projeto)
 
 #### 1. Configurar variáveis de ambiente:
 
-Copie o arquivo de exemplo `.env.example` para `.env` e preencha as variáveis necessárias:
+Copie o arquivo de exemplo `.env.example` para o `.env` dentro da pasta `/.devcontainer` e preencha as variáveis necessárias:
+```bash
+cp .env.example ./.devcontainer/.env
+# Edite o arquivo .env com os valores apropriados
+```
+
+#### 2. Liberar permissão de arquivos
+
+```bash
+chmod +x /usr/local/sdkman/candidates/tomcat/current/bin/*.sh
+```
+
+#### 3. Buildar e jogar no Tomcat
+
+```bash
+build.devcontainer.sh
+```
+
+#### 4. Iniciar o tomcat
+
+```bash
+/usr/local/sdkman/candidates/tomcat/current/bin/catalina.sh start
+```
+
+#### 5. Acessar a aplicação
+
+Abra no navegador: http://localhost:8080
+
+</br>
+
+### Usando Docker Compose (faça isso caso queira apenas ver a aplicação)
+
+#### 1. Configurar variáveis de ambiente:
+
+Copie o arquivo de exemplo `.env.example` para o `.env` na raiz do projeto e preencha as variáveis necessárias:
 ```bash
 cp .env.example .env
 # Edite o arquivo .env com os valores apropriados
@@ -30,26 +59,12 @@ cp .env.example .env
 #### 2. Subir os containers:
 
 ```bash
-docker compose up --build
+docker compose up
 ```
 
-#### 3. Inicializar o banco com script `init.sql`:
+#### 3. Acessar a aplicação:
 
-```bash
-docker cp init.sql trabalho-dev-web-db:/init.sql
-docker exec -it trabalho-dev-web-db bash
-psql -U postgres -d devbank -f /init.sql
-```
-
-#### 4. Compilar o projeto (executar na raiz do host):
-
-```bash
-./build.sh
-```
-
-#### 5. Acessar a aplicação:
-
-Abra no navegador: http://localhost:8080/trabalho-dev-web/home
+Abra no navegador: http://localhost:8080
 
 ---
 
