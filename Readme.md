@@ -14,6 +14,14 @@ DevBank é um sistema bancário simples desenvolvido como parte do trabalho da d
 
 ### Usando Dev Container (faça isso caso queira desenvolver no projeto)
 
+#### Pré-requisitos
+
+Antes de começar, certifique-se de que você possui:
+
+- [Docker](https://www.docker.com/) instalado e em execução
+- [Visual Studio Code (VS Code)](https://code.visualstudio.com/) instalado
+- Extensão **[Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)** instalada no VS Code
+
 #### 1. Configurar variáveis de ambiente:
 
 Copie o arquivo de exemplo `.env.example` para o `.env` dentro da pasta `/.devcontainer` e preencha as variáveis necessárias:
@@ -22,31 +30,44 @@ cp .env.example ./.devcontainer/.env
 # Edite o arquivo .env com os valores apropriados
 ```
 
-#### 2. Liberar permissão de arquivos
+#### 2. Abrir o projeto no container
+No VS Code, pressione `Ctrl + Shift + P` (ou `Cmd + Shift + P` no macOS), digite:
+```txt
+Dev Containers: Rebuild and Reopen in Container
+```
+E selecione a opção para reconstruir e abrir o projeto dentro do container.
+
+#### 3. Liberar permissão de arquivos
 
 ```bash
 chmod +x /usr/local/sdkman/candidates/tomcat/current/bin/*.sh
 ```
 
-#### 3. Buildar e jogar no Tomcat
+#### 4. Buildar e jogar no Tomcat
 
 ```bash
 build.devcontainer.sh
 ```
 
-#### 4. Iniciar o tomcat
+#### 5. Iniciar o tomcat
 
 ```bash
 /usr/local/sdkman/candidates/tomcat/current/bin/catalina.sh start
 ```
 
-#### 5. Acessar a aplicação
+#### 6. Acessar a aplicação
 
 Abra no navegador: http://localhost:8080
 
 </br>
 
 ### Usando Docker Compose (faça isso caso queira apenas ver a aplicação)
+
+#### Pré-requisitos
+
+Antes de começar, certifique-se de que você possui:
+
+- [Docker](https://www.docker.com/) instalado e em execução
 
 #### 1. Configurar variáveis de ambiente:
 
