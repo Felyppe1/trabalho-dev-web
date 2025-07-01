@@ -46,7 +46,7 @@ chmod +x /usr/local/sdkman/candidates/tomcat/current/bin/*.sh
 #### 4. Buildar e jogar no Tomcat
 
 ```bash
-build.devcontainer.sh
+./build.devcontainer.sh
 ```
 
 #### 5. Iniciar o tomcat
