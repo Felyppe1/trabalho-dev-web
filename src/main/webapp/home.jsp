@@ -13,50 +13,98 @@
 <body>
     <%@ include file="components/header.jsp" %>
   
-    <main class="page">
-      <section class="card transfer">
-        <h1 class="transfer__title">Transfer Money</h1>
-        <p class="transfer__subtitle">Transfer money between your accounts or to someone else.</p>
-  
-        <form class="transfer__form">
-          <label class="transfer__form-label">From Account</label>
-          <select class="transfer__form-select">
-            <option>Select account</option>
-          </select>
-  
-          <label class="transfer__form-label">To Account</label>
-          <select class="transfer__form-select">
-            <option>Select account</option>
-          </select>
-  
-          <label class="transfer__form-label">Amount</label>
-          <input class="transfer__form-input" type="number" placeholder="$ 0.00">
-  
-          <label class="transfer__form-label">Description (Optional)</label>
-          <input class="transfer__form-input" type="text" placeholder="What's this for?">
-  
-          <button class="transfer__form-button" type="submit">Transfer Money</button>
-        </form>
-      </section>
-  
-      <aside class="card recipients">
-        <h2 class="recipients__title">Recent Recipients</h2>
-  
-        <div class="recipients__list">
-            <div class="recipients__card">
-                <span>John Doe</span>
-                <span class="recipients__bank">Chase Bank - ****3456</span>
-            </div>
-            <div class="recipients__card">
-                <span>Jane Smith</span>
-                <span class="recipients__bank">Bank of America - ****5432</span>
-            </div>
-            <div class="recipients__card">
-                <span>Robert Johnson</span>
-                <span class="recipients__bank">Wells Fargo - ****3210</span>
-            </div>
+    <main class="main">
+        <h1 class="title">Bem-vindo, Fulano</h1>
+        <div>
+            <section class="card balance">
+                <div class="balance__account-container">
+                    <div>
+                        <span>Conta Corrente</span>
+                        <span>12345678</span>
+                    </div>
+                    <span></span>
+                </div>
+                <div class="balance__amount-container">
+                    <span class="balance__amount">R$ 5.000,00</span>
+                    <span class="balance__available">Saldo Disponível</span>
+                </div>
+                <div class="balance__updated-container">
+                    <button class="balance__button button button--outline">Adicionar Dinheiro</button>
+                    <div>
+                        <span>
+                            Atualizado
+                        </span>
+                        <span>
+                            Hoje, 13:31
+                        </span>
+                    </div>
+                </div>
+            </section>
+            <section class="card transactions">
+                <h2 class="transactions__title">Transações recentes</h2>
+                <ul class="transactions__list">
+                    <li class="transactions__item">
+                        <div>
+                            <span class="transactions__icon transactions__icon--success">
+                                <%@ include file="icons/card-send.svg" %>
+                            </span>
+                            <div>
+                                <span class="transactions__name">Depósito de Salário</span>
+                                <span class="transactions__date">Ontem, 14:34</span>
+                            </div>
+                        </div>
+                        <span class="transactions__amount">+ R$ 3.200,00</span>
+                    </li>
+                    <li class="transactions__item">
+                        <div>
+                            <span class="transactions__icon transactions__icon--danger">
+                                <%@ include file="icons/card-send.svg" %>
+                            </span>
+                            <div>
+                                <span class="transactions__name">Depósito de Salário</span>
+                                <span class="transactions__date">Ontem, 14:34</span>
+                            </div>
+                        </div>
+                        <span class="transactions__amount transactions__amount--danger">+ R$ 3.200,00</span>
+                    </li>
+                    <li class="transactions__item">
+                        <div>
+                            <span class="transactions__icon transactions__icon--success">
+                                <%@ include file="icons/card-send.svg" %>
+                            </span>
+                            <div>
+                                <span class="transactions__name">Depósito de Salário</span>
+                                <span class="transactions__date">Ontem, 14:34</span>
+                            </div>
+                        </div>
+                        <span class="transactions__amount">+ R$ 3.200,00</span>
+                    </li>
+                    <li class="transactions__item">
+                        <div>
+                            <span class="transactions__icon transactions__icon--danger">
+                                <%@ include file="icons/card-send.svg" %>
+                            </span>
+                            <div>
+                                <span class="transactions__name">Depósito de Salário</span>
+                                <span class="transactions__date">Ontem, 14:34</span>
+                            </div>
+                        </div>
+                        <span class="transactions__amount transactions__amount--danger">+ R$ 3.200,00</span>
+                    </li>
+                    <li class="transactions__item">
+                        <div>
+                            <span class="transactions__icon transactions__icon--danger">
+                                <%@ include file="icons/card-send.svg" %>
+                            </span>
+                            <div>
+                                <span class="transactions__name">Depósito de Salário</span>
+                                <span class="transactions__date">Ontem, 14:34</span>
+                            </div>
+                        </div>
+                        <span class="transactions__amount transactions__amount--danger">+ R$ 3.200,00</span>
+                    </li>
+            </section>
         </div>
-      </aside>
     </main>
   </body>
 

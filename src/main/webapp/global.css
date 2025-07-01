@@ -12,6 +12,9 @@
     --color-danger-bg: #fef2f1;
     --color-danger-muted: #fee2e2;
     --color-danger-text: #ef4444;
+    --color-success-text: #12B981;
+    --color-success-bg: #DCFCE7;
+
 
     --radius: 0.5rem;
     --transition: 0.2s ease-in-out;
@@ -174,4 +177,27 @@ h3 {
 .notification--hide {
     opacity: 0;
     pointer-events: none;
+}
+
+.button {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    padding: 0.75rem;
+    border: none;
+    border-radius: var(--radius);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.button--outline {
+    background-color: var(--color-white);
+    color: var(--color-primary);
+    border: 2px solid var(--color-primary);
+}
+
+.button--outline:hover {
+    background-color: var(--color-primary-hover);
+    color: var(--color-white);
+    border: 2px solid var(--color-primary-hover);
 }
