@@ -44,7 +44,7 @@ public class CreateAccountService {
         }
 
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
-        Account account = new Account(
+        Account account = Account.create(
                 cpf,
                 name,
                 email,

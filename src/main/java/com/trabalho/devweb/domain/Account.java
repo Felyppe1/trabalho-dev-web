@@ -20,13 +20,13 @@ public class Account {
     private String status = "active";
     private LocalDateTime createdAt;
 
-    public Account() {}
-
-    public Account(String cpf, String name, String email, String password,
-                   LocalDate birthDate, String address, String cellphoneNumber) {
-        this.id = UUID.randomUUID().toString();
-        this.number = generateAccountNumber();
-        this.digit = generateAccountDigit();
+    public Account(String id, String number, String digit, String cpf, String name, 
+                   String email, String password, LocalDate birthDate, String address, 
+                   String cellphoneNumber, BigDecimal balance, String status, 
+                   LocalDateTime createdAt) {
+        this.id = id;
+        this.number = number;
+        this.digit = digit;
         this.cpf = cpf;
         this.name = name;
         this.email = email;
@@ -34,120 +34,82 @@ public class Account {
         this.birthDate = birthDate;
         this.address = address;
         this.cellphoneNumber = cellphoneNumber;
-        this.createdAt = LocalDateTime.now();
+        this.balance = balance;
+        this.status = status;
+        this.createdAt = createdAt;
     }
 
-    // Gera um número de conta de 10 dígitos
-    private String generateAccountNumber() {
+    public static Account create(String cpf, String name, String email, String password,
+                             LocalDate birthDate, String address, String cellphoneNumber) {
+    String id = UUID.randomUUID().toString();
+    String number = generateAccountNumber();
+    String digit = generateAccountDigit();
+    BigDecimal balance = BigDecimal.ZERO;
+    String status = "active";
+    LocalDateTime createdAt = LocalDateTime.now();
+
+    return new Account(id, number, digit, cpf, name, email, password,
+                       birthDate, address, cellphoneNumber, balance, status, createdAt);
+    }
+
+    private static String generateAccountNumber() {
         return String.format("%010d", (int)(Math.random() * 10000000000L));
     }
 
-    // Gera um dígito verificador de 2 dígitos
-    private String generateAccountDigit() {
-        return String.format("%02d", (int)(Math.random() * 100));
+    private static String generateAccountDigit() {
+        return String.format("%01d", (int)(Math.random() * 100));
     }
 
-    // Getters e Setters
+    // Getters apenas para os campos que são usados
     public String getId() {
         return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getNumber() {
         return number;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
     public String getDigit() {
         return digit;
     }
 
-    public void setDigit(String digit) {
-        this.digit = digit;
-    }
     public String getCpf() {
         return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getEmail() {
         return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public LocalDate getBirthDate() {
         return birthDate;
-    }
-
-    public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
     }
 
     public String getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     public String getCellphoneNumber() {
         return cellphoneNumber;
-    }
-
-    public void setCellphoneNumber(String cellphoneNumber) {
-        this.cellphoneNumber = cellphoneNumber;
     }
 
     public BigDecimal getBalance() {
         return balance;
     }
 
-    public void setBalance(BigDecimal balance) {
-        this.balance = balance;
-    }
-
     public String getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     public LocalDateTime getCreatedAt() {
         return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
     }
 }

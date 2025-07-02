@@ -147,21 +147,21 @@ public class AccountsRepository implements IAccountsRepository {
     }
 
     private Account mapResultSetToAccount(ResultSet rs) throws SQLException {
-        Account account = new Account();
-        account.setId(rs.getString("id"));
-        account.setNumber(rs.getString("number"));
-        account.setDigit(rs.getString("digit"));
-        account.setCpf(rs.getString("cpf"));
-        account.setName(rs.getString("name"));
-        account.setEmail(rs.getString("email"));
-        account.setPassword(rs.getString("password"));
-        account.setBirthDate(rs.getDate("birth_date").toLocalDate());
-        account.setAddress(rs.getString("address"));
-        account.setCellphoneNumber(rs.getString("cellphone_number"));
-        account.setBalance(rs.getBigDecimal("balance"));
-        account.setStatus(rs.getString("status"));
-        account.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
-        return account;
+        return new Account(
+            rs.getString("id"),
+            rs.getString("number"),
+            rs.getString("digit"),
+            rs.getString("cpf"),
+            rs.getString("name"),
+            rs.getString("email"),
+            rs.getString("password"),
+            rs.getDate("birth_date").toLocalDate(),
+            rs.getString("address"),
+            rs.getString("cellphone_number"),
+            rs.getBigDecimal("balance"),
+            rs.getString("status"),
+            rs.getTimestamp("created_at").toLocalDateTime()
+        );
     }
 
 }
