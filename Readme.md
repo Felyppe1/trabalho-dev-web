@@ -59,6 +59,14 @@ chmod +x /usr/local/sdkman/candidates/tomcat/current/bin/*.sh
 
 Abra no navegador: http://localhost:8080
 
+#### Caso queira alterar o banco (rodar fora do Dev Container):
+
+```bash
+docker cp init.sql trabalho-dev-web-db:/init.sql
+docker exec -it trabalho-dev-web-db bash
+psql -U postgres -d devbank -f /init.sql
+```
+
 </br>
 
 ### Usando Docker Compose (faça isso caso queira apenas ver a aplicação)
