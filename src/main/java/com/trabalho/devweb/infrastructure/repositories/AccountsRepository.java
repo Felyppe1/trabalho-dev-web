@@ -19,20 +19,24 @@ public class AccountsRepository implements IAccountsRepository {
     public void save(Account account) throws SQLException {
         String sql = """
                     INSERT INTO account (
-                        cpf, name, email, password, birth_date, address, cellphone_number, balance, status
-                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                        id, number, digit, cpf, name, email, password, birth_date, address, cellphone_number, balance, status, created_at
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """;
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, account.getCpf());
-            stmt.setString(2, account.getName());
-            stmt.setString(3, account.getEmail());
-            stmt.setString(4, account.getPassword());
-            stmt.setDate(5, java.sql.Date.valueOf(account.getBirthDate())); // LocalDate -> SQL Date
-            stmt.setString(6, account.getAddress());
-            stmt.setString(7, account.getCellphoneNumber());
-            stmt.setBigDecimal(8, account.getBalance());
-            stmt.setString(9, account.getStatus());
+            stmt.setString(1, account.getId());
+            stmt.setString(2, account.getNumber());
+            stmt.setString(3, account.getDigit());
+            stmt.setString(4, account.getCpf());
+            stmt.setString(5, account.getName());
+            stmt.setString(6, account.getEmail());
+            stmt.setString(7, account.getPassword());
+            stmt.setDate(8, java.sql.Date.valueOf(account.getBirthDate())); // LocalDate -> SQL Date
+            stmt.setString(9, account.getAddress());
+            stmt.setString(10, account.getCellphoneNumber());
+            stmt.setBigDecimal(11, account.getBalance());
+            stmt.setString(12, account.getStatus());
+            stmt.setTimestamp(13, java.sql.Timestamp.valueOf(account.getCreatedAt())); // LocalDateTime -> SQL Timestamp
 
             stmt.executeUpdate();
         }
@@ -63,9 +67,29 @@ public class AccountsRepository implements IAccountsRepository {
     }
 
     @Override
+    public Account findById(String id) throws SQLException {
+        String sql = """
+                    SELECT id, number, digit, cpf, name, email, password, birth_date, address, cellphone_number, balance, status, created_at
+                    FROM account
+                    WHERE id = ?
+                """;
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, id);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return mapResultSetToAccount(rs);
+                }
+                return null;
+            }
+        }
+    }
+
+    @Override
     public Account findOneByCpf(String cpf) throws SQLException {
         String sql = """
-                    SELECT cpf, name, email, password, birth_date, address, cellphone_number
+                    SELECT id, number, digit, cpf, name, email, password, birth_date, address, cellphone_number, balance, status, created_at
                     FROM account
                     WHERE cpf = ?
                 """;
@@ -85,7 +109,7 @@ public class AccountsRepository implements IAccountsRepository {
     @Override
     public Account findOneByEmail(String email) throws SQLException {
         String sql = """
-                    SELECT cpf, name, email, password, birth_date, address, cellphone_number
+                    SELECT id, number, digit, cpf, name, email, password, birth_date, address, cellphone_number, balance, status, created_at
                     FROM account
                     WHERE email = ?
                 """;
@@ -105,7 +129,7 @@ public class AccountsRepository implements IAccountsRepository {
     @Override
     public Account findOneByCellphoneNumber(String cellphoneNumber) throws SQLException {
         String sql = """
-                    SELECT cpf, name, email, password, birth_date, address, cellphone_number
+                    SELECT id, number, digit, cpf, name, email, password, birth_date, address, cellphone_number, balance, status, created_at
                     FROM account
                     WHERE cellphone_number = ?
                 """;
@@ -123,14 +147,21 @@ public class AccountsRepository implements IAccountsRepository {
     }
 
     private Account mapResultSetToAccount(ResultSet rs) throws SQLException {
-        return new Account(
-                rs.getString("cpf"),
-                rs.getString("name"),
-                rs.getString("email"),
-                rs.getString("password"),
-                rs.getDate("birth_date").toLocalDate(),
-                rs.getString("address"),
-                rs.getString("cellphone_number"));
+        Account account = new Account();
+        account.setId(rs.getString("id"));
+        account.setNumber(rs.getString("number"));
+        account.setDigit(rs.getString("digit"));
+        account.setCpf(rs.getString("cpf"));
+        account.setName(rs.getString("name"));
+        account.setEmail(rs.getString("email"));
+        account.setPassword(rs.getString("password"));
+        account.setBirthDate(rs.getDate("birth_date").toLocalDate());
+        account.setAddress(rs.getString("address"));
+        account.setCellphoneNumber(rs.getString("cellphone_number"));
+        account.setBalance(rs.getBigDecimal("balance"));
+        account.setStatus(rs.getString("status"));
+        account.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
+        return account;
     }
 
 }

@@ -38,8 +38,4 @@
     color: var(--color-primary);
 }
 
-.header__nav a.active {
-  color: var(--color-primary);
-  font-weight: 600;
-}
 
