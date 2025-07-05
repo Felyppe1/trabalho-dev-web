@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<%@ page import="com.trabalho.devweb.domain.Account" %>
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -11,21 +12,25 @@
     <title>DevBank</title>
 </head>
 <body>
+    <%
+        Account account = (Account) session.getAttribute("account");
+    %>
+    
     <%@ include file="components/header.jsp" %>
   
     <main class="main">
-        <h1 class="title">Bem-vindo, Fulano</h1>
+        <h1 class="title">Bem-vindo, <%= account.getName() %></h1>
         <div>
             <section class="card balance">
                 <div class="balance__account-container">
                     <div>
                         <span>Conta Corrente</span>
-                        <span>12345678</span>
+                        <span><%= account.getAccountNumber() %></span>
                     </div>
                     <span></span>
                 </div>
                 <div class="balance__amount-container">
-                    <span class="balance__amount">R$ 5.000,00</span>
+                    <span class="balance__amount">R$ <%= account.getBalance() %></span>
                     <span class="balance__available">Saldo Disponível</span>
                 </div>
                 <div class="balance__updated-container">

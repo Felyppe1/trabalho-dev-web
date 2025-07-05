@@ -60,7 +60,10 @@ public class Account {
         return String.format("%01d", (int)(Math.random() * 100));
     }
 
-    // Getters apenas para os campos que são usados
+    public String getAccountNumber() {
+        return number + "-" + digit;
+    }
+    
     public String getId() {
         return id;
     }

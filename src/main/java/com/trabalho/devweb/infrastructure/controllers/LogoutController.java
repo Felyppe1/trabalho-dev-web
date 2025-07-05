@@ -7,22 +7,23 @@ import java.io.IOException;
 
 @WebServlet(name = "LogoutController", urlPatterns = "/sair")
 public class LogoutController extends HttpServlet {
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Cookie accessToken = new Cookie("access_token", "");
-        accessToken.setPath("/");
-        accessToken.setHttpOnly(true);
-        accessToken.setMaxAge(0);
+        doPost(req, resp);
+    }
 
-        Cookie refreshToken = new Cookie("refresh_token", "");
-        refreshToken.setPath("/");
-        refreshToken.setHttpOnly(true);
-        refreshToken.setMaxAge(0);
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession(false);
 
-        resp.addCookie(accessToken);
-        resp.addCookie(refreshToken);
+        if (session != null) {
+            session.invalidate();
+        }
 
-        req.getSession().setAttribute("success", "Você foi desconectado com sucesso.");
+        HttpSession newSession = req.getSession(true);
+        newSession.setAttribute("success", "Você foi desconectado com sucesso.");
+
         resp.sendRedirect(req.getContextPath() + "/login");
     }
 }

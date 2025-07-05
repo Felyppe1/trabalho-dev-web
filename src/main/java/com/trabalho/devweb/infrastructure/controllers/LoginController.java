@@ -5,27 +5,18 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpSession;
-
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Keys;
 
 import com.trabalho.devweb.application.LoginService;
 import com.trabalho.devweb.infrastructure.repositories.AccountsRepository;
 import com.trabalho.devweb.infrastructure.databaseconnection.PostgresConnection;
 import com.trabalho.devweb.domain.Account;
 
-import java.security.Key;
 import java.io.IOException;
-import java.util.Date;
 import java.sql.Connection;
 
 @WebServlet(name = "LoginController", urlPatterns = "/login")
 public class LoginController extends HttpServlet {
-    private static final Key SECRET_KEY = Keys
-            .hmacShaKeyFor("sua-chave-super-secreta-que-tem-mais-de-32-caracteres".getBytes());
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -33,9 +24,9 @@ public class LoginController extends HttpServlet {
         String error = (String) session.getAttribute("error");
         String success = (String) session.getAttribute("success");
 
-        if ("jwt-invalid".equals(error)) {
+        if ("session-invalid".equals(error)) {
             req.setAttribute("error", "Sessão inválida. Faça login novamente.");
-        } else if ("jwt-missing".equals(error)) {
+        } else if ("session-missing".equals(error)) {
             req.setAttribute("error", "Você precisa estar logado para acessar essa página.");
         } else if (success != null) {
             req.setAttribute("success", success);
@@ -57,36 +48,12 @@ public class LoginController extends HttpServlet {
             LoginService loginService = new LoginService(repo);
             Account account = loginService.authenticate(email, password);
 
-            String accessToken = Jwts.builder()
-                    .setSubject(account.getId())
-                    .claim("email", account.getEmail())
-                    .setIssuedAt(new Date())
-                    .setExpiration(new Date(System.currentTimeMillis() + 60 * 1000)) // 1 minuto
-                    .signWith(SECRET_KEY, SignatureAlgorithm.HS256)
-                    .compact();
+            HttpSession session = req.getSession(true);
+            session.setAttribute("account", account);
 
-            String refreshToken = Jwts.builder()
-                    .setSubject(account.getId())
-                    .claim("email", account.getEmail())
-                    .setIssuedAt(new Date())
-                    .setExpiration(new Date(System.currentTimeMillis() + 7L * 24 * 60 * 60 * 1000)) // 7 dias
-                    .signWith(SECRET_KEY, SignatureAlgorithm.HS256)
-                    .compact();
+            session.setMaxInactiveInterval(10 * 60);
 
-            Cookie jwtCookie = new Cookie("access_token", accessToken);
-            jwtCookie.setHttpOnly(true); // Proteger contra acesso via JavaScript
-            jwtCookie.setMaxAge(60 * 60); // 1 hora
-            jwtCookie.setPath("/");
-            // jwtCookie.setSecure(true); // Só envia via HTTPS
-            resp.addCookie(jwtCookie);
-
-            Cookie refreshCookie = new Cookie("refresh_token", refreshToken);
-            refreshCookie.setHttpOnly(true);
-            refreshCookie.setMaxAge(7 * 24 * 60 * 60); // 7 dias
-            refreshCookie.setPath("/");
-            resp.addCookie(refreshCookie);
-
-            HttpSession session = req.getSession();
+            // HttpSession session = req.getSession();
             String redirectUrl = (String) session.getAttribute("redirect");
 
             if (redirectUrl != null) {
