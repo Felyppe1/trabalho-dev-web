@@ -58,7 +58,7 @@ public class LoginController extends HttpServlet {
             Account account = loginService.authenticate(email, password);
 
             String accessToken = Jwts.builder()
-                    .setSubject(account.getId())  // Usar ID em vez de email
+                    .setSubject(account.getId())
                     .claim("email", account.getEmail())
                     .setIssuedAt(new Date())
                     .setExpiration(new Date(System.currentTimeMillis() + 60 * 1000)) // 1 minuto
@@ -66,7 +66,7 @@ public class LoginController extends HttpServlet {
                     .compact();
 
             String refreshToken = Jwts.builder()
-                    .setSubject(account.getId())  // Usar ID em vez de email
+                    .setSubject(account.getId())
                     .claim("email", account.getEmail())
                     .setIssuedAt(new Date())
                     .setExpiration(new Date(System.currentTimeMillis() + 7L * 24 * 60 * 60 * 1000)) // 7 dias

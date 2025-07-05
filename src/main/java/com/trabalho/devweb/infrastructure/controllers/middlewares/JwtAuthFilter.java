@@ -33,7 +33,7 @@ public class JwtAuthFilter implements Filter {
                         .build()
                         .parseClaimsJws(accessToken);
 
-                req.setAttribute("user", claims.getBody().getSubject());
+                req.setAttribute("accountId", claims.getBody().getSubject());
                 chain.doFilter(request, response);
                 return;
             } catch (ExpiredJwtException eje) {
@@ -47,10 +47,10 @@ public class JwtAuthFilter implements Filter {
                                 .parseClaimsJws(refreshToken);
 
                         // Refresh token válido: gerar novo JWT
-                        String username = refreshClaims.getBody().getSubject();
+                        String accountId = refreshClaims.getBody().getSubject();
 
                         String newAccessToken = Jwts.builder()
-                                .setSubject(username)
+                                .setSubject(accountId)
                                 .setIssuedAt(new java.util.Date())
                                 .setExpiration(new java.util.Date(System.currentTimeMillis() + 60 * 60 * 1000))
                                 .signWith(SECRET_KEY, SignatureAlgorithm.HS256)
@@ -62,7 +62,7 @@ public class JwtAuthFilter implements Filter {
                         jwtCookie.setPath("/");
                         resp.addCookie(jwtCookie);
 
-                        req.setAttribute("user", username);
+                        req.setAttribute("accountId", accountId);
                         chain.doFilter(request, response);
 
                         return;

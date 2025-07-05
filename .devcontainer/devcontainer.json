@@ -9,7 +9,8 @@
         "ghcr.io/devcontainers-extra/features/maven-sdkman:2": {
             "version": "3.9.10"
         },
-        "ghcr.io/devcontainers-extra/features/tomcat-sdkman:2": {}
+        "ghcr.io/devcontainers-extra/features/tomcat-sdkman:2": {},
+        "ghcr.io/devcontainers/features/node:1": {}
     },
     "forwardPorts": [8080],
     "postCreateCommand": "rm -rf ${SDKMAN_DIR}/candidates/tomcat/current/webapps/*"
