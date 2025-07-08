@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 public class Account {
     private String id;
@@ -53,11 +55,11 @@ public class Account {
     }
 
     private static String generateAccountNumber() {
-        return String.format("%010d", (int)(Math.random() * 10000000000L));
+        return String.format("%010d", (long)(Math.random() * 10000000000L));
     }
 
     private static String generateAccountDigit() {
-        return String.format("%01d", (int)(Math.random() * 100));
+        return String.valueOf((int)(Math.random() * 10));
     }
 
     public String getAccountNumber() {
@@ -106,6 +108,11 @@ public class Account {
 
     public BigDecimal getBalance() {
         return balance;
+    }
+
+    public String getFormattedBalance() {
+        NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.of("pt", "BR"));
+        return nf.format(balance);
     }
 
     public String getStatus() {

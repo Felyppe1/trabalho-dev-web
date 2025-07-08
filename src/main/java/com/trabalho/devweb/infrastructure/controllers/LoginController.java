@@ -35,7 +35,7 @@ public class LoginController extends HttpServlet {
         session.removeAttribute("error");
         session.removeAttribute("success");
 
-        req.getRequestDispatcher("login.jsp").forward(req, resp);
+        req.getRequestDispatcher("/login.jsp").forward(req, resp);
     }
 
     @Override
@@ -45,15 +45,16 @@ public class LoginController extends HttpServlet {
 
         try (Connection conn = PostgresConnection.getConnection()) {
             AccountsRepository repo = new AccountsRepository(conn);
+
             LoginService loginService = new LoginService(repo);
-            Account account = loginService.authenticate(email, password);
+
+            Account account = loginService.execute(email, password);
 
             HttpSession session = req.getSession(true);
             session.setAttribute("account", account);
 
             session.setMaxInactiveInterval(10 * 60);
 
-            // HttpSession session = req.getSession();
             String redirectUrl = (String) session.getAttribute("redirect");
 
             if (redirectUrl != null) {
@@ -64,7 +65,7 @@ public class LoginController extends HttpServlet {
             }
         } catch (Exception e) {
             req.setAttribute("error", "Usuário ou senha inválidos.");
-            req.getRequestDispatcher("login.jsp").forward(req, resp);
+            req.getRequestDispatcher("/login.jsp").forward(req, resp);
         }
     }
 }

@@ -4,9 +4,13 @@ import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.*;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
 import com.trabalho.devweb.domain.Account;
+import com.trabalho.devweb.infrastructure.databaseconnection.PostgresConnection;
+import com.trabalho.devweb.infrastructure.repositories.AccountsRepository;
 
-@WebFilter(filterName = "SessionAuthFilter", urlPatterns = { "/home/*", "/extrato/*", "/transfer/*", "/statement/*" })
+@WebFilter(filterName = "SessionAuthFilter", urlPatterns = { "/home", "/extrato", "/transfer/*", "/statement/*" })
 public class SessionAuthFilter implements Filter {
 
     @Override
@@ -25,8 +29,20 @@ public class SessionAuthFilter implements Filter {
         }
 
         if (account != null) {
-            chain.doFilter(request, response);
-            return;
+            try (Connection connection = PostgresConnection.getConnection()) {
+                AccountsRepository accountsRepository = new AccountsRepository(connection);
+                Account updatedAccount = accountsRepository.findById(account.getId());
+
+                if (updatedAccount != null) {
+                    session.setAttribute("account", updatedAccount);
+                    chain.doFilter(request, response);
+                    return;
+                }
+                
+            } catch (SQLException e) {
+                // Do nothing
+                
+            }
         }
 
         HttpSession newSession = req.getSession(true);

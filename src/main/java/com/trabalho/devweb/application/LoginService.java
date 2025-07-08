@@ -11,7 +11,7 @@ public class LoginService {
         this.accountsRepository = accountsRepository;
     }
 
-    public Account authenticate(String email, String password) throws Exception {
+    public Account execute(String email, String password) throws Exception {
         Account account = accountsRepository.findOneByEmail(email);
         if (account == null || !BCrypt.checkpw(password, account.getPassword())) {
             throw new Exception("Usuário ou senha inválidos.");

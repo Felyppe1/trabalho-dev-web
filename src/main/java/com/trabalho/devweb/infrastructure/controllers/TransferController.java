@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class TransferController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("transfer.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/transfer.jsp");
         dispatcher.forward(request, response);
     }
 }
