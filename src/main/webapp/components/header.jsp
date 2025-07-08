@@ -18,6 +18,11 @@
                 Transferência
         </a>
         <a
+            href="${pageContext.request.contextPath}/eu/investimentos"
+            class="header__a <%= currentPath.endsWith("/transferencia") ? "header__a--active" : "" %>">
+                Investimentos
+        </a>
+        <a
             href="${pageContext.request.contextPath}/extrato"
             class="header__a <%= currentPath.endsWith("/extrato") ? "header__a--active" : "" %>">
                 Extrato

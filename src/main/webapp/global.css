@@ -14,7 +14,9 @@
     --color-danger-text: #ef4444;
     --color-success-text: #12B981;
     --color-success-bg: #DCFCE7;
-
+    --color-gray-bg: #F1F5F9;
+    --color-gray-text: #65758C;
+/* #EF4444 ipca */
 
     --radius: 0.5rem;
     --transition: 0.2s ease-in-out;
@@ -48,12 +50,6 @@ a {
 .container {
     max-width: 64rem;
     margin: 0 auto;
-}
-
-h1,
-h2,
-h3 {
-    margin-bottom: 1rem;
 }
 
 .btn {
