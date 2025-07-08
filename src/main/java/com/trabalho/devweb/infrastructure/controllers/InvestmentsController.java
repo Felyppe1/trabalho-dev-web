@@ -8,8 +8,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "MyInvestmentsController", urlPatterns = "/eu/investimentos")
-public class MyInvestmentsController extends HttpServlet {
+@WebServlet(name = "InvestmentsController", urlPatterns = "/investimentos")
+public class InvestmentsController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)

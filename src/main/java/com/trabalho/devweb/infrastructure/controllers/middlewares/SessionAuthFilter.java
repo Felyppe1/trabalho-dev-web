@@ -10,7 +10,7 @@ import com.trabalho.devweb.domain.Account;
 import com.trabalho.devweb.infrastructure.databaseconnection.PostgresConnection;
 import com.trabalho.devweb.infrastructure.repositories.AccountsRepository;
 
-@WebFilter(filterName = "SessionAuthFilter", urlPatterns = { "/home", "/extrato", "/eu/*", "/transfer/*", "/statement/*" })
+@WebFilter(filterName = "SessionAuthFilter", urlPatterns = { "/home", "/extrato", "/transfer/*", "/statement/*" })
 public class SessionAuthFilter implements Filter {
 
     @Override

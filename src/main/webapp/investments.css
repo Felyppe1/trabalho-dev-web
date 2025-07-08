@@ -1,21 +1,129 @@
-/* Container principal */
-.investments {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-        sans-serif;
+/* Estilos específicos para página de investimentos disponíveis */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
 }
 
-/* Navegação por abas */
-.tabs {
+.investment__details {
     display: flex;
-    gap: .5rem;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.investment__info-btn {
+    background: none;
+    border: none;
+    color: #6b7280;
+    cursor: pointer;
+    padding: 2px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+}
+
+.investment__info-btn:hover {
+    color: #2563eb;
+    background: #eff6ff;
+}
+
+.investment__indicator--ipca {
+    background: linear-gradient(45deg, #059669, #10b981);
+}
+
+.investment__name--ipca {
+    color: #059669;
+}
+
+
+
+
+
+
+
+/* Investment Summary Component */
+.investment-summary__title {
+    font-size: 1.875rem;
+    font-weight: 700;
+}
+
+.investment-summary__subtitle {
+    color: #6b7280;
+    font-size: 1rem;
+    margin: 0 0 2rem 0;
+}
+
+.investment-summary__stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
     margin-bottom: 1rem;
 }
 
+.stat-card {
+    background-color: var(--color-bg);
+    padding: 1.5rem;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-card__label {
+    color: var(--color-gray-text);
+    font-size: 0.875rem;
+    margin-bottom: 0.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.stat-card__value {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.stat-card__value--positive {
+    color: var(--color-success-text);
+}
+
+.stat-card__value--highlight {
+    color: #0ea5e9;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .investment-summary__stats {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .stat-card {
+        padding: 1rem;
+    }
+    
+    .stat-card__value {
+        font-size: 1.5rem;
+    }
+}
+
+
+.main {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.tabs {
+    display: flex;
+    gap: .5rem;
+    margin-top: 1rem;
+}
+
 .tabs__item {
-    padding: .75rem 4rem;
+    padding: .5rem 4rem;
     background: var(--color-gray-bg);
     border: 2px solid transparent;
     border-radius: var(--radius);
@@ -34,17 +142,13 @@
 }
 
 .tabs__item:hover:not(.tabs__item--active) {
-    color: #6b7280;
-    background: #f9fafb;
+    color: var(--color-text-gray);
+    background-color: #ebeff4;
 }
 
 /* Cabeçalho do portfólio */
 .portfolio {
     margin-bottom: 2rem;
-}
-
-.portfolio__title {
-    color: #1f2937;
 }
 
 .portfolio__subtitle {
@@ -93,6 +197,20 @@
     border-bottom: none;
 }
 
+.investments-table__row > div {
+    font-weight: 600;
+}
+
+.button--details {
+    background-color: white;
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+}
+
+.button--details:hover {
+    background-color: #f5f5f5;
+}
+
 /* Dados do investimento */
 .investment {
     display: flex;
@@ -127,31 +245,8 @@
     color: #7E23CF;
 }
 
-.investment__return {
-    font-weight: 600;
-    color: var(--color-text);
-}
-
 .investment__value {
     color: var(--color-success-text);
-    font-weight: 600;
-}
-
-/* Botão de detalhes */
-.button {
-    background-color: white;
-    border: 1px solid var(--color-border);
-    padding: .75rem 0;
-    border-radius: var(--radius);
-    color: var(--color-text);
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    text-align: center;
-}
-
-.button:hover {
-    background-color: #d7d7d7;
 }
 
 /* Responsividade */
@@ -199,5 +294,16 @@
     .navigation--left,
     .navigation--right {
         display: none;
+    }
+
+    .page-header {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: stretch;
+    }
+    
+    .page-title {
+        font-size: 1.5rem;
+        text-align: center;
     }
 }
