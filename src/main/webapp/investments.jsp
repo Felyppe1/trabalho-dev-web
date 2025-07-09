@@ -18,26 +18,24 @@
     BigDecimal expectedReturn = BigDecimal.ZERO;
     BigDecimal totalReturn = BigDecimal.ZERO;
     
-    if (isMyInvestments) {
-        List<MyInvestment> myInvestments = (List<MyInvestment>) request.getAttribute("myInvestments");
-        if (myInvestments != null && !myInvestments.isEmpty()) {
-            for (MyInvestment investment : myInvestments) {
-                if (investment.getAmountInvested() != null) {
-                    totalInvested = totalInvested.add(investment.getAmountInvested());
-                }
-                if (investment.getCurrentValue() != null) {
-                    totalCurrentValue = totalCurrentValue.add(investment.getCurrentValue());
-                }
+    List<MyInvestment> myInvestments = (List<MyInvestment>) request.getAttribute("myInvestments");
+    if (myInvestments != null && !myInvestments.isEmpty()) {
+        for (MyInvestment investment : myInvestments) {
+            if (investment.getAmountInvested() != null) {
+                totalInvested = totalInvested.add(investment.getAmountInvested());
             }
-            
-            // Retorno esperado = valor atual - valor investido
-            expectedReturn = totalCurrentValue.subtract(totalInvested);
-            
-            // Rentabilidade total = (retorno esperado / total investido) * 100
-            if (totalInvested.compareTo(BigDecimal.ZERO) > 0) {
-                totalReturn = expectedReturn.divide(totalInvested, 4, RoundingMode.HALF_UP)
-                    .multiply(new BigDecimal("100"));
+            if (investment.getCurrentValue() != null) {
+                totalCurrentValue = totalCurrentValue.add(investment.getCurrentValue());
             }
+        }
+        
+        // Retorno esperado = valor atual - valor investido
+        expectedReturn = totalCurrentValue.subtract(totalInvested);
+        
+        // Rentabilidade total = (retorno esperado / total investido) * 100
+        if (totalInvested.compareTo(BigDecimal.ZERO) > 0) {
+            totalReturn = expectedReturn.divide(totalInvested, 4, RoundingMode.HALF_UP)
+                .multiply(new BigDecimal("100"));
         }
     }
 %>
