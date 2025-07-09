@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.postgresql.core.ConnectionFactory;
 import com.trabalho.devweb.infrastructure.databaseconnection.PostgresConnection;
 import com.trabalho.devweb.domain.Transaction;
 
@@ -31,6 +30,7 @@ public class TransactionRepository{
                 transactions.setCreatedAt(result.getTimestamp("created_at").toLocalDateTime());
                 transactions.setType(result.getString("type"));
                 transactions.setAmount(result.getBigDecimal("amount"));
+                transactions.setBalanceAfter(result.getBigDecimal("balance_after"));
                 transactions.setDescription(result.getString("description"));
                 list.add(transactions);
             }
