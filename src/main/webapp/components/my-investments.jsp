@@ -33,14 +33,20 @@
                     String nameClass = "";
                     
                     if (investment.getCategory().contains("PREFIXADO")) {
-                        indicatorClass = "investment__indicator--prefixed";
-                        nameClass = "investment__name--prefixed";
+                        indicatorClass = "investment__indicator--prefixado";
+                        nameClass = "investment__name--prefixado";
                     } else if (investment.getCategory().contains("SELIC")) {
                         indicatorClass = "investment__indicator--selic";
                         nameClass = "investment__name--selic";
-                    } else if (investment.getCategory().contains("IPCA") || investment.getCategory().contains("RENDA") || investment.getCategory().contains("EDUCA")) {
+                    } else if (investment.getCategory().contains("IPCA")) {
                         indicatorClass = "investment__indicator--ipca";
                         nameClass = "investment__name--ipca";
+                    } else if (investment.getCategory().contains("EDUCA")) {
+                        indicatorClass = "investment__indicator--educa";
+                        nameClass = "investment__name--educa";
+                    } else if (investment.getCategory().contains("RENDA")) {
+                        indicatorClass = "investment__indicator--renda";
+                        nameClass = "investment__name--renda";
                     }
         %>
             <div class="investments-table__row">

@@ -37,7 +37,7 @@ public class MyInvestmentsController extends HttpServlet {
             Connection connection = PostgresConnection.getConnection();
             IInvestmentRepository investmentRepository = new InvestmentsRepository(connection);
             GetMyInvestmentsService getMyInvestmentsService = new GetMyInvestmentsService(investmentRepository);
-            List<MyInvestment> myInvestments = getMyInvestmentsService.executeAggregated(accountId);
+            List<MyInvestment> myInvestments = getMyInvestmentsService.execute(accountId);
             request.setAttribute("myInvestments", myInvestments);
         } catch (Exception e) {
             e.printStackTrace();
