@@ -12,17 +12,17 @@
 
 <div class="card">
     <div class="portfolio">
-        <h1 class="portfolio__title">My Investment Portfolio</h1>
-        <p class="portfolio__subtitle">Your current investments and their performance</p>
+        <h1 class="portfolio__title">Minha Carteira de Investimentos</h1>
+        <p class="portfolio__subtitle">Seus investimentos atuais e seu desempenho</p>
     </div>
 
     <div class="investments-table">
         <div class="investments-table__header">
-            <div>Title</div>
-            <div>Annual Return</div>
-            <div>Amount Invested</div>
-            <div>Current Value</div>
-            <div>Maturity</div>
+            <div>Título</div>
+            <div>Retorno Anual</div>
+            <div>Valor Investido</div>
+            <div>Valor Atual</div>
+            <div>Vencimento</div>
             <div></div>
         </div>
 
@@ -58,7 +58,7 @@
                 <div class="investment__amount"><%= currencyFormat.format(investment.getAmountInvested()) %></div>
                 <div class="investment__value"><%= currencyFormat.format(investment.getCurrentValue()) %></div>
                 <div class="investment__maturity"><%= dateFormat.format(investment.getMaturityDate()) %></div>
-                <a href="#" class="button button--details">Details</a>
+                <a href="#" class="button button--details">Detalhes</a>
             </div>
         <%
                 }

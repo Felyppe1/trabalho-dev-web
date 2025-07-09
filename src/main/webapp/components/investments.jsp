@@ -1,3 +1,4 @@
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.trabalho.devweb.domain.Investment" %>
 <%@ page import="java.text.SimpleDateFormat" %>
@@ -8,17 +9,17 @@
 
 <div class="card">
     <div class="portfolio">
-        <h2 class="portfolio__title">Available Investment Options</h2>
-        <p class="portfolio__subtitle">Treasury bonds and investment options</p>
+        <h2 class="portfolio__title">Opções de Investimento Disponíveis</h2>
+        <p class="portfolio__subtitle">Títulos do Tesouro e opções de investimento</p>
     </div>
 
     <div class="investments-table">
         <div class="investments-table__header">
-            <div>Title</div>
-            <div>Annual Return</div>
-            <div>Min. Investment</div>
-            <div>Unit Price</div>
-            <div>Maturity</div>
+            <div>Título</div>
+            <div>Retorno Anual</div>
+            <div>Investimento Mín.</div>
+            <div>Preço Unitário</div>
+            <div>Vencimento</div>
             <div></div>
         </div>
         <% 

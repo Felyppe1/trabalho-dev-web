@@ -57,27 +57,27 @@
     <%@ include file="components/header.jsp" %>
     
     <main class="main">
-        <h1>Investments</h1>
+        <h1>Investimentos</h1>
 
         <div class="investment-summary card">
-            <h2>Investment Summary</h2>
-            <p class="investment-summary__subtitle">Overview of your investment portfolio</p>
+            <h2>Resumo dos Investimentos</h2>
+            <p class="investment-summary__subtitle">Visão geral da sua carteira de investimentos</p>
             
             <div class="investment-summary__stats">
                 <div class="stat-card">
-                    <span class="stat-card__label">Total Invested</span>
+                    <span class="stat-card__label">Total Investido</span>
                     <span class="stat-card__value"><%= currencyFormat.format(totalInvested) %></span>
                 </div>
                 
                 <div class="stat-card">
-                    <span class="stat-card__label">Total profit</span>
+                    <span class="stat-card__label">Lucro Total</span>
                     <span class="stat-card__value stat-card__value--positive">
                         + <%= currencyFormat.format(expectedReturn) %>
                     </span>
                 </div>
                 
                 <div class="stat-card">
-                    <span class="stat-card__label">Total Rentability</span>
+                    <span class="stat-card__label">Rentabilidade Total</span>
                     <span class="stat-card__value stat-card__value--highlight"><%= totalReturn.setScale(2, RoundingMode.HALF_UP) %>%</span>
                 </div>
             </div>
@@ -86,12 +86,12 @@
         <div class="tabs">
             <a href="${pageContext.request.contextPath}/eu/investimentos"
             class="tabs__item <%= isMyInvestments ? "tabs__item--active" : "" %>">
-                My Investments
+                Meus Investimentos
             </a>
 
             <a href="${pageContext.request.contextPath}/investimentos"
             class="tabs__item <%= !isMyInvestments ? "tabs__item--active" : "" %>">
-                Available Investments
+                Investimentos Disponíveis
             </a>
         </div>
 
