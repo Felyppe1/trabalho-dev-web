@@ -9,4 +9,6 @@ public interface IInvestmentRepository {
     List<Investment> findAvailableInvestments();
 
     List<MyInvestment> findInvestmentsByAccountId(String accountId) throws SQLException;
+
+    Investment findInvestmentByCategoryAndYear(String category, int year) throws SQLException;
 }

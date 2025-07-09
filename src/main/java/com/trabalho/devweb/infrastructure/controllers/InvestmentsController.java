@@ -31,6 +31,12 @@ public class InvestmentsController extends HttpServlet {
         HttpSession session = request.getSession(false);
         Account account = (Account) session.getAttribute("account");
 
+        String error = (String) session.getAttribute("error");
+        if (error != null) {
+            request.setAttribute("error", error);
+            session.removeAttribute("error");
+        }
+
         try {
             Connection connection = PostgresConnection.getConnection();
             IInvestmentRepository investmentRepository = new InvestmentsRepository(connection);

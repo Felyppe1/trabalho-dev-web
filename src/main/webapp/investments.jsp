@@ -52,6 +52,25 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/investments.css">
 </head>
 <body>
+    <% String error = (String) request.getAttribute("error"); %>
+    <% String success = (String) request.getAttribute("success"); %>
+    
+    <div class="notification-area">
+    <% if (success != null) { %>
+        <div class="notification notification--success"><%= success %></div>
+    <% } %>
+    <% if (error != null) { %>
+        <div class="notification notification--error"><%= error %></div>
+    <% } %>
+    </div>
+    <script>
+        document.querySelectorAll('.notification').forEach((el, i) => {
+            setTimeout(() => {
+                el.classList.add('notification--hide');
+            }, 5000 + i * 300);
+        });
+    </script>
+    
     <%@ include file="components/header.jsp" %>
     
     <main class="main">

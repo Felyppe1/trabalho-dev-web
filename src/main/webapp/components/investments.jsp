@@ -31,6 +31,10 @@
                 DecimalFormat currencyFormat = new DecimalFormat("#,##0.00", symbols);
                 
                 for (Investment inv : availableInvestments) {
+                    // Criar ID do investimento no formato CATEGORY-YEAR (removendo "TESOURO " da category)
+                    String category = inv.getCategory().replace("TESOURO ", "");
+                    int year = inv.getExpiration().toLocalDate().getYear();
+                    String investmentId = category + "-" + year;
         %>
         <div class="investments-table__row">
             <div class="investment">
@@ -45,7 +49,7 @@
             <div class="investment__amount">R$ <%= currencyFormat.format(inv.getUnitPrice().multiply(new java.math.BigDecimal("0.01"))) %></div>
             <div class="investment__price">R$ <%= currencyFormat.format(inv.getUnitPrice()) %></div>
             <div class="investment__maturity"><%= new SimpleDateFormat("dd/MM/yyyy").format(inv.getExpiration()) %></div>
-            <a href="#" class="button">Simular</a>
+            <a href="${pageContext.request.contextPath}/comprar-investimento/<%= investmentId %>" class="button">Investir</a>
         </div>
         <% 
                 }
