@@ -19,8 +19,8 @@
     gap: 0.5rem;
     color: var(--color-muted);
     text-decoration: none;
-    font-size: 0.9rem;
     transition: var(--transition);
+    font-weight: 600;
 }
 
 .back-link:hover {
@@ -31,14 +31,8 @@
     margin-bottom: 2rem;
 }
 
-.page-title {
-    margin-bottom: 0.5rem;
-    color: var(--color-text);
-}
-
 .page-subtitle {
     color: var(--color-muted);
-    font-size: 1rem;
 }
 
 .content-grid {
@@ -59,16 +53,13 @@
 .card-title {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: .75rem;
     margin-bottom: 1.5rem;
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: var(--color-text);
 }
 
 .card-title-icon {
-    width: 4px;
-    height: 20px;
+    width: .25rem;
+    height: 2.5rem;
     background: var(--color-primary);
     border-radius: 2px;
 }
@@ -169,44 +160,8 @@
     margin-top: 0.25rem;
 }
 
-.btn {
+.button-confirm {
     width: 100%;
-    padding: 0.875rem;
-    border: none;
-    border-radius: var(--radius);
-    font-size: 1rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: var(--transition);
-    margin-bottom: 0.75rem;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-}
-
-.btn-secondary {
-    background: var(--color-light-gray);
-    color: var(--color-text);
-    border: 1px solid var(--color-border);
-}
-
-.btn-secondary:hover {
-    background: #e2e8f0;
-    transform: translateY(-1px);
-}
-
-.btn-primary {
-    background: var(--color-primary);
-    color: var(--color-white);
-}
-
-.btn-primary:hover {
-    background: var(--color-primary-hover);
-    transform: translateY(-1px);
-}
-
-.btn-icon {
-    margin-right: 0.5rem;
 }
 
 .error-message {
@@ -225,6 +180,125 @@
     border-radius: var(--radius);
     margin-bottom: 1rem;
     border: 1px solid var(--color-success-text);
+}
+
+/* Investment type specific colors */
+.card-title-icon--prefixado {
+    background: #0ea5e9 !important;
+}
+
+.card-title-icon--selic {
+    background: #7E23CF !important;
+}
+
+.card-title-icon--ipca {
+    background: #EF4444 !important;
+}
+
+.card-title-icon--renda {
+    background: #4a3395 !important;
+}
+
+.card-title-icon--educa {
+    background: #297719 !important;
+}
+
+.investment-name--prefixado {
+    color: #0ea5e9 !important;
+}
+
+.investment-name--selic {
+    color: #7E23CF !important;
+}
+
+.investment-name--ipca {
+    color: #EF4444 !important;
+}
+
+.investment-name--renda {
+    color: #4a3395 !important;
+}
+
+.investment-name--educa {
+    color: #297719 !important;
+}
+
+.info-box--prefixado {
+    background: #eff8ff;
+    border-color: #a5d8ff;
+}
+
+.info-box--prefixado .info-icon,
+.info-box--prefixado .info-text {
+    color: #0ea5e9;
+}
+
+.info-box--selic {
+    background: #f5f0ff;
+    border-color: #d4b5ff;
+}
+
+.info-box--selic .info-icon,
+.info-box--selic .info-text {
+    color: #7E23CF;
+}
+
+.info-box--ipca {
+    background: #fef2f2;
+    border-color: #fecaca;
+}
+
+.info-box--ipca .info-icon,
+.info-box--ipca .info-text {
+    color: #EF4444;
+}
+
+.info-box--renda {
+    background: #f2f0ff;
+    border-color: #c5b8ff;
+}
+
+.info-box--renda .info-icon,
+.info-box--renda .info-text {
+    color: #4a3395;
+}
+
+.info-box--educa {
+    background: #f0fdf4;
+    border-color: #86efac;
+}
+
+.info-box--educa .info-icon,
+.info-box--educa .info-text {
+    color: #297719;
+}
+
+/* Investment Summary Styles */
+.investment-summary {
+    background: var(--color-bg);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.summary-title {
+    margin-bottom: 1rem;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.summary-item:last-child {
+    margin-bottom: 0;
+    color: #f59e0b;
+}
+
+.summary-value {
+    font-weight: 600;
 }
 
 @media (max-width: 768px) {

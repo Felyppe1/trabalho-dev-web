@@ -219,8 +219,8 @@
 }
 
 .investment__indicator {
-    width: 4px;
-    height: 40px;
+    width: .25rem;
+    height: 2.5rem;
     border-radius: 2px;
 }
 
