@@ -29,7 +29,7 @@ public class StatementController extends HttpServlet {
             return;
         }
         List<Transaction> transactions = repository.findByAccountId(account.getId());
-        request.setAttribute("transaction", transactions);
+        request.setAttribute("transactions", transactions);
         request.getRequestDispatcher("/statement.jsp").forward(request, response);               
     }
 }
