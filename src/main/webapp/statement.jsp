@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.trabalho.devweb.domain.Transaction" %>
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -30,6 +32,15 @@
       </div>
 
       <ul class="statements__list">
+        
+        <!--JSP de recuperação das listas-->
+
+        <%
+          List<Transaction> transactions = (List<Transaction>) request.getAttribute("transactions");
+          if (transactions != null) {
+              for (Transaction tx : transactions) {
+        %>
+
         <li class="statement">
           <div class="statement__info">
             <div class="statement__icon">📄</div>
@@ -39,10 +50,29 @@
             </div>
           </div>
           <div class="statement__actions">
-            <button class="btn btn--secondary">👁️ View</button>
-            <button class="btn btn--secondary">⬇️ Download</button>
+            <form action="extrato/view" method="get">
+              <input type="hidden" name="id" value="">
+              <button class="btn btn--secondary">👁️ View</button>
+            </form>
+            <form action="extrato/download" method="get">
+              <input type="hidden" name="id" value="">
+              <button class="btn btn--secondary">⬇️ Download</button>
+            </form>
           </div>
+          <!-- Lista das trasações no html-->
+          
+          <table>
+            <tr> <th>Tipo de transação</th> <th>Valor</th> </tr>
+            <tr>
+              <td> <%= tx.getType() %> de R$ <%= tx.getAmount() %></td>
+              <td> <%= tx.getCreatedAt() %> - Saldo após: <%= tx.getBalanceAfter() %> </td>
+            </tr>
+          </table>
         </li>
+        <%
+              }
+            }
+        %>
         <li class="statement">
           <div class="statement__info">
             <div class="statement__icon">📄</div>
