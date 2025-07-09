@@ -1,3 +1,11 @@
+<%@ page import="java.util.List" %>
+<%@ page import="com.trabalho.devweb.domain.Investment" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.math.RoundingMode" %>
+<%@ page import="java.text.DecimalFormat" %>
+<%@ page import="java.text.DecimalFormatSymbols" %>
+<%@ page import="java.util.Locale" %>
+
 <div class="card">
     <div class="portfolio">
         <h2 class="portfolio__title">Available Investment Options</h2>
@@ -13,110 +21,34 @@
             <div>Maturity</div>
             <div></div>
         </div>
-
+        <% 
+            List<Investment> availableInvestments = (List<Investment>) request.getAttribute("availableInvestments");
+            if (availableInvestments != null) {
+                DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.getDefault());
+                symbols.setDecimalSeparator(',');
+                symbols.setGroupingSeparator('.');
+                DecimalFormat currencyFormat = new DecimalFormat("#,##0.00", symbols);
+                
+                for (Investment inv : availableInvestments) {
+        %>
         <div class="investments-table__row">
             <div class="investment">
-                <div class="investment__indicator investment__indicator--prefixed"></div>
+                <div class="investment__indicator investment__indicator--<%= inv.getCategory().toLowerCase().contains("prefixado") ? "prefixed" : inv.getCategory().toLowerCase().contains("selic") ? "selic" : "ipca" %>"></div>
                 <div class="investment__details">
-                    <span class="investment__name investment__name--prefixed">TESOURO PREFIXADO 2028</span>
-                    <button class="investment__info-btn">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="10"/>
-                            <path d="M9,9h0a3,3,0,0,1,6,0c0,2-3,3-3,3"/>
-                            <path d="M12,17h0"/>
-                        </svg>
-                    </button>
+                    <span class="investment__name"> <%= inv.getCategory() %> <%= inv.getExpiration().toLocalDate().getYear() %></span>
                 </div>
             </div>
-            <div class="investment__return">13,98%</div>
-            <div class="investment__amount">R$ 6,99</div>
-            <div class="investment__price">R$ 699,96</div>
-            <div class="investment__maturity">01/01/2028</div>
-            <a href="#" class="button">Simulate</a>
-        </div>
-
-        <div class="investments-table__row">
-            <div class="investment">
-                <div class="investment__indicator investment__indicator--prefixed"></div>
-                <div class="investment__details">
-                    <span class="investment__name investment__name--prefixed">TESOURO PREFIXADO 2032</span>
-                    <button class="investment__info-btn">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="10"/>
-                            <path d="M9,9h0a3,3,0,0,1,6,0c0,2-3,3-3,3"/>
-                            <path d="M12,17h0"/>
-                        </svg>
-                    </button>
-                </div>
+            <div class="investment__return">
+                <%= inv.getRentabilityIndex() != null ? inv.getRentabilityIndex() + " + " : "" %><%= inv.getRentabilityPercent().stripTrailingZeros().toPlainString().replace('.', ',') %>%
             </div>
-            <div class="investment__return">14,54%</div>
-            <div class="investment__amount">R$ 4,02</div>
-            <div class="investment__price">R$ 402,79</div>
-            <div class="investment__maturity">01/01/2032</div>
-            <a href="#" class="button">Simulate</a>
+            <div class="investment__amount">R$ <%= currencyFormat.format(inv.getUnitPrice().multiply(new java.math.BigDecimal("0.01"))) %></div>
+            <div class="investment__price">R$ <%= currencyFormat.format(inv.getUnitPrice()) %></div>
+            <div class="investment__maturity"><%= new SimpleDateFormat("dd/MM/yyyy").format(inv.getExpiration()) %></div>
+            <a href="#" class="button">Simular</a>
         </div>
-
-        <div class="investments-table__row">
-            <div class="investment">
-                <div class="investment__indicator investment__indicator--selic"></div>
-                <div class="investment__details">
-                    <span class="investment__name investment__name--selic">TESOURO SELIC 2031</span>
-                    <button class="investment__info-btn">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="10"/>
-                            <path d="M9,9h0a3,3,0,0,1,6,0c0,2-3,3-3,3"/>
-                            <path d="M12,17h0"/>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-            <div class="investment__return">SELIC + 0,1152%</div>
-            <div class="investment__amount">R$ 8,50</div>
-            <div class="investment__price">R$ 850,45</div>
-            <div class="investment__maturity">01/03/2031</div>
-            <a href="#" class="button">Simulate</a>
-        </div>
-
-        <div class="investments-table__row">
-            <div class="investment">
-                <div class="investment__indicator investment__indicator--ipca"></div>
-                <div class="investment__details">
-                    <span class="investment__name investment__name--ipca">TESOURO IPCA+ 2029</span>
-                    <button class="investment__info-btn">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="10"/>
-                            <path d="M9,9h0a3,3,0,0,1,6,0c0,2-3,3-3,3"/>
-                            <path d="M12,17h0"/>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-            <div class="investment__return">IPCA + 6,10%</div>
-            <div class="investment__amount">R$ 15,25</div>
-            <div class="investment__price">R$ 1.525,80</div>
-            <div class="investment__maturity">15/08/2029</div>
-            <a href="#" class="button">Simulate</a>
-        </div>
-
-        <div class="investments-table__row">
-            <div class="investment">
-                <div class="investment__indicator investment__indicator--ipca"></div>
-                <div class="investment__details">
-                    <span class="investment__name investment__name--ipca">TESOURO IPCA+ 2035</span>
-                    <button class="investment__info-btn">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="10"/>
-                            <path d="M9,9h0a3,3,0,0,1,6,0c0,2-3,3-3,3"/>
-                            <path d="M12,17h0"/>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-            <div class="investment__return">IPCA + 6,45%</div>
-            <div class="investment__amount">R$ 12,50</div>
-            <div class="investment__price">R$ 1.250,30</div>
-            <div class="investment__maturity">15/05/2035</div>
-            <a href="#" class="button">Simulate</a>
-        </div>
+        <% 
+                }
+            }
+        %>
     </div>
 </div>
