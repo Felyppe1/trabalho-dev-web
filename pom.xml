@@ -19,8 +19,8 @@
         <dependency>
             <groupId>jakarta.servlet</groupId>
             <artifactId>jakarta.servlet-api</artifactId>
-            <version>5.0.0</version> <!-- Use a versão compatível com seu Tomcat -->
-            <scope>provided</scope> <!-- Evita conflito com a implementação do Tomcat -->
+            <version>5.0.0</version> 
+            <scope>provided</scope> 
         </dependency>
 
         <dependency>
