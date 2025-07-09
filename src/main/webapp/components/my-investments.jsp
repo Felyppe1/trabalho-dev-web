@@ -1,3 +1,15 @@
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.trabalho.devweb.domain.MyInvestment" %>
+<%@ page import="java.text.NumberFormat" %>
+<%@ page import="java.util.Locale" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%
+    List<MyInvestment> myInvestments = (List<MyInvestment>) request.getAttribute("myInvestments");
+    NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+%>
+
 <div class="card">
     <div class="portfolio">
         <h1 class="portfolio__title">My Investment Portfolio</h1>
@@ -14,28 +26,45 @@
             <div></div>
         </div>
 
-        <div class="investments-table__row">
-            <div class="investment">
-                <div class="investment__indicator investment__indicator--prefixed"></div>
-                <span class="investment__name investment__name--prefixed">TESOURO PREFIXADO 2028</span>
+        <%
+            if (myInvestments != null && !myInvestments.isEmpty()) {
+                for (MyInvestment investment : myInvestments) {
+                    String indicatorClass = "";
+                    String nameClass = "";
+                    
+                    if (investment.getCategory().contains("PREFIXADO")) {
+                        indicatorClass = "investment__indicator--prefixed";
+                        nameClass = "investment__name--prefixed";
+                    } else if (investment.getCategory().contains("SELIC")) {
+                        indicatorClass = "investment__indicator--selic";
+                        nameClass = "investment__name--selic";
+                    } else if (investment.getCategory().contains("IPCA") || investment.getCategory().contains("RENDA") || investment.getCategory().contains("EDUCA")) {
+                        indicatorClass = "investment__indicator--ipca";
+                        nameClass = "investment__name--ipca";
+                    }
+        %>
+            <div class="investments-table__row">
+                <div class="investment">
+                    <div class="investment__indicator <%= indicatorClass %>"></div>
+                    <span class="investment__name <%= nameClass %>"><%= investment.getInvestmentTitle() %></span>
+                </div>
+                <div class="investment__return"><%= investment.getFormattedReturn() %></div>
+                <div class="investment__amount"><%= currencyFormat.format(investment.getAmountInvested()) %></div>
+                <div class="investment__value"><%= currencyFormat.format(investment.getCurrentValue()) %></div>
+                <div class="investment__maturity"><%= dateFormat.format(investment.getMaturityDate()) %></div>
+                <a href="#" class="button button--details">Details</a>
             </div>
-            <div class="investment__return">13,98%</div>
-            <div class="investment__amount">R$ 10.000,00</div>
-            <div class="investment__value">R$ 10.845,30</div>
-            <div class="investment__maturity">01/01/2028</div>
-            <a href="#" class="button button--details">Details</a>
-        </div>
-
-        <div class="investments-table__row">
-            <div class="investment">
-                <div class="investment__indicator investment__indicator--selic"></div>
-                <span class="investment__name investment__name--selic">TESOURO SELIC 2031</span>
+        <%
+                }
+            } else {
+        %>
+            <div class="investments-table__row">
+                <div style="grid-column: 1 / -1; text-align: center; padding: 2rem;">
+                    Você ainda não possui investimentos.
+                </div>
             </div>
-            <div class="investment__return">SELIC + 0,1152%</div>
-            <div class="investment__amount">R$ 10.000,00</div>
-            <div class="investment__value">R$ 10.845,30</div>
-            <div class="investment__maturity">01/03/2031</div>
-            <a href="#" class="button button--details">Details</a>
-        </div>
+        <%
+            }
+        %>
     </div>
 </div>

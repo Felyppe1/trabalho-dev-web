@@ -44,14 +44,14 @@ CREATE TABLE IF NOT EXISTS transaction (
 );
 
 CREATE TABLE IF NOT EXISTS application (
+    id VARCHAR(255) PRIMARY KEY,
     expiration DATE NOT NULL,
     category VARCHAR(50) NOT NULL,
-    id VARCHAR(255) NOT NULL,
+    account_id VARCHAR(255) NOT NULL,
     amount NUMERIC(12,2) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (expiration, category, id),
     FOREIGN KEY (expiration, category) REFERENCES investment(expiration, category),
-    FOREIGN KEY (id) REFERENCES account(id)
+    FOREIGN KEY (account_id) REFERENCES account(id)
 );
 
 
