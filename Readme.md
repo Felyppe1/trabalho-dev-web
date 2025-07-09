@@ -49,11 +49,20 @@ chmod +x /usr/local/sdkman/candidates/tomcat/current/bin/*.sh
 ./build.devcontainer.sh
 ```
 
-#### 5. Iniciar o tomcat
+#### 5.1 Iniciar o tomcat
 
 ```bash
 /usr/local/sdkman/candidates/tomcat/current/bin/catalina.sh start
 ```
+
+#### 5.2 Iniciar com jetty
+#### Caso queira rodar usando hot reload basta rodar com o Jetty usando o seguinte comando:
+
+```bash
+mvn jetty:run
+```
+
+
 
 #### 6. Acessar a aplicação
 

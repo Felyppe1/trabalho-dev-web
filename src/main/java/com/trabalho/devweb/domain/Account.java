@@ -111,8 +111,9 @@ public class Account {
     }
 
     public String getFormattedBalance() {
-        NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.of("pt", "BR"));
-        return nf.format(balance);
+        // NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.of("pt", "BR"));
+        // return nf.format(balance);
+        return "";
     }
 
     public String getStatus() {
