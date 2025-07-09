@@ -33,9 +33,9 @@
         %>
         <div class="investments-table__row">
             <div class="investment">
-                <div class="investment__indicator investment__indicator--<%= inv.getCategory().toLowerCase().contains("prefixado") ? "prefixed" : inv.getCategory().toLowerCase().contains("selic") ? "selic" : "ipca" %>"></div>
+                <div class="investment__indicator investment__indicator--<%= inv.getCategory().toLowerCase().contains("renda") ? "renda" : inv.getCategory().toLowerCase().contains("educa") ? "educa" : inv.getCategory().toLowerCase().contains("prefixado") ? "prefixado" : inv.getCategory().toLowerCase().contains("selic") ? "selic" : "ipca" %>"></div>
                 <div class="investment__details">
-                    <span class="investment__name"> <%= inv.getCategory() %> <%= inv.getExpiration().toLocalDate().getYear() %></span>
+                    <span class="investment__name investment__name--<%= inv.getCategory().toLowerCase().contains("renda") ? "renda" : inv.getCategory().toLowerCase().contains("educa") ? "educa" : inv.getCategory().toLowerCase().contains("prefixado") ? "prefixado" : inv.getCategory().toLowerCase().contains("selic") ? "selic" : "ipca" %>"> <%= inv.getCategory() %> <%= inv.getExpiration().toLocalDate().getYear() %></span>
                 </div>
             </div>
             <div class="investment__return">

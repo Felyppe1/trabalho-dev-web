@@ -224,7 +224,7 @@
     border-radius: 2px;
 }
 
-.investment__indicator--prefixed {
+.investment__indicator--prefixado {
     background: #0ea5e9;
 }
 
@@ -232,17 +232,41 @@
     background: #7E23CF;
 }
 
+.investment__indicator--ipca {
+    background: #EF4444;
+}
+
+.investment__indicator--renda {
+    background: #4a3395;
+}
+
+.investment__indicator--educa {
+    background: #297719;
+}
+
 .investment__name {
     font-weight: 600;
     font-size: 16px;
 }
 
-.investment__name--prefixed {
-    color: hsl(199, 89%, 48%);
+.investment__name--prefixado {
+    color: #0ea5e9;
 }
 
 .investment__name--selic {
     color: #7E23CF;
+}
+
+.investment__name--ipca {
+    color: #EF4444;
+}
+
+.investment__name--renda {
+    color: #4a3395;
+}
+
+.investment__name--educa {
+    color: #297719;
 }
 
 .investment__value {
