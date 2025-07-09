@@ -12,7 +12,7 @@
 
 <div class="card">
     <div class="portfolio">
-        <h1 class="portfolio__title">Minha Carteira de Investimentos</h1>
+        <h2>Minha Carteira de Investimentos</h2>
         <p class="portfolio__subtitle">Seus investimentos atuais e seu desempenho</p>
     </div>
 

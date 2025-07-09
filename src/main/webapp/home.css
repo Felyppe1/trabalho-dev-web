@@ -6,11 +6,6 @@
     gap: var(--spacing-md);
 }
 
-.title {
-    font-size: 2rem;
-    font-weight: 600;
-}
-
 .main > div {
     display: flex;
     gap: var(--spacing-lg);
@@ -87,11 +82,6 @@
 
 .transactions {
     flex-grow: 2;
-}
-
-.transactions__title {
-    font-size: 1.5rem;
-    font-weight: 600;
 }
 
 .transactions__list {

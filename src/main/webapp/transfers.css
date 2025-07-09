@@ -1,6 +1,10 @@
- .layout {
+.container2 {
+    padding: 2rem 0;
+}
+.layout {
       display: flex;
       gap: var(--spacing-lg);
+      margin-top: 1rem;
     }
 
     .sidebar {

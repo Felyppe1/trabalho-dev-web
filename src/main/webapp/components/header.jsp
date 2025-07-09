@@ -13,9 +13,9 @@
                 Página Inicial
         </a>
         <a
-            href="${pageContext.request.contextPath}/transferencia"
+            href="${pageContext.request.contextPath}/transferencias"
             class="header__a <%= currentPath.endsWith("/transferencia") ? "header__a--active" : "" %>">
-                Transferência
+                Transferências
         </a>
         <a
             href="${pageContext.request.contextPath}/eu/investimentos"

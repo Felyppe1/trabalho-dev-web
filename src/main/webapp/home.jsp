@@ -19,7 +19,7 @@
     <%@ include file="components/header.jsp" %>
   
     <main class="main">
-        <h1 class="title">Bem-vindo, <%= account.getName() %></h1>
+        <h1>Bem-vindo, <%= account.getName() %></h1>
         <div>
             <section class="card balance">
                 <div class="balance__account-container">
@@ -46,7 +46,7 @@
                 </div>
             </section>
             <section class="card transactions">
-                <h2 class="transactions__title">Transações recentes</h2>
+                <h2>Transações recentes</h2>
                 <ul class="transactions__list">
                     <li class="transactions__item">
                         <div>

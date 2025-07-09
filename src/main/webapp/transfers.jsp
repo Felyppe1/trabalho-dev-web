@@ -32,22 +32,14 @@
   <meta charset="UTF-8" />
   <title>Transferências - DevBank</title>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/global.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/components/header.css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/transfers.css">
 </head>
 <body>
-  <header class="topbar">
-    <div class="topbar__logo">DevBank</div>
-    <nav class="topbar__nav">
-      <a href="#">Início</a>
-      <a href="#">Investimentos</a>
-      <a href="#" class="active">Transferências</a>
-      <a href="#">Extrato</a>
-      <a href="#">Configurações</a>
-      <a href="#">Sair</a>
-    </nav>
-  </header>
+    <%@ include file="components/header.jsp" %>
 
-  <div class="container">
+
+  <div class="container container2">
     <h1>Transferências Recentes</h1>
     <div class="layout">
       <div class="sidebar">
@@ -97,7 +89,7 @@
           <button type="submit" name="type" value="all" class="btn btn--secondary <%= (filterType == null || filterType.equals("all")) ? "btn--active" : "" %>">Todos</button>
           <button type="submit" name="type" value="sent" class="btn btn--secondary <%= "sent".equals(filterType) ? "btn--active" : "" %>">Enviados</button>
           <button type="submit" name="type" value="received" class="btn btn--secondary <%= "received".equals(filterType) ? "btn--active" : "" %>">Recebidos</button>
-          <a href="new-transfer.jsp" class="btn btn--primary">Nova Transferência</a>
+          <a href="${pageContext.request.contextPath}/transferir" class="btn btn--primary">Nova Transferência</a>
         </form>
 
         <div class="transfer-list">
