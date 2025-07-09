@@ -1,7 +1,45 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.trabalho.devweb.domain.MyInvestment" %>
+<%@ page import="java.text.NumberFormat" %>
+<%@ page import="java.util.Locale" %>
+<%@ page import="java.math.BigDecimal" %>
+<%@ page import="java.math.RoundingMode" %>
 <%
     String uri = (String) request.getAttribute("uri");
     boolean isMyInvestments = uri.contains("/eu/");
+    
+    // Formatador de moeda brasileira
+    NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+    
+    // Calcular valores do sumário apenas para My Investments
+    BigDecimal totalInvested = BigDecimal.ZERO;
+    BigDecimal totalCurrentValue = BigDecimal.ZERO;
+    BigDecimal expectedReturn = BigDecimal.ZERO;
+    BigDecimal totalReturn = BigDecimal.ZERO;
+    
+    if (isMyInvestments) {
+        List<MyInvestment> myInvestments = (List<MyInvestment>) request.getAttribute("myInvestments");
+        if (myInvestments != null && !myInvestments.isEmpty()) {
+            for (MyInvestment investment : myInvestments) {
+                if (investment.getAmountInvested() != null) {
+                    totalInvested = totalInvested.add(investment.getAmountInvested());
+                }
+                if (investment.getCurrentValue() != null) {
+                    totalCurrentValue = totalCurrentValue.add(investment.getCurrentValue());
+                }
+            }
+            
+            // Retorno esperado = valor atual - valor investido
+            expectedReturn = totalCurrentValue.subtract(totalInvested);
+            
+            // Rentabilidade total = (retorno esperado / total investido) * 100
+            if (totalInvested.compareTo(BigDecimal.ZERO) > 0) {
+                totalReturn = expectedReturn.divide(totalInvested, 4, RoundingMode.HALF_UP)
+                    .multiply(new BigDecimal("100"));
+            }
+        }
+    }
 %>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -28,17 +66,19 @@
             <div class="investment-summary__stats">
                 <div class="stat-card">
                     <span class="stat-card__label">Total Invested</span>
-                    <span class="stat-card__value">R$ 16,926.49</span>
+                    <span class="stat-card__value"><%= currencyFormat.format(totalInvested) %></span>
                 </div>
                 
                 <div class="stat-card">
-                    <span class="stat-card__label">Expected Return</span>
-                    <span class="stat-card__value stat-card__value--positive">+ R$ 2,458.70</span>
+                    <span class="stat-card__label">Total profit</span>
+                    <span class="stat-card__value stat-card__value--positive">
+                        + <%= currencyFormat.format(expectedReturn) %>
+                    </span>
                 </div>
                 
                 <div class="stat-card">
-                    <span class="stat-card__label">Average Annual Return</span>
-                    <span class="stat-card__value stat-card__value--highlight">13.78%</span>
+                    <span class="stat-card__label">Total Rentability</span>
+                    <span class="stat-card__value stat-card__value--highlight"><%= totalReturn.setScale(2, RoundingMode.HALF_UP) %>%</span>
                 </div>
             </div>
         </div>
