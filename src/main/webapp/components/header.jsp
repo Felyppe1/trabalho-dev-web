@@ -23,9 +23,9 @@
                 Extrato
         </a>
         <a
-            href="#"
+            href="${pageContext.request.contextPath}/configuracoes"
             class="header__a <%= currentPath.endsWith("/settings") ? "active" : "" %>">
-                Settings
+                Configurações
         </a>
         <a
             href="${pageContext.request.contextPath}/sair"
