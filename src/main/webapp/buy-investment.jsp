@@ -80,22 +80,6 @@
             <p class="page-subtitle">Adquirir títulos do tesouro e produtos de investimento</p>
         </div>
 
-        <!-- Error/Success Messages -->
-        <% String error = (String) request.getAttribute("error"); %>
-        <% if (error != null) { %>
-            <div class="error-message">
-                <%= error %>
-            </div>
-        <% } %>
-
-        <% String successMessage = (String) session.getAttribute("successMessage"); %>
-        <% if (successMessage != null) { %>
-            <div class="success-message">
-                <%= successMessage %>
-            </div>
-            <% session.removeAttribute("successMessage"); %>
-        <% } %>
-
         <div class="content-grid">
             <!-- Selected Investment Card -->
             <div class="investment-card">
@@ -144,7 +128,11 @@
                     Checkout
                 </h2>
 
-                <form id="investmentForm" method="post" action="<%= request.getContextPath() %>/investimentos/<%= investmentId %>">
+                <form id="investmentForm" method="post" action="<%= request.getContextPath() %>/comprar-investimento/<%= investmentId %>">
+                    <!-- Hidden fields para enviar category e year -->
+                    <input type="hidden" name="category" value="<%= investment.getCategory() %>">
+                    <input type="hidden" name="year" value="<%= year %>">
+                    
                     <div class="form-group">
                         <label class="form-label" for="amount">Valor do Investimento (R$)</label>
                         <input 

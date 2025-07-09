@@ -31,17 +31,18 @@ CREATE TABLE IF NOT EXISTS investment (
 );
 
 CREATE TABLE IF NOT EXISTS transaction (
+    id VARCHAR(255) PRIMARY KEY,
     origin_id VARCHAR(255),
     target_id VARCHAR(255),
-    created_at TIMESTAMP NOT NULL,
     type VARCHAR(50) NOT NULL,
     amount NUMERIC(12,2) NOT NULL,
     description TEXT,
     balance_after NUMERIC(12,2),
-    PRIMARY KEY (origin_id, target_id, created_at),
+    created_at TIMESTAMP NOT NULL,
     FOREIGN KEY (origin_id) REFERENCES account(id),
     FOREIGN KEY (target_id) REFERENCES account(id)
 );
+
 
 CREATE TABLE IF NOT EXISTS application (
     id VARCHAR(255) PRIMARY KEY,

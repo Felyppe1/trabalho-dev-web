@@ -1,99 +1,87 @@
 package com.trabalho.devweb.application;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
+import java.sql.Date;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.util.UUID;
 
+import com.trabalho.devweb.application.interfaces.IAccountsRepository;
+import com.trabalho.devweb.application.interfaces.IApplicationRepository;
+import com.trabalho.devweb.application.interfaces.IInvestmentRepository;
+import com.trabalho.devweb.application.interfaces.ITransactionRepository;
 import com.trabalho.devweb.domain.Account;
+import com.trabalho.devweb.domain.Application;
 import com.trabalho.devweb.domain.Investment;
+import com.trabalho.devweb.domain.Transaction;
 
 public class BuyInvestmentService {
 
     private final Connection connection;
+    private final IAccountsRepository accountRepository;
+    private final IInvestmentRepository investmentRepository;
+    private final ITransactionRepository transactionRepository;
+    private final IApplicationRepository applicationRepository;
 
-    public BuyInvestmentService(Connection connection) {
+    public BuyInvestmentService(Connection connection,
+            IAccountsRepository accountRepository,
+            IInvestmentRepository investmentRepository,
+            ITransactionRepository transactionRepository,
+            IApplicationRepository applicationRepository) {
         this.connection = connection;
+        this.accountRepository = accountRepository;
+        this.investmentRepository = investmentRepository;
+        this.transactionRepository = transactionRepository;
+        this.applicationRepository = applicationRepository;
     }
 
-    public boolean execute(Account account, String investmentType, BigDecimal amount) throws SQLException {
-    //     try {
-    //         connection.setAutoCommit(false);
+    public boolean execute(String accountId, String category, int year, BigDecimal amount) throws SQLException {
+        Account account = accountRepository.findById(accountId);
+        if (account == null) {
+            throw new RuntimeException("Conta não encontrada");
+        }
 
-    //         // 1. Verificar se o investimento existe e está disponível
-    //         Investment investment = getInvestmentByType(investmentType);
-    //         if (investment == null) {
-    //             throw new RuntimeException("Investment not found");
-    //         }
+        Investment investment = investmentRepository.findInvestmentByCategoryAndYear(category, year);
+        if (investment == null) {
+            throw new RuntimeException("Investimento não encontrado");
+        }
 
-    //         // 2. Verificar valor mínimo
-    //         if (amount.compareTo(investment.getMinimumInvestment()) < 0) {
-    //             throw new RuntimeException("Amount below minimum investment");
-    //         }
+        try {
+            connection.setAutoCommit(false);
 
-    //         // 3. Verificar saldo da conta
-    //         if (account.getBalance().compareTo(amount) < 0) {
-    //             throw new RuntimeException("Insufficient balance");
-    //         }
+            BigDecimal minimumInvestment = investment.getUnitPrice().divide(new BigDecimal("100"));
+            if (amount.compareTo(minimumInvestment) < 0) {
+                minimumInvestment = minimumInvestment.setScale(2, RoundingMode.HALF_UP);
+                String formattedValue = minimumInvestment.toString().replace('.', ',');
+                throw new RuntimeException("Valor abaixo do investimento mínimo de R$ " +
+                        formattedValue);
+            }
 
-    //         // 4. Debitar da conta
-    //         updateAccountBalance(account.getId(), account.getBalance().subtract(amount));
+            // if (account.getBalance().compareTo(amount) < 0) {
+            //     throw new RuntimeException("Saldo insuficiente");
+            // }
 
-    //         // 5. Criar registro do investimento
-    //         createMyInvestment(account.getId(), investment.getId(), amount);
+            account.debit(amount);
 
-    //         connection.commit();
-    //         return true;
+            accountRepository.updateAccount(account);
 
-    //     } catch (Exception e) {
-    //         connection.rollback();
-    //         throw e;
-    //     } finally {
-    //         connection.setAutoCommit(true);
-    //     }
-    // }
+            String description = "Investimento em " + category + " " + year;
+            Transaction transaction = Transaction.create(
+                    account.getId(), amount, description, account.getBalance());
+            transactionRepository.save(transaction);
 
-    // private Investment getInvestmentByType(String investmentType) throws SQLException {
-    //     String sql = "SELECT * FROM investments WHERE name = ? LIMIT 1";
-    //     try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-    //         stmt.setString(1, investmentType);
-    //         var rs = stmt.executeQuery();
+            Date expiration = Date.valueOf(investment.getExpiration().toLocalDate());
+            Application application = Application.create(expiration, category, account.getId(), amount);
+            applicationRepository.save(application);
 
-    //         if (rs.next()) {
-    //             Investment investment = new Investment();
-    //             investment.setId(rs.getString("id"));
-    //             investment.setName(rs.getString("name"));
-    //             investment.setDescription(rs.getString("description"));
-    //             investment.setAnnualReturn(rs.getBigDecimal("annual_return"));
-    //             investment.setMinimumInvestment(rs.getBigDecimal("minimum_investment"));
-    //             investment.setUnitPrice(rs.getBigDecimal("unit_price"));
-    //             investment.setMaturityDate(rs.getDate("maturity_date"));
-    //             return investment;
-    //         }
-    //     }
-        return true;
+            connection.commit();
+            return true;
+
+        } catch (Exception e) {
+            connection.rollback();
+            throw e;
+        } finally {
+            connection.setAutoCommit(true);
+        }
     }
-
-    // private void updateAccountBalance(String accountId, BigDecimal newBalance) throws SQLException {
-    //     String sql = "UPDATE accounts SET balance = ? WHERE id = ?";
-    //     try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-    //         stmt.setBigDecimal(1, newBalance);
-    //         stmt.setString(2, accountId);
-    //         stmt.executeUpdate();
-    //     }
-    // }
-
-    // private void createMyInvestment(String accountId, String investmentId, BigDecimal amount) throws SQLException {
-    //     String sql = "INSERT INTO my_investments (id, account_id, investment_id, amount, purchase_date) VALUES (?, ?, ?, ?, ?)";
-    //     try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-    //         stmt.setString(1, UUID.randomUUID().toString());
-    //         stmt.setString(2, accountId);
-    //         stmt.setString(3, investmentId);
-    //         stmt.setBigDecimal(4, amount);
-    //         stmt.setTimestamp(5, java.sql.Timestamp.valueOf(LocalDateTime.now()));
-    //         stmt.executeUpdate();
-    //     }
-    // }
 }

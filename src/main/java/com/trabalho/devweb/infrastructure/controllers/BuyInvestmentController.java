@@ -89,120 +89,65 @@ public class BuyInvestmentController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // Pegar account da sessão (middleware já verificou se está logada)
-        // HttpSession session = request.getSession();
-        // Account account = (Account) session.getAttribute("account");
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("account");
 
-        // try {
-        // // Pegar dados do formulário
-        // String amountStr = request.getParameter("amount");
+        try {
+            // Pegar dados do formulário
+            String amountStr = request.getParameter("amount");
+            String category = request.getParameter("category");
+            String yearStr = request.getParameter("year");
 
-        // // Extrair o ID do investimento do path
-        // String pathInfo = request.getPathInfo();
-        // if (pathInfo == null || pathInfo.length() <= 1) {
-        // request.setAttribute("error", "Investment ID is required");
-        // doGet(request, response);
-        // return;
-        // }
+            // Validações básicas de entrada
+            if (amountStr == null || amountStr.trim().isEmpty()) {
+                request.setAttribute("error", "Valor é obrigatório");
+                doGet(request, response);
+                return;
+            }
 
-        // String investmentId = pathInfo.substring(1);
+            if (category == null || category.trim().isEmpty()) {
+                request.setAttribute("error", "Categoria do investimento é obrigatória");
+                doGet(request, response);
+                return;
+            }
 
-        // if (amountStr == null || amountStr.trim().isEmpty()) {
-        // request.setAttribute("error", "Amount is required");
-        // doGet(request, response);
-        // return;
-        // }
+            if (yearStr == null || yearStr.trim().isEmpty()) {
+                request.setAttribute("error", "Ano do investimento é obrigatório");
+                doGet(request, response);
+                return;
+            }
 
-        // if (investmentId.trim().isEmpty()) {
-        // request.setAttribute("error", "Investment ID is required");
-        // doGet(request, response);
-        // return;
-        // }
+            amountStr = amountStr.replace(".", "").replace(",", ".");
+            BigDecimal amount = new BigDecimal(amountStr);
+            int year = Integer.parseInt(yearStr);
 
-        // // Converter string de valor para BigDecimal
-        // // Remove pontos de milhar e substitui vírgula por ponto
-        // amountStr = amountStr.replace(".", "").replace(",", ".");
-        // BigDecimal amount = new BigDecimal(amountStr);
+            Connection connection = PostgresConnection.getConnection();
+            BuyInvestmentService buyInvestmentService = new BuyInvestmentService(
+                    connection,
+                    new com.trabalho.devweb.infrastructure.repositories.AccountsRepository(connection),
+                    new InvestmentsRepository(connection),
+                    new com.trabalho.devweb.infrastructure.repositories.TransactionRepository(connection),
+                    new com.trabalho.devweb.infrastructure.repositories.ApplicationRepository(connection));
 
-        // // Validar valor mínimo
-        // BigDecimal minimumAmount = new BigDecimal("6.99");
-        // if (amount.compareTo(minimumAmount) < 0) {
-        // request.setAttribute("error", "Minimum investment amount is R$ 6,99");
-        // doGet(request, response);
-        // return;
-        // }
+            boolean success = buyInvestmentService.execute(account.getId(), category, year, amount);
 
-        // // Verificar se o usuário tem saldo suficiente
-        // BigDecimal accountBalance = account.getBalance();
-        // if (accountBalance.compareTo(amount) < 0) {
-        // request.setAttribute("error", "Insufficient balance");
-        // doGet(request, response);
-        // return;
-        // }
+            if (success) {
+                session.setAttribute("successMessage",
+                        "Investimento realizado com sucesso! Valor: R$ " + amount.toString().replace('.', ','));
 
-        // // Separar category e year do ID
-        // String[] parts = investmentId.split("-");
-        // if (parts.length != 2) {
-        // request.setAttribute("error", "Invalid investment ID format");
-        // doGet(request, response);
-        // return;
-        // }
+                response.sendRedirect(request.getContextPath() + "/eu/investimentos");
+            } else {
+                request.setAttribute("error", "Falha ao processar investimento");
+                doGet(request, response);
+            }
 
-        // String category = parts[0].trim().toUpperCase();
-        // int year;
-
-        // try {
-        // year = Integer.parseInt(parts[1].trim());
-        // } catch (NumberFormatException e) {
-        // request.setAttribute("error", "Invalid year in investment ID");
-        // doGet(request, response);
-        // return;
-        // }
-
-        // // Buscar o investimento para verificar se existe
-        // Connection connection = PostgresConnection.getConnection();
-        // IInvestmentRepository investmentRepository = new
-        // InvestmentsRepository(connection);
-
-        // Investment investment =
-        // investmentRepository.findInvestmentByCategoryAndYear(category, year);
-
-        // if (investment == null) {
-        // request.setAttribute("error", "Investment not found");
-        // doGet(request, response);
-        // return;
-        // }
-
-        // // Executar a compra do investimento usando category separada
-        // BuyInvestmentService buyInvestmentService = new
-        // BuyInvestmentService(connection);
-        // boolean success = buyInvestmentService.execute(account, category, amount);
-
-        // if (success) {
-        // // Atualizar o saldo da conta na sessão
-        // BigDecimal newBalance = account.getBalance().subtract(amount);
-        // account.setBalance(newBalance);
-        // session.setAttribute("account", account);
-
-        // // Adicionar mensagem de sucesso
-        // session.setAttribute("successMessage",
-        // "Investment purchased successfully! Amount: R$ " + amount.toString());
-
-        // // Redirecionar para a página de investimentos
-        // response.sendRedirect("investimentos");
-        // } else {
-        // request.setAttribute("error", "Failed to purchase investment");
-        // doGet(request, response);
-        // }
-
-        // } catch (NumberFormatException e) {
-        // request.setAttribute("error", "Invalid amount format");
-        // doGet(request, response);
-        // } catch (Exception e) {
-        // e.printStackTrace();
-        // request.setAttribute("error", "Error processing investment purchase: " +
-        // e.getMessage());
-        // doGet(request, response);
-        // }
+        } catch (NumberFormatException e) {
+            request.setAttribute("error", "Formato de valor inválido");
+            doGet(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
+            request.setAttribute("error", "Erro ao processar investimento: " + e.getMessage());
+            doGet(request, response);
+        }
     }
 }
