@@ -11,7 +11,6 @@
     int currentPage = (request.getAttribute("page") != null) ? (Integer) request.getAttribute("page") : 1;
     int totalPages = (request.getAttribute("totalPages") != null) ? (Integer) request.getAttribute("totalPages") : 1;
 
-    // Oculta paginação se não tiver transferências
     if (transfers == null || transfers.isEmpty()) {
         totalPages = 0;
     }
@@ -22,6 +21,10 @@
     BigDecimal totalSent = (BigDecimal) request.getAttribute("totalSent");
     BigDecimal totalReceived = (BigDecimal) request.getAttribute("totalReceived");
     BigDecimal balance = (BigDecimal) request.getAttribute("balance");
+
+    boolean isNegativeBalance = balance.compareTo(BigDecimal.ZERO) < 0;
+    String balanceClass = isNegativeBalance ? "sent" : "received";
+    String balancePrefix = isNegativeBalance ? "- R$ " : "+ R$ ";
 
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 %>
@@ -36,8 +39,7 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath}/transfers.css">
 </head>
 <body>
-    <%@ include file="components/header.jsp" %>
-
+  <%@ include file="components/header.jsp" %>
 
   <div class="container container2">
     <h1>Transferências Recentes</h1>
@@ -52,9 +54,9 @@
             <span>Recebidos</span>
             <span>+ R$ <%= String.format("%.2f", totalReceived) %></span>
           </div>
-          <div class="summary-item net">
+          <div class="summary-item <%= balanceClass %>">
             <span>Saldo</span>
-            <span>+ R$ <%= String.format("%.2f", balance) %></span>
+            <span><%= balancePrefix + String.format("%.2f", balance.abs()) %></span>
           </div>
         </div>
 

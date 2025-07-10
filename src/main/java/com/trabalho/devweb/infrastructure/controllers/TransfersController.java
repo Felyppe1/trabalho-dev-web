@@ -20,7 +20,7 @@ public class TransfersController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-         req.setCharacterEncoding("UTF-8");
+        req.setCharacterEncoding("UTF-8");
         HttpSession session = req.getSession();
         Account account = (Account) session.getAttribute("account");
 
@@ -45,7 +45,7 @@ public class TransfersController extends HttpServlet {
 
             BigDecimal totalSent = repo.getTotalSent(account.getId());
             BigDecimal totalReceived = repo.getTotalReceived(account.getId());
-            BigDecimal balance = totalReceived.subtract(totalSent);
+            BigDecimal balance = account.getBalance(); // ✅ Agora o saldo é o valor correto do banco
 
             List<Transfer> frequents = repo.findTopFrequentRecipients(account.getId(), 3);
 
@@ -66,4 +66,4 @@ public class TransfersController extends HttpServlet {
             req.getRequestDispatcher("/error.jsp").forward(req, resp);
         }
     }
-}  
+}
