@@ -124,6 +124,56 @@
             }
         %>
 
+        <!-- Modal de Resgate -->
+        <div id="redeemModal" class="modal" style="display: none;">
+            <div class="modal__content">
+                <span class="modal__close" onclick="closeRedeemModal()">&times;</span>
+                <h2>Resgatar Investimento</h2>
+                <form action="${pageContext.request.contextPath}/eu/investimentos" method="post">
+                    <div class="form-group">
+                        <label for="redeemCategory">Categoria:</label>
+                        <input type="text" id="redeemCategory" name="category" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="redeemYear">Ano:</label>
+                        <input type="number" id="redeemYear" name="year" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="redeemAmount">Valor a resgatar (R$):</label>
+                        <input type="number" id="redeemAmount" name="amount" step="0.01" min="0.01" required>
+                        <small>Valor máximo disponível: R$ <span id="maxAmount">0,00</span></small>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" onclick="closeRedeemModal()" class="button button--secondary">Cancelar</button>
+                        <button type="submit" class="button button--primary">Confirmar Resgate</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <script>
+            function openRedeemModal(category, year, maxAmount) {
+                document.getElementById('redeemCategory').value = category;
+                document.getElementById('redeemYear').value = year;
+                document.getElementById('maxAmount').textContent = parseFloat(maxAmount).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                document.getElementById('redeemAmount').max = maxAmount;
+                document.getElementById('redeemModal').style.display = 'block';
+            }
+
+            function closeRedeemModal() {
+                document.getElementById('redeemModal').style.display = 'none';
+                document.getElementById('redeemAmount').value = '';
+            }
+
+            // Fechar modal ao clicar fora dele
+            window.onclick = function(event) {
+                const modal = document.getElementById('redeemModal');
+                if (event.target == modal) {
+                    closeRedeemModal();
+                }
+            }
+        </script>
+
         
     </main>
 </body>

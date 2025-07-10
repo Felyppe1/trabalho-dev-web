@@ -34,6 +34,13 @@ public class Transaction {
         return new Transaction(id, accountId, null, "INVESTMENT", amount, description, balanceAfter, createdAt);
     }
 
+    public static Transaction createRedemption(String accountId, BigDecimal amount,
+            String description, BigDecimal balanceAfter) {
+        String id = UUID.randomUUID().toString();
+        LocalDateTime createdAt = LocalDateTime.now();
+        return new Transaction(id, null, accountId, "REDEMPTION", amount, description, balanceAfter, createdAt);
+    }
+
     public String getId() {
         return id;
     }
