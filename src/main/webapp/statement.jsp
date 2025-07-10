@@ -31,21 +31,27 @@
         </select>
       </div>
 
-      <ul class="statements__list">
-        
-        <!--JSP de recuperação das listas-->
+      <ul class="statements__list">           
+
+        <%
+          java.time.YearMonth currentMonth = java.time.YearMonth.now();
+          for (int i = 1; i <= currentMonth.getMonthValue(); i++) {
+            java.time.YearMonth monthYear = java.time.YearMonth.of(currentMonth.getYear(), i);
+            String month = String.format("%02d", i);
+        %>
 
         <li class="statement">
           <div class="statement__info">
             <div class="statement__icon">📄</div>
             <div>
-              <strong>April 2025 Statement</strong>
+              <strong> <%= monthYear.getMonth() %>/<%= monthYear.getYear() %> Extrato</strong>
               <p>Generated on Apr 1, 2025 • 245 KB</p>
             </div>
           </div>
           <div class="statement__actions">
             <form action="extrato/view" method="get">
-              <input type="hidden" name="id" value="">
+                <input type="hidden" name="mes" value="<%= month %>">
+                <input type="hidden" name="ano" value="<%= monthYear.getYear() %>">
               <button class="btn btn--secondary">👁️ View</button>
             </form>
             <form action="extrato/download" method="get">
@@ -53,6 +59,9 @@
               <button class="btn btn--secondary">⬇️ Download</button>
             </form>
           </div>
+        <%
+          }
+        %>
           <!-- Lista das trasações no html-->
       <%
           List<Transaction> transactions = (List<Transaction>) request.getAttribute("transactions");
