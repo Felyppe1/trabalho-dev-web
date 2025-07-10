@@ -146,6 +146,48 @@ public class AccountsRepository implements IAccountsRepository {
         }
     }
 
+    @Override
+    public void update(Account account) throws SQLException {
+        String sql = """
+                    UPDATE account SET
+                        name = ?,
+                        email = ?,
+                        address = ?,
+                        cellphone_number = ?
+                    WHERE id = ?
+                """;
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, account.getName());
+            stmt.setString(2, account.getEmail());
+            stmt.setString(3, account.getAddress());
+            stmt.setString(4, account.getCellphoneNumber());
+            stmt.setString(5, account.getId());
+
+            stmt.executeUpdate();
+        }
+    }
+
+    @Override
+    public boolean checkIfAlreadyExistsForUpdate(String id, String email, String cellphoneNumber) throws SQLException {
+        String sql = """
+                    SELECT id
+                    FROM account
+                    WHERE (email = ? OR cellphone_number = ?)
+                    AND id != ?
+                """;
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, email);
+            stmt.setString(2, cellphoneNumber);
+            stmt.setString(3, id);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                return rs.next();
+            }
+        }
+    }
+
     private Account mapResultSetToAccount(ResultSet rs) throws SQLException {
         return new Account(
             rs.getString("id"),
