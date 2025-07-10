@@ -5,31 +5,34 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
-    String mesParam = request.getParameter("mes");
-    String anoParam = request.getParameter("ano");
-    int mes = mesParam != null ? Integer.parseInt(mesParam) : 0;
-    int ano = anoParam != null ? Integer.parseInt(anoParam) : 0;
+    String monthParam = request.getParameter("month");
+    String yearParam = request.getParameter("year");
+    int month = monthParam != null ? Integer.parseInt(monthParam) : 0;
+    int year = yearParam != null ? Integer.parseInt(yearParam) : 0;
 
     List<Transaction> transactions = (List<Transaction>) request.getAttribute("transactions");
 
-    String[] nomesMeses = {
+    String[] MonthsNames = {
         "", "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
         "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
     };
-    String nomeMes = (mes >= 1 && mes <= 12) ? nomesMeses[mes] : "Mês Desconhecido";
+    String MonthName = (month >= 1 && month <= 12) ? MonthsNames[month] : "Mês Desconhecido";
 %>
 
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Extrato de <%= nomeMes %> <%= ano %></title>
-    <link rel="stylesheet" href="/global.css">
-    <link rel="stylesheet" href="/extrato.css">
+    <title>Extrato de <%= MonthName %> <%= year %></title>
+      <link rel="stylesheet" href="${pageContext.request.contextPath}/global.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/statement.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/transfer.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/components/header.css">
 </head>
 <body>
+    <%@ include file="components/header.jsp" %>
 
-    <h1 class="page-title">Extrato de <%= nomeMes %> <%= ano %></h1>
+    <h1 class="page-title">Extrato de <%= MonthName %> <%= year %></h1>
 year
     <div class="transfer-list">
         <%
