@@ -38,10 +38,10 @@ public class StatementDownloadController extends HttpServlet{
             List<Transaction> transactions = transactionRepository.findByAccountIdAndMonth(account.getId(), month, year);
 
             response.setContentType("application/pdf");
-            response.setHeader("Content-Disposition", "attachment; filename = extrato" + month + " " + year + ".pdf");
+            response.setHeader("Content-Disposition", "attachment; filename=extrato_" + month + " " + year + ".pdf");
 
             OutputStream out = response.getOutputStream();
-            generatePDF(transactions, out, month, year, getServletInfo());
+            generatePDF(transactions, out, month, year, account.getName());
         } catch (Exception e) {
             e.printStackTrace();
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erro ao gerar PDF");
@@ -52,7 +52,7 @@ public class StatementDownloadController extends HttpServlet{
         private void generatePDF(List<Transaction> transactions, OutputStream out, int month, int year, String userName) throws Exception{
         Document document = new Document();
         PdfWriter.getInstance(document, out);
-        document.open();
+        document.open();        
 
         document.add(new Paragraph("Extrato de " + userName));
         document.add(new Paragraph("Mês: " + month + " de " + year));
