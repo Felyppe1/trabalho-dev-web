@@ -41,16 +41,17 @@ public class StatementDownloadController extends HttpServlet{
             response.setHeader("Content-Disposition", "attachment; filename = extrato" + month + " " + year + ".pdf");
 
             OutputStream out = response.getOutputStream();
-            
+            generatePDF(transactions, out, month, year, getServletInfo());
         } catch (Exception e) {
-            // TODO: handle exception
+            e.printStackTrace();
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erro ao gerar PDF");
         }
 
 
     }
         private void generatePDF(List<Transaction> transactions, OutputStream out, int month, int year, String userName) throws Exception{
         Document document = new Document();
-        PdfWriter.getInstance(document, out)
+        PdfWriter.getInstance(document, out);
         document.open();
 
         document.add(new Paragraph("Extrato de " + userName));
