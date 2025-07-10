@@ -1,12 +1,10 @@
 package com.trabalho.devweb.infrastructure.controllers;
 
 import java.io.IOException;
-import java.sql.Connection;
 import java.util.List;
 
 import com.trabalho.devweb.domain.Account;
 import com.trabalho.devweb.domain.Transaction;
-import com.trabalho.devweb.infrastructure.databaseconnection.PostgresConnection;
 import com.trabalho.devweb.infrastructure.repositories.TransactionRepository;
 
 import jakarta.servlet.ServletException;
@@ -19,6 +17,8 @@ import jakarta.servlet.http.HttpSession;
 
 @WebServlet(name = "StatementController", urlPatterns = "/extrato")
 public class StatementController extends HttpServlet {
+   
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -28,17 +28,7 @@ public class StatementController extends HttpServlet {
             response.sendRedirect("login.jsp");
             return;
         }
-
-        try (Connection connection = PostgresConnection.getConnection()) {
-            TransactionRepository transactionRepository = new TransactionRepository(connection);
-            List<Transaction> transactions = transactionRepository.findByAccountId(account.getId());
-            request.setAttribute("transactions", transactions);
-            request.getRequestDispatcher("/statement.jsp").forward(request, response);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/statement.jsp");
-        dispatcher.forward(request, response);
+        
+        request.getRequestDispatcher("/statement.jsp").forward(request, response);               
     }
 }
