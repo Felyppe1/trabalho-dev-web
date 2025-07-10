@@ -79,7 +79,11 @@ public class RedeemInvestmentService {
 
                     BigDecimal newAmount = originalAmount.subtract(remainingToRedeem);
 
-                    applicationRepository.updateAmount(application.getId(), newAmount);
+                    if (newAmount.compareTo(BigDecimal.ZERO) == 0) {
+                        applicationRepository.delete(application.getId());
+                    } else {
+                        applicationRepository.updateAmount(application.getId(), newAmount);
+                    }
 
                     remainingToRedeem = BigDecimal.ZERO;
                 }
@@ -94,8 +98,8 @@ public class RedeemInvestmentService {
 
             String description = String.format("Resgate de %s %d - Valor: R$ %.2f",
                     category, year, totalRedeemed);
-            Transaction transaction = Transaction.createRedemption(
-                    account.getId(), totalRedeemed, description, account.getBalance());
+            Transaction transaction = Transaction.create(null,
+                    account.getId(), "REDEMPTION", totalRedeemed, description, account.getBalance());
             transactionRepository.save(transaction);
 
             connection.commit();

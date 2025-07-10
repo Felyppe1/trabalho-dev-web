@@ -67,7 +67,7 @@ public class BuyInvestmentService {
 
             String description = "Investimento em " + category + " " + year;
             Transaction transaction = Transaction.create(
-                    account.getId(), amount, description, account.getBalance());
+                    account.getId(), null, "INVESTMENT", amount, description, account.getBalance());
             transactionRepository.save(transaction);
 
             Date expiration = Date.valueOf(investment.getExpiration().toLocalDate());
