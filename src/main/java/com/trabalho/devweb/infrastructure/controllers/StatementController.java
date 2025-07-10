@@ -29,9 +29,21 @@ public class StatementController extends HttpServlet {
             return;
         }
 
+        String monthParam = request.getParameter("mes");
+        String yearParam = request.getParameter("ano");
+        if (monthParam == null || yearParam == null) {
+            request.setAttribute("mensagem", "Parâmetros de data ausentes.");
+            request.getRequestDispatcher("/statement.jsp").forward(request, response);
+            return;
+        }
+        Integer month = Integer.parseInt(monthParam);
+        Integer year = Integer.parseInt(yearParam);
+
+
         try (Connection connection = PostgresConnection.getConnection()) {
             TransactionRepository transactionRepository = new TransactionRepository(connection);
-            List<Transaction> transactions = transactionRepository.findByAccountId(account.getId());
+
+            List<Transaction> transactions = transactionRepository.findByAccountIdAndMonth(account.getId(), month, year);
             request.setAttribute("transactions", transactions);
             request.getRequestDispatcher("/statement.jsp").forward(request, response);
         } catch (Exception e) {

@@ -7,5 +7,5 @@ import java.util.List;
 public interface ITransactionRepository {
     void save(Transaction transaction) throws SQLException;
 
-    List<Transaction> findByAccountId(String accountId);
+    List<Transaction> findByAccountIdAndMonth(String accountId, Integer month, Integer year);
 }
