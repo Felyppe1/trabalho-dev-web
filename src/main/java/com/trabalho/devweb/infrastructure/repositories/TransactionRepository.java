@@ -44,9 +44,7 @@ public class TransactionRepository implements ITransactionRepository {
     public List<Transaction> findByAccountIdAndMonth(String accountId, Integer month, Integer year) {
         List<Transaction> list = new ArrayList<>();
 
-        System.out.println(">> Account ID: " + accountId);
-        System.out.println(">> Mês: " + month);
-        System.out.println(">> Ano: " + year);
+        
 
         String searchTrasaction = """
                                     SELECT * FROM transaction
