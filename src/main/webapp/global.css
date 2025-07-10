@@ -200,6 +200,16 @@ a {
     background-color: var(--color-primary-hover);
 }
 
+.button--danger {
+    color: var(--color-danger-text);
+    border: 1px solid var(--color-danger-text);
+    background-color: #fff;
+}
+
+.button--danger:hover {
+    background-color: #fff5f5;
+}
+
 .button--outline {
     background-color: var(--color-white);
     color: var(--color-primary);
