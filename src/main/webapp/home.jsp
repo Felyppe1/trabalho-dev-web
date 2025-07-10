@@ -30,7 +30,7 @@
                     <span></span>
                 </div>
                 <div class="balance__amount-container">
-                    <span class="balance__amount">R$ <%= account.getFormattedBalance() %></span>
+                    <span class="balance__amount"><%= account.getFormattedBalance() %></span>
                     <span class="balance__available">Saldo Disponível</span>
                 </div>
                 <div class="balance__updated-container">
