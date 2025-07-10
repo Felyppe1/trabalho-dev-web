@@ -44,11 +44,17 @@ public class TransactionRepository implements ITransactionRepository {
     public List<Transaction> findByAccountIdAndMonth(String accountId, Integer month, Integer year) {
         List<Transaction> list = new ArrayList<>();
 
-        String searchTrasaction = "SELECT * FROM transaction"+
-                                    "WHERE (origin_id) = ? OR target_id = ?)"+
-                                    "AND EXTRACT(MONTH FROM created_at) = ? " +
-                                    "AND EXTRACT(YEAR FROM created_at) = ? " +
-                                    "ORDER BY created_at DESC";
+        System.out.println(">> Account ID: " + accountId);
+        System.out.println(">> Mês: " + month);
+        System.out.println(">> Ano: " + year);
+
+        String searchTrasaction = """
+                                    SELECT * FROM transaction
+                                    WHERE (origin_id = ? OR target_id = ?)
+                                    AND EXTRACT(MONTH FROM created_at) = ?
+                                    AND EXTRACT(YEAR FROM created_at) = ?
+                                    ORDER BY created_at DESC
+                                """;
         try (Connection conn = PostgresConnection.getConnection()) {
             PreparedStatement statement = conn.prepareStatement(searchTrasaction);
             statement.setString(1, accountId);

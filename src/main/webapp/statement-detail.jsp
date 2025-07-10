@@ -33,7 +33,7 @@
     <%@ include file="components/header.jsp" %>
 
     <h1 class="page-title">Extrato de <%= MonthName %> <%= year %></h1>
-year
+
     <div class="transfer-list">
         <%
             if (transactions == null || transactions.isEmpty()) {
