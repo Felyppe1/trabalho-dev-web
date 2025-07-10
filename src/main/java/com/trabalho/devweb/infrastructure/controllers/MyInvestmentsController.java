@@ -77,7 +77,6 @@ public class MyInvestmentsController extends HttpServlet {
         Account account = (Account) session.getAttribute("account");
 
         try {
-            // Obter parâmetros da requisição
             String amountStr = request.getParameter("amount");
             String category = request.getParameter("category");
             String yearStr = request.getParameter("year");
@@ -90,7 +89,7 @@ public class MyInvestmentsController extends HttpServlet {
             int year = Integer.parseInt(yearStr);
 
             if (amount.compareTo(BigDecimal.ZERO) <= 0) {
-                throw new RuntimeException("Valor deve ser maior que zero");
+                throw new RuntimeException("O valor deve ser maior que zero");
             }
 
             // Configurar repositórios e serviço
@@ -107,11 +106,10 @@ public class MyInvestmentsController extends HttpServlet {
                     transactionRepository,
                     applicationRepository);
 
-            // Executar resgate
-            boolean success = redeemService.execute(account.getId(), category, year, amount);
+            BigDecimal redeemedValue = redeemService.execute(account.getId(), category, year, amount);
 
-            if (success) {
-                session.setAttribute("success", String.format("Resgate de R$ %.2f realizado com sucesso!", amount));
+            if (redeemedValue != null) {
+                session.setAttribute("success", String.format("Resgate de R$ %.2f realizado com sucesso!", redeemedValue));
             } else {
                 session.setAttribute("error", "Erro interno no processamento do resgate");
             }

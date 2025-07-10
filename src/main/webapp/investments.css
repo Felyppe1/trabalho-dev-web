@@ -351,8 +351,8 @@
     padding: 2rem;
     border-radius: 0.5rem;
     box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    width: 90%;
-    max-width: 500px;
+    width: 100%;
+    max-width: 35rem;
     position: relative;
 }
 
@@ -369,6 +369,34 @@
 
 .modal__close:hover {
     color: #ef4444;
+}
+
+.redeem-modal__header {
+    margin-top: 1rem;
+}
+
+.redeem-modal__items {
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+    margin-top: .75rem;
+}
+
+.redeem-modal__item {
+    display: flex;
+    justify-content: space-between;
+}
+
+.redeem-modal__value {
+    font-weight: 600;
+}
+
+.redeem-modal__value--success {
+    color: var(--color-success-text);
+}
+
+.redeem-modal__form {
+    margin-top: 2rem;
 }
 
 .form-group {
