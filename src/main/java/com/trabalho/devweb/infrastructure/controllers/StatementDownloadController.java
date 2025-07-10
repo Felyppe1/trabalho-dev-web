@@ -48,7 +48,21 @@ public class StatementDownloadController extends HttpServlet{
 
 
     }
+        private void generatePDF(List<Transaction> transactions, OutputStream out, int month, int year, String userName) throws Exception{
+        Document document = new Document();
+        PdfWriter.getInstance(document, out)
+        document.open();
 
+        document.add(new Paragraph("Extrato de " + userName));
+        document.add(new Paragraph("Mês: " + month + " de " + year));
+        document.add(new Paragraph(" "));
 
+        for(Transaction t : transactions){
+            document.add(new Paragraph(
+                t.getCreatedAt() + " - " + t.getType() + " - R$ " + t.getAmount() + " - Saldo: R$ " + t.getBalanceAfter()
+            ));
+        }
+        document.close();
+    }
     
 }
