@@ -116,7 +116,7 @@
             <input type="hidden" id="redeem-year" name="year" />
             <div class="form-group">
                 <label for="redeem-amount">Valor a resgatar (R$):</label>
-                <input type="number" id="redeem-amount" name="amount" step="0.01" min="0.01" required>
+                <input type="text" id="redeem-amount" name="amount" step="0.01" min="0.01" placeholder="0,00" required>
                 <small>Valor máximo disponível: R$ <span id="max-amount">0,00</span></small>
             </div>
             <div class="form-actions">
@@ -128,12 +128,19 @@
 </div>
 
 <script>
+    document.getElementById('redeem-amount').addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\D/g, '');
+        value = (value / 100).toLocaleString('pt-BR', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
+        e.target.value = value;
+    });
+
     function openRedeemModal(category, year, title, amountInvested, currentValue, annualReturn, expirationDate) {
-        // Preencher campos do formulário
         document.getElementById('redeem-category').value = category;
         document.getElementById('redeem-year').value = year;
         
-        // Preencher informações do modal
         document.getElementById('redeem-modal__title').textContent = title;
         document.getElementById('redeem-modal__amount-invested').textContent = 
             parseFloat(amountInvested).toLocaleString('pt-BR', { 
@@ -166,12 +173,10 @@
         document.getElementById('redeem-modal').style.display = 'none';
         document.getElementById('redeem-amount').value = '';
         
-        // Limpar campos do formulário
         document.getElementById('redeem-category').value = '';
         document.getElementById('redeem-year').value = '';
     }
 
-    // Fechar modal ao clicar fora dele
     window.onclick = function(event) {
         const modal = document.getElementById('redeem-modal');
         if (event.target == modal) {
