@@ -25,19 +25,18 @@ public class TransactionRepository{
             
             while (result.next()) {
                 Transaction transactions = new Transaction();
-                transactions.setOriginId(result.getString("oringin_id"));
+                transactions.setOriginId(result.getString("origin_id"));
                 transactions.setTargetId(result.getString("target_id"));
                 transactions.setCreatedAt(result.getTimestamp("created_at").toLocalDateTime());
                 transactions.setType(result.getString("type"));
                 transactions.setAmount(result.getBigDecimal("amount"));
-                transactions.setBalanceAfter(result.getBigDecimal("balance_after"));
                 transactions.setDescription(result.getString("description"));
+                transactions.setBalanceAfter(result.getBigDecimal("balance_after"));                
                 list.add(transactions);
             }
         } catch (Exception e) {
             e.printStackTrace();
-        }
-
+        }        
         return list;
     }
     
