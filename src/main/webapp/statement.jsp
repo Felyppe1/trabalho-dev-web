@@ -35,12 +35,6 @@
         
         <!--JSP de recuperação das listas-->
 
-        <%
-          List<Transaction> transactions = (List<Transaction>) request.getAttribute("transactions");
-          if (transactions != null) {
-              for (Transaction tx : transactions) {
-        %>
-
         <li class="statement">
           <div class="statement__info">
             <div class="statement__icon">📄</div>
@@ -60,7 +54,15 @@
             </form>
           </div>
           <!-- Lista das trasações no html-->
-          
+      <%
+          List<Transaction> transactions = (List<Transaction>) request.getAttribute("transactions");
+          if( transactions.size() == 0){
+            %>
+             <p>Não houve transações realizadas nesse mês<p></p>
+            <%
+          }else{
+              for (Transaction tx : transactions) {
+      %>
           <table>
             <tr> <th>Tipo de transação</th> <th>Valor</th> </tr>
             <tr>
@@ -70,8 +72,8 @@
           </table>
         </li>
         <%
-              }
             }
+          }
         %>
         <li class="statement">
           <div class="statement__info">
