@@ -59,7 +59,8 @@
               <button class="btn btn--secondary">👁️ View</button>
             </form>
             <form action="extrato/download" method="get">
-              <input type="hidden" name="id" value="">
+              <input type="hidden" name="month" value="<%= month %>">
+              <input type="hidden" name="year" value="<%= monthYear.getYear() %>">
               <button class="btn btn--secondary">⬇️ Download</button>
             </form>
           </div>
