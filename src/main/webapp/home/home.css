@@ -366,11 +366,11 @@
 }
 
 .withdraw-btn {
-    background-color: red
+    background-color: rgb(255, 68, 68)
 }
 
 .withdraw-btn:hover {
-    background: var(--color-primary-hover);
+    background: rgb(255, 0, 0);
 }
 
 .balance-info {
