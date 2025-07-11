@@ -81,21 +81,7 @@
       </ul>
     </section>
 
-    <section class="statement-settings">
-      <h2 class="statement-settings__title">Statement Settings</h2>
-      <div class="statement-settings__grid">
-        <div>
-          <h3 class="statement-settings__label">Delivery Preferences</h3>
-          <p>Email Delivery<br><small>Receive statements via email</small></p>
-          <button class="btn btn--secondary">Change</button>
-        </div>
-        <div>
-          <h3 class="statement-settings__label">Account Selection</h3>
-          <p>Premium Checking<br><small>****5678</small></p>
-          <span class="badge badge--active">Active</span>
-        </div>
-      </div>
-    </section>
+    
   </main>
 </body>
 </html>
