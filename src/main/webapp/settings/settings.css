@@ -59,7 +59,7 @@
     max-width: 800px;
 }
 
-.profile-section {
+.profile-section, .settings-section {
     background: var(--color-white);
     border-radius: var(--radius);
     padding: 2rem;

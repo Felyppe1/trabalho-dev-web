@@ -43,6 +43,6 @@
                    value="<%= account.getAddress() %>" required />
         </div>
         
-        <button type="submit" class="save-btn">Salvar Alterações</button>
+        <button type="submit" class="button">Salvar Alterações</button>
     </form>
 </div>

@@ -38,6 +38,52 @@
                 el.classList.add('notification--hide');
             }, 5000 + i * 300);
         });
+
+        // Funcionalidade do olho para mostrar/esconder informações sensíveis
+        document.addEventListener('DOMContentLoaded', function() {
+            const eyeIcon = document.getElementById('balance__eye');
+            const balanceAmount = document.querySelector('.balance__amount');
+            const accountNumber = document.querySelector('.balance__account-container > div > span:last-child');
+            const transactionAmounts = document.querySelectorAll('.transactions__amount');
+            const transactionNames = document.querySelectorAll('.transactions__name');
+            const transactionDates = document.querySelectorAll('.transactions__date');
+            
+            // Estado inicial (sempre mostra as informações)
+            let isHidden = false;
+            
+            // Função para alternar a visibilidade
+            function toggleVisibility(hide) {
+                if (hide) {
+                    eyeIcon.classList.add('hidden');
+                    balanceAmount.classList.add('hidden');
+                    accountNumber.classList.add('hidden');
+                    transactionAmounts.forEach(amount => amount.classList.add('hidden'));
+                    transactionNames.forEach(name => name.classList.add('hidden'));
+                    transactionDates.forEach(date => date.classList.add('hidden'));
+                } else {
+                    eyeIcon.classList.remove('hidden');
+                    balanceAmount.classList.remove('hidden');
+                    accountNumber.classList.remove('hidden');
+                    transactionAmounts.forEach(amount => amount.classList.remove('hidden'));
+                    transactionNames.forEach(name => name.classList.remove('hidden'));
+                    transactionDates.forEach(date => date.classList.remove('hidden'));
+                }
+            }
+            
+            // Event listener para o clique no ícone do olho
+            eyeIcon.addEventListener('click', function() {
+                isHidden = !isHidden;
+                
+                // Aplica a mudança de visibilidade
+                toggleVisibility(isHidden);
+                
+                // Adiciona um pequeno feedback visual
+                eyeIcon.style.transform = 'scale(0.9)';
+                setTimeout(() => {
+                    eyeIcon.style.transform = 'scale(1)';
+                }, 150);
+            });
+        });
     </script>
   
     <main class="main">
@@ -49,10 +95,10 @@
                         <span>Conta Corrente</span>
                         <span><%= account.getAccountNumber() %></span>
                     </div>
-                    <span></span>
+                    <button id="balance__eye" type="button"></button>
                 </div>
                 <div class="balance__amount-container">
-                    <span class="balance__amount">R$ <%= account.getFormattedBalance() %></span>
+                    <span class="balance__amount"><%= account.getFormattedBalance() %></span>
                     <span class="balance__available">Saldo Disponível</span>
                 </div>
             </section>
@@ -60,7 +106,7 @@
             <%@ include file="components/deposit.jsp" %>
 
             <section class="card transactions">
-                <h2>Transações recentes</h2>
+                <h2>Transações Recentes</h2>
                 <ul class="transactions__list">
                     <%
                         @SuppressWarnings("unchecked")

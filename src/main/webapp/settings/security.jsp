@@ -26,7 +26,7 @@
                            minlength="6" />
                 </div>
                 
-                <button type="submit" class="save-btn">Atualizar Senha</button>
+                <button type="submit" class="button">Atualizar Senha</button>
             </form>
        
         
