@@ -4,10 +4,7 @@
     <h2>Configurações de Segurança</h2>
     <p class="section-description">Gerencie suas preferências de segurança da conta.</p>
     
-    <div class="security-settings">
-       
-      
-            
+    <div class="security-settings">        
             <form class="password-form" method="POST" action="${pageContext.request.contextPath}/alterar-senha">
                 <div class="form-group">
                     <label for="currentPassword">Senha Atual</label>

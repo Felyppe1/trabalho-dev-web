@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/global.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/components/header.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/settings.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/settings/settings.css">
  
     <title>DevBank</title>
 </head>
@@ -68,6 +68,9 @@
         <div class="settings-content">
             <% 
                 String activeTab = request.getParameter("tab");
+                if (activeTab == null) {
+                    activeTab = (String) request.getAttribute("tab");
+                }
                 if (activeTab == null) {
                     activeTab = "profile";
                 }

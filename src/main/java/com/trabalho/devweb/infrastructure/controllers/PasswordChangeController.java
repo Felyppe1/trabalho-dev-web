@@ -4,12 +4,12 @@ import com.trabalho.devweb.domain.Account;
 import com.trabalho.devweb.infrastructure.databaseconnection.PostgresConnection;
 import org.mindrot.jbcrypt.BCrypt;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -35,31 +35,34 @@ public class PasswordChangeController extends HttpServlet {
             currentPassword.trim().isEmpty() || newPassword.trim().isEmpty() || confirmPassword.trim().isEmpty()) {
             
             request.setAttribute("errorMessage", "Todos os campos são obrigatórios");
-            request.getRequestDispatcher("/settings/settings.jsp?tab=security").forward(request, response);
+            request.setAttribute("tab", "security");
+            request.getRequestDispatcher("/settings/settings.jsp").forward(request, response);
             return;
         }
         
         if (!newPassword.equals(confirmPassword)) {
             request.setAttribute("errorMessage", "A nova senha e a confirmação não coincidem");
-            request.getRequestDispatcher("/settings/settings.jsp?tab=security").forward(request, response);
+            request.setAttribute("tab", "security");
+            request.getRequestDispatcher("/settings/settings.jsp").forward(request, response);
             return;
         }
         
         if (newPassword.length() < 6) {
             request.setAttribute("errorMessage", "A nova senha deve ter pelo menos 6 caracteres");
-            request.getRequestDispatcher("/settings/settings.jsp?tab=security").forward(request, response);
+            request.setAttribute("tab", "security");
+            request.getRequestDispatcher("/settings/settings.jsp").forward(request, response);
             return;
         }
         
         try {
-            // Verificar senha atual
             if (!verifyCurrentPassword(account.getId(), currentPassword)) {
                 request.setAttribute("errorMessage", "Senha atual incorreta");
-                request.getRequestDispatcher("/settings/settings.jsp?tab=security").forward(request, response);
+                request.setAttribute("tab", "security");
+                request.getRequestDispatcher("/settings/settings.jsp").forward(request, response);
                 return;
             }
             
-            // Atualizar senha
+    
             if (updatePassword(account.getId(), newPassword)) {
                 request.setAttribute("successMessage", "Senha atualizada com sucesso!");
             } else {
@@ -71,11 +74,13 @@ public class PasswordChangeController extends HttpServlet {
             request.setAttribute("errorMessage", "Erro interno do servidor");
         }
         
-        request.getRequestDispatcher("/settings/settings.jsp?tab=security").forward(request, response);
+        // Configurar o parâmetro tab antes do forward
+        request.setAttribute("tab", "security");
+        request.getRequestDispatcher("/settings/settings.jsp").forward(request, response);
     }
     
     private boolean verifyCurrentPassword(String accountId, String currentPassword) throws SQLException {
-        String sql = "SELECT password FROM accounts WHERE id = ?";
+        String sql = "SELECT password FROM account WHERE id = ?";
         
         try (Connection conn = PostgresConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -93,7 +98,7 @@ public class PasswordChangeController extends HttpServlet {
     }
     
     private boolean updatePassword(String accountId, String newPassword) throws SQLException {
-        String sql = "UPDATE accounts SET password = ? WHERE id = ?";
+        String sql = "UPDATE account SET password = ? WHERE id = ?";
         String hashedPassword = BCrypt.hashpw(newPassword, BCrypt.gensalt());
         
         try (Connection conn = PostgresConnection.getConnection();

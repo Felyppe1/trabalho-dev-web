@@ -77,7 +77,7 @@ public class ConfigController extends HttpServlet {
             request.setAttribute("errorMessage", "Erro interno do servidor. Tente novamente.");
         }
         
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/settings.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/settings/settings.jsp");
         dispatcher.forward(request, response);
     }
 }
