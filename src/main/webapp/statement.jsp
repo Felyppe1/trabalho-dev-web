@@ -74,68 +74,7 @@
           </div>
         <%
           }
-        %>
-          <!-- Lista das trasações no html-->
-      <%
-          List<Transaction> transactions = (List<Transaction>) request.getAttribute("transactions");
-          if( transactions == null){
-            %>
-             <p>Não houve transações realizadas nesse mês<p></p>
-            <%
-          }else{
-              for (Transaction tx : transactions) {
-      %>
-          <table>
-            <tr> <th>Tipo de transação</th> <th>Valor</th> </tr>
-            <tr>
-              <td> <%= tx.getType() %> de R$ <%= tx.getAmount() %></td>
-              <td> <%= tx.getCreatedAt() %> - Saldo após: <%= tx.getBalanceAfter() %> </td>
-            </tr>
-          </table>
-        </li>
-        <%
-            }
-          }
-        %>
-        <li class="statement">
-          <div class="statement__info">
-            <div class="statement__icon">📄</div>
-            <div>
-              <strong>March 2025 Statement</strong>
-              <p>Generated on Mar 1, 2025 • 267 KB</p>
-            </div>
-          </div>
-          <div class="statement__actions">
-            <button class="btn btn--secondary">👁️ View</button>
-            <button class="btn btn--secondary">⬇️ Download</button>
-          </div>
-        </li>
-        <li class="statement">
-          <div class="statement__info">
-            <div class="statement__icon">📄</div>
-            <div>
-              <strong>February 2025 Statement</strong>
-              <p>Generated on Feb 1, 2025 • 234 KB</p>
-            </div>
-          </div>
-          <div class="statement__actions">
-            <button class="btn btn--secondary">👁️ View</button>
-            <button class="btn btn--secondary">⬇️ Download</button>
-          </div>
-        </li>
-        <li class="statement">
-          <div class="statement__info">
-            <div class="statement__icon">📄</div>
-            <div>
-              <strong>January 2025 Statement</strong>
-              <p>Generated on Jan 1, 2025 • 251 KB</p>
-            </div>
-          </div>
-          <div class="statement__actions">
-            <button class="btn btn--secondary">👁️ View</button>
-            <button class="btn btn--secondary">⬇️ Download</button>
-          </div>
-        </li>
+        %>                    
       </ul>
     </section>
 
