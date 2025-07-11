@@ -146,22 +146,88 @@ public class AccountsRepository implements IAccountsRepository {
         }
     }
 
+    @Override
+    public void updateAccount(Account account) throws SQLException {
+        String sql = """
+                    UPDATE account SET
+                        balance = ?,
+                        name = ?,
+                        email = ?,
+                        address = ?,
+                        cellphone_number = ?,
+                        status = ?
+                    WHERE id = ?
+                """;
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setBigDecimal(1, account.getBalance());
+            stmt.setString(2, account.getName());
+            stmt.setString(3, account.getEmail());
+            stmt.setString(4, account.getAddress());
+            stmt.setString(5, account.getCellphoneNumber());
+            stmt.setString(6, account.getStatus());
+            stmt.setString(7, account.getId());
+
+            stmt.executeUpdate();
+        }
+    }
+
+    public void update(Account account) throws SQLException {
+        String sql = """
+                    UPDATE account SET
+                        name = ?,
+                        email = ?,
+                        address = ?,
+                        cellphone_number = ?
+                    WHERE id = ?
+                """;
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, account.getName());
+            stmt.setString(2, account.getEmail());
+            stmt.setString(3, account.getAddress());
+            stmt.setString(4, account.getCellphoneNumber());
+            stmt.setString(5, account.getId());
+
+            stmt.executeUpdate();
+        }
+    }
+
+    @Override
+    public boolean checkIfAlreadyExistsForUpdate(String id, String email, String cellphoneNumber) throws SQLException {
+        String sql = """
+                    SELECT id
+                    FROM account
+                    WHERE (email = ? OR cellphone_number = ?)
+                    AND id != ?
+                """;
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, email);
+            stmt.setString(2, cellphoneNumber);
+            stmt.setString(3, id);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                return rs.next();
+            }
+        }
+    }
+
     private Account mapResultSetToAccount(ResultSet rs) throws SQLException {
         return new Account(
-            rs.getString("id"),
-            rs.getString("number"),
-            rs.getString("digit"),
-            rs.getString("cpf"),
-            rs.getString("name"),
-            rs.getString("email"),
-            rs.getString("password"),
-            rs.getDate("birth_date").toLocalDate(),
-            rs.getString("address"),
-            rs.getString("cellphone_number"),
-            rs.getBigDecimal("balance"),
-            rs.getString("status"),
-            rs.getTimestamp("created_at").toLocalDateTime()
-        );
+                rs.getString("id"),
+                rs.getString("number"),
+                rs.getString("digit"),
+                rs.getString("cpf"),
+                rs.getString("name"),
+                rs.getString("email"),
+                rs.getString("password"),
+                rs.getDate("birth_date").toLocalDate(),
+                rs.getString("address"),
+                rs.getString("cellphone_number"),
+                rs.getBigDecimal("balance"),
+                rs.getString("status"),
+                rs.getTimestamp("created_at").toLocalDateTime());
     }
 
 }

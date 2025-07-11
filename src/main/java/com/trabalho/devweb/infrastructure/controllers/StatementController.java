@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpSession;
 
 @WebServlet(name = "StatementController", urlPatterns = "/extrato")
 public class StatementController extends HttpServlet {
-    private TransactionRepository repository = new TransactionRepository();
+   
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -28,8 +28,7 @@ public class StatementController extends HttpServlet {
             response.sendRedirect("login.jsp");
             return;
         }
-        List<Transaction> transactions = repository.findByAccountId(account.getId());
-        request.setAttribute("transactions", transactions);
+        
         request.getRequestDispatcher("/statement.jsp").forward(request, response);               
     }
 }

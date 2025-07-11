@@ -22,10 +22,10 @@ public class Account {
     private String status = "active";
     private LocalDateTime createdAt;
 
-    public Account(String id, String number, String digit, String cpf, String name, 
-                   String email, String password, LocalDate birthDate, String address, 
-                   String cellphoneNumber, BigDecimal balance, String status, 
-                   LocalDateTime createdAt) {
+    public Account(String id, String number, String digit, String cpf, String name,
+            String email, String password, LocalDate birthDate, String address,
+            String cellphoneNumber, BigDecimal balance, String status,
+            LocalDateTime createdAt) {
         this.id = id;
         this.number = number;
         this.digit = digit;
@@ -42,30 +42,30 @@ public class Account {
     }
 
     public static Account create(String cpf, String name, String email, String password,
-                             LocalDate birthDate, String address, String cellphoneNumber) {
-    String id = UUID.randomUUID().toString();
-    String number = generateAccountNumber();
-    String digit = generateAccountDigit();
-    BigDecimal balance = BigDecimal.ZERO;
-    String status = "active";
-    LocalDateTime createdAt = LocalDateTime.now();
+            LocalDate birthDate, String address, String cellphoneNumber) {
+        String id = UUID.randomUUID().toString();
+        String number = generateAccountNumber();
+        String digit = generateAccountDigit();
+        BigDecimal balance = BigDecimal.ZERO;
+        String status = "active";
+        LocalDateTime createdAt = LocalDateTime.now();
 
-    return new Account(id, number, digit, cpf, name, email, password,
-                       birthDate, address, cellphoneNumber, balance, status, createdAt);
+        return new Account(id, number, digit, cpf, name, email, password,
+                birthDate, address, cellphoneNumber, balance, status, createdAt);
     }
 
     private static String generateAccountNumber() {
-        return String.format("%010d", (long)(Math.random() * 10000000000L));
+        return String.format("%010d", (long) (Math.random() * 10000000000L));
     }
 
     private static String generateAccountDigit() {
-        return String.valueOf((int)(Math.random() * 10));
+        return String.valueOf((int) (Math.random() * 10));
     }
 
     public String getAccountNumber() {
         return number + "-" + digit;
     }
-    
+
     public String getId() {
         return id;
     }
@@ -113,6 +113,7 @@ public class Account {
     public String getFormattedBalance() {
         NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.of("pt", "BR"));
         return nf.format(balance);
+        // return "";
     }
 
     public String getStatus() {
@@ -121,5 +122,26 @@ public class Account {
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
+    }
+
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
+    }
+
+    public void debit(BigDecimal amount) {
+        if (amount.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("Valor deve ser positivo");
+        }
+        if (this.balance.compareTo(amount) < 0) {
+            throw new IllegalArgumentException("Saldo insuficiente");
+        }
+        this.balance = this.balance.subtract(amount);
+    }
+
+    public void credit(BigDecimal amount) {
+        if (amount.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("Valor deve ser positivo");
+        }
+        this.balance = this.balance.add(amount);
     }
 }

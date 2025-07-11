@@ -1,0 +1,498 @@
+/* Estilos específicos para página de investimentos disponíveis */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.investment__details {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.investment__info-btn {
+    background: none;
+    border: none;
+    color: #6b7280;
+    cursor: pointer;
+    padding: 2px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+}
+
+.investment__info-btn:hover {
+    color: #2563eb;
+    background: #eff6ff;
+}
+
+.investment__indicator--ipca {
+    background: linear-gradient(45deg, #059669, #10b981);
+}
+
+.investment__name--ipca {
+    color: #059669;
+}
+
+
+
+
+
+
+
+/* Investment Summary Component */
+.investment-summary__title {
+    font-size: 1.875rem;
+    font-weight: 700;
+}
+
+.investment-summary__subtitle {
+    color: #6b7280;
+    font-size: 1rem;
+    margin: 0 0 2rem 0;
+}
+
+.investment-summary__stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.stat-card {
+    background-color: var(--color-bg);
+    padding: 1.5rem;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-card__label {
+    color: var(--color-gray-text);
+    font-size: 0.875rem;
+    margin-bottom: 0.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.stat-card__value {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.stat-card__value--positive {
+    color: var(--color-success-text);
+}
+
+.stat-card__value--highlight {
+    color: #0ea5e9;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .investment-summary__stats {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .stat-card {
+        padding: 1rem;
+    }
+    
+    .stat-card__value {
+        font-size: 1.5rem;
+    }
+}
+
+
+.main {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.tabs {
+    display: flex;
+    gap: .5rem;
+    margin-top: 1rem;
+}
+
+.tabs__item {
+    padding: .5rem 4rem;
+    background: var(--color-gray-bg);
+    border: 2px solid transparent;
+    border-radius: var(--radius);
+    font-size: 1rem;
+    /* font-size: 16px; */
+    color: var(--color-gray-text);
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.tabs__item--active {
+    color: var(--color-text);
+    border-color: var(--color-text);
+    background: var(--color-white);
+}
+
+.tabs__item:hover:not(.tabs__item--active) {
+    color: var(--color-text-gray);
+    background-color: #ebeff4;
+}
+
+/* Cabeçalho do portfólio */
+.portfolio {
+    margin-bottom: 2rem;
+}
+
+.portfolio__subtitle {
+    font-size: 1rem;
+    color: var(--color-gray-text);
+}
+
+/* Wrapper dos investimentos com navegação */
+.investments__wrapper {
+    position: relative;
+}
+
+/* Tabela de investimentos */
+.investments-table__header {
+    background: #ffffff;
+    padding: 1.25rem;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr 120px;
+    gap: 1.25rem;
+    border-bottom: 1px solid var(--color-border);
+    font-weight: 600;
+    color: var(--color-gray-text);
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+}
+
+.investments-table__header > div:first-child {
+    padding-left: 1.25rem;
+}
+.investments-table__row {
+    padding: 1.5rem 1.25rem;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr 120px;
+    gap: 1.25rem;
+    border-bottom: 1px solid #f8fafc;
+    align-items: center;
+    transition: background-color 0.2s ease;
+    background: var(--color-white);
+}
+
+.investments-table__row:hover {
+    background: #fafbfc;
+}
+
+.investments-table__row:last-child {
+    border-bottom: none;
+}
+
+.investments-table__row > div {
+    font-weight: 600;
+}
+
+.button--details {
+    background-color: white;
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+}
+
+.button--details:hover {
+    background-color: #f5f5f5;
+}
+
+/* Dados do investimento */
+.investment {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.investment__indicator {
+    width: .25rem;
+    height: 2.5rem;
+    border-radius: 2px;
+}
+
+.investment__indicator--prefixado {
+    background: #0ea5e9;
+}
+
+.investment__indicator--selic {
+    background: #7E23CF;
+}
+
+.investment__indicator--ipca {
+    background: #EF4444;
+}
+
+.investment__indicator--renda {
+    background: #4a3395;
+}
+
+.investment__indicator--educa {
+    background: #297719;
+}
+
+.investment__name {
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.investment__name--prefixado {
+    color: #0ea5e9;
+}
+
+.investment__name--selic {
+    color: #7E23CF;
+}
+
+.investment__name--ipca {
+    color: #EF4444;
+}
+
+.investment__name--renda {
+    color: #4a3395;
+}
+
+.investment__name--educa {
+    color: #297719;
+}
+
+.investment__value {
+    color: var(--color-success-text);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .investments-table__header,
+    .investments-table__row {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .investments-table__header {
+        display: none;
+    }
+
+    .investments-table__row {
+        display: block;
+        padding: 20px;
+    }
+
+    .investment {
+        margin-bottom: 12px;
+    }
+
+    .investment__details {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-bottom: 12px;
+    }
+
+    .investment__detail {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .investment__detail-label {
+        font-size: 12px;
+        color: #6b7280;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-weight: 600;
+    }
+
+    .navigation--left,
+    .navigation--right {
+        display: none;
+    }
+
+    .page-header {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: stretch;
+    }
+    
+    .page-title {
+        font-size: 1.5rem;
+        text-align: center;
+    }
+}
+
+/* Modal Styles */
+.modal {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal__content {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    width: 100%;
+    max-width: 35rem;
+    position: relative;
+}
+
+.modal__close {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    color: #6b7280;
+    transition: color 0.2s ease;
+}
+
+.modal__close:hover {
+    color: #ef4444;
+}
+
+.redeem-modal__header {
+    margin-top: 1rem;
+}
+
+.redeem-modal__items {
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+    margin-top: .75rem;
+}
+
+.redeem-modal__item {
+    display: flex;
+    justify-content: space-between;
+}
+
+.redeem-modal__value {
+    font-weight: 600;
+}
+
+.redeem-modal__value--success {
+    color: var(--color-success-text);
+}
+
+.redeem-modal__form {
+    margin-top: 2rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #374151;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+    font-size: 1rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.form-group input[readonly] {
+    background-color: #f9fafb;
+    color: #6b7280;
+}
+
+.form-group small {
+    display: block;
+    margin-top: 0.25rem;
+    color: #6b7280;
+    font-size: 0.875rem;
+}
+
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    margin-top: 2rem;
+}
+
+.button--secondary {
+    background-color: #f3f4f6;
+    color: #374151;
+    border: 1px solid #d1d5db;
+}
+
+.button--secondary:hover {
+    background-color: #e5e7eb;
+}
+
+.button--redeem {
+    background-color: #dc2626;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.button--redeem:hover {
+    background-color: #b91c1c;
+}
+
+.investment__actions {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+@media (max-width: 768px) {
+    .modal__content {
+        margin: 1rem;
+        padding: 1.5rem;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+    
+    .investment__actions {
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+    
+    .button--redeem,
+    .button--details {
+        font-size: 0.75rem;
+        padding: 0.375rem 0.75rem;
+    }
+}

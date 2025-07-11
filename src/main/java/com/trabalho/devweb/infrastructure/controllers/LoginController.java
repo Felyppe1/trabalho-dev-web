@@ -44,9 +44,9 @@ public class LoginController extends HttpServlet {
         String password = req.getParameter("password");
 
         try (Connection conn = PostgresConnection.getConnection()) {
-            AccountsRepository repo = new AccountsRepository(conn);
+            AccountsRepository accountsRepository = new AccountsRepository(conn);
 
-            LoginService loginService = new LoginService(repo);
+            LoginService loginService = new LoginService(accountsRepository);
 
             Account account = loginService.execute(email, password);
 

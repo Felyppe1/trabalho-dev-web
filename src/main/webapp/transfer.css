@@ -118,3 +118,30 @@
   color: var(--color-text-gray);
   margin-top: 0.25rem;
 }
+/* ===== Ajuste de posicionamento da seta e espaçamento ===== */
+.back-button-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin: 2rem 0 1rem 2rem; /* Espaçamento acima e abaixo */
+}
+
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color-primary);
+  font-weight: 500;
+  font-size: 1.125rem;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.back-button:hover {
+  color: var(--color-primary-hover);
+}
+
+.back-button svg {
+  width: 30px;
+  height: 30px;
+}

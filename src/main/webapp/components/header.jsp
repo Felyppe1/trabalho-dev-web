@@ -13,9 +13,14 @@
                 Página Inicial
         </a>
         <a
-            href="${pageContext.request.contextPath}/transferencia"
+            href="${pageContext.request.contextPath}/transferencias"
             class="header__a <%= currentPath.endsWith("/transferencia") ? "header__a--active" : "" %>">
-                Transferência
+                Transferências
+        </a>
+        <a
+            href="${pageContext.request.contextPath}/eu/investimentos"
+            class="header__a <%= currentPath.endsWith("/transferencia") ? "header__a--active" : "" %>">
+                Investimentos
         </a>
         <a
             href="${pageContext.request.contextPath}/extrato"
@@ -23,9 +28,9 @@
                 Extrato
         </a>
         <a
-            href="#"
+            href="${pageContext.request.contextPath}/configuracoes"
             class="header__a <%= currentPath.endsWith("/settings") ? "active" : "" %>">
-                Settings
+                Configurações
         </a>
         <a
             href="${pageContext.request.contextPath}/sair"

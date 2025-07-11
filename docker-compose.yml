@@ -6,6 +6,10 @@ services:
       - "8080:8080"
     depends_on:
       - database
+    volumes:
+      - ./src/main/webapp:/usr/local/tomcat/webapps/ROOT
+      - ./target/classes:/usr/local/tomcat/webapps/ROOT/WEB-INF/classes
+
     networks:
       - trabalho-dev-web
 

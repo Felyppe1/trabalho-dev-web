@@ -37,23 +37,39 @@ Dev Containers: Rebuild and Reopen in Container
 ```
 E selecione a opção para reconstruir e abrir o projeto dentro do container.
 
-#### 3. Liberar permissão de arquivos
+#### 3.1 Iniciar com Jetty
+Para iniciar o projeto com Jetty, basta usar o comando:
+
+
+```bash
+mvn jetty:run
+```
+
+#### 3.2 Iniciar com Tomcat
+Outra forma de iniciar o projeto é usando o Tomcat. Para isso basta seguir os passos:
+
+#### 3.2.1 Liberar permissão de arquivos
 
 ```bash
 chmod +x /usr/local/sdkman/candidates/tomcat/current/bin/*.sh
 ```
 
-#### 4. Buildar e jogar no Tomcat
+#### 3.2.2 Buildar e jogar no Tomcat
 
 ```bash
 ./build.devcontainer.sh
 ```
 
-#### 5. Iniciar o tomcat
+#### 3.2.3 Iniciar o tomcat
 
 ```bash
 /usr/local/sdkman/candidates/tomcat/current/bin/catalina.sh start
 ```
+
+
+
+
+
 
 #### 6. Acessar a aplicação
 
