@@ -55,6 +55,9 @@
                         String cssClass = type.equals("TRANSFER_OUT") ? "negative" :
                                         type.equals("TRANSFER_IN") ? "positive" : "";
 
+                        String typeTransaction = type.equals("TRANSFER_OUT") ? "Transferência enviada" :
+                                    type.equals("TRANSFER_IN") ? "Transferência recebida" : "";
+
                         String label = type.equals("TRANSFER_OUT") ? "Para" :
                                     type.equals("TRANSFER_IN") ? "De" : "";
                         
@@ -69,7 +72,7 @@
 
                 <div class="transfer-item <%= cssClass %>">
                     <div class="info">
-                        <strong><%= type %> <%= label %>: <%= relatedAccountId %></strong>
+                        <strong><%= typeTransaction %> <%= label %>: <%= relatedAccountId %></strong>
                         <strong>Valor: R$ <%= String.format("%.2f", t.getAmount()) %></strong> <br />
                         <span>Descrição: <%= t.getDescription() %></span>                       
                         <span class="status">✔️ Concluída · <%= formattedDate %></span>
