@@ -30,10 +30,10 @@ public class StatementDownloadController extends HttpServlet{
 
         int month = Integer.parseInt(request.getParameter("month"));
         int year = Integer.parseInt(request.getParameter("year"));
-
         
-        System.out.println("> Mês: " + month);
-        System.out.println("> Ano: " + year);
+        System.out.println(">> Account ID: " + account.getName());
+        System.out.println(">> Mês: " + month);
+        System.out.println(">> Ano: " + year);
 
         try 
             (Connection connection = PostgresConnection.getConnection();){
@@ -52,29 +52,31 @@ public class StatementDownloadController extends HttpServlet{
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erro ao gerar PDF");
         }
 
-
     }
     private void generatePDF(List<Transaction> transactions, OutputStream out, int month, int year, String userName) throws Exception{
-        
-        try{
-            Document document = new Document();
-            PdfWriter.getInstance(document, out);
-            document.open();        
+               
+           try {
+        System.setProperty("java.awt.headless", "true"); 
 
-            document.add(new Paragraph("Extrato de " + userName));
-            document.add(new Paragraph("Mês: " + month + " de " + year));
-            document.add(new Paragraph(" "));
+        Document document = new Document();
+        PdfWriter.getInstance(document, out);
+        document.open();        
 
-            for(Transaction t : transactions){
-                document.add(new Paragraph(
-                    t.getCreatedAt() + " - " + t.getType() + " - R$ " + t.getAmount() + " - Saldo: R$ " + t.getBalanceAfter()
-                ));
-            }
-            document.close();
-        }catch(DocumentException e){
-            e.printStackTrace();
-            //response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erro ao gerar o PDF.");
+        document.add(new Paragraph("Extrato de " + userName));
+        document.add(new Paragraph("Mês: " + month + " de " + year));
+        document.add(new Paragraph(" "));
+
+        for (Transaction t : transactions) {
+            document.add(new Paragraph(
+                t.getCreatedAt() + " - " + t.getType() + " - R$ " + t.getAmount() + " - Saldo: R$ " + t.getBalanceAfter()
+            ));
         }
+
+        document.close();
+    } catch (DocumentException e) {
+        e.printStackTrace();
+        throw e;
+    }   
     }
     
 }
