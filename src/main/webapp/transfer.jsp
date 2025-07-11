@@ -5,8 +5,6 @@
 
 <%
     List<Transfer> recentTransfers = (List<Transfer>) request.getAttribute("recentTransfers");
-    String error = (String) request.getAttribute("error");
-    String success = (String) request.getAttribute("success");
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 %>
 
@@ -18,8 +16,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/global.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/transfer.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/components/header.css">
 </head>
 <body>
+    <% String error = (String) request.getAttribute("error"); %>
+    <% String success = (String) request.getAttribute("success"); %>
+    
+    <div class="notification-area">
+    <% if (success != null) { %>
+        <div class="notification notification--success"><%= success %></div>
+    <% } %>
+    <% if (error != null) { %>
+        <div class="notification notification--error"><%= error %></div>
+    <% } %>
+    </div>
+    <script>
+        document.querySelectorAll('.notification').forEach((el, i) => {
+            setTimeout(() => {
+                el.classList.add('notification--hide');
+            }, 5000 + i * 300);
+        });
+    </script>
+
+    <%@ include file="components/header.jsp" %>
+
  <div class="back-button-container">
     <a href="transferencias" class="back-button">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -34,12 +54,6 @@
         <h1 class="transfer__title">Realizar Transferência</h1>
         <p class="transfer__subtitle">Transfira dinheiro para outra conta usando o CPF.</p>
 
-        <% if (error != null) { %>
-            <p style="color:red;"><%= error %></p>
-        <% } else if (success != null) { %>
-            <p style="color:green;">Transferência realizada com sucesso!</p>
-        <% } %>
-
         <form class="transfer__form" method="post" action="transferir">
             <label class="transfer__form-label">CPF do destinatário</label>
             <input class="transfer__form-input" type="text" name="cpf" placeholder="Digite o CPF do destinatário" required />
@@ -48,9 +62,9 @@
             <input class="transfer__form-input"
                    type="text"
                    name="amount"
-                   placeholder="R$ 0.00"
-                   pattern="^\d+(\.\d{1,2})?$"
-                   title="Digite o valor com ponto como separador decimal. Ex: 200.00"
+                   id="amount"
+                   placeholder="R$ 0,00"
+                   title="Digite o valor que deseja transferir"
                    required />
 
             <label class="transfer__form-label">Descrição (opcional)</label>
@@ -80,6 +94,17 @@
             <% } %>
         </div>
     </aside>
+
+    <script>
+        document.getElementById('amount').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            value = (value / 100).toLocaleString('pt-BR', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+            e.target.value = value;
+        });
+    </script>
 </main>
 </body>
 </html>

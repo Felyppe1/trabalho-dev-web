@@ -132,8 +132,8 @@ public class BuyInvestmentController extends HttpServlet {
             boolean success = buyInvestmentService.execute(account.getId(), category, year, amount);
 
             if (success) {
-                session.setAttribute("successMessage",
-                        "Investimento realizado com sucesso! Valor: R$ " + amount.toString().replace('.', ','));
+                session.setAttribute("success",
+                        "Investimento no valor de R$ " + amount.toString().replace('.', ',') + " realizado com sucesso!");
 
                 response.sendRedirect(request.getContextPath() + "/eu/investimentos");
             } else {
@@ -143,6 +143,9 @@ public class BuyInvestmentController extends HttpServlet {
 
         } catch (NumberFormatException e) {
             request.setAttribute("error", "Formato de valor inválido");
+            doGet(request, response);
+        } catch (RuntimeException e) {
+            request.setAttribute("error", e.getMessage());
             doGet(request, response);
         } catch (Exception e) {
             e.printStackTrace();

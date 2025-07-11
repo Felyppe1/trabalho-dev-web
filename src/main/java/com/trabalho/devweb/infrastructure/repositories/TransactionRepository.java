@@ -44,15 +44,13 @@ public class TransactionRepository implements ITransactionRepository {
     public List<Transaction> findByAccountIdAndMonth(String accountId, Integer month, Integer year) {
         List<Transaction> list = new ArrayList<>();
 
-        
-
         String searchTrasaction = """
-                                    SELECT * FROM transaction
-                                    WHERE (origin_id = ? OR target_id = ?)
-                                    AND EXTRACT(MONTH FROM created_at) = ?
-                                    AND EXTRACT(YEAR FROM created_at) = ?
-                                    ORDER BY created_at DESC
-                                """;
+                    SELECT * FROM transaction
+                    WHERE (origin_id = ? OR target_id = ?)
+                    AND EXTRACT(MONTH FROM created_at) = ?
+                    AND EXTRACT(YEAR FROM created_at) = ?
+                    ORDER BY created_at DESC
+                """;
         try (Connection conn = PostgresConnection.getConnection()) {
             PreparedStatement statement = conn.prepareStatement(searchTrasaction);
             statement.setString(1, accountId);
@@ -79,5 +77,71 @@ public class TransactionRepository implements ITransactionRepository {
         }
 
         return list;
+    }
+
+    public List<Transaction> findRecentByAccountId(String accountId, int limit) throws SQLException {
+        String sql = "SELECT id, origin_id, target_id, created_at, type, amount, description, balance_after " +
+                "FROM transaction " +
+                "WHERE origin_id = ? OR target_id = ? " +
+                "ORDER BY created_at DESC " +
+                "LIMIT ?";
+
+        List<Transaction> transactions = new ArrayList<>();
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, accountId);
+            stmt.setString(2, accountId);
+            stmt.setInt(3, limit);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Transaction transaction = new Transaction(
+                        rs.getString("id"),
+                        rs.getString("origin_id"),
+                        rs.getString("target_id"),
+                        rs.getString("type"),
+                        rs.getBigDecimal("amount"),
+                        rs.getString("description"),
+                        rs.getBigDecimal("balance_after"),
+                        rs.getTimestamp("created_at").toLocalDateTime());
+
+                transactions.add(transaction);
+            }
+        }
+
+        return transactions;
+    }
+
+    public List<Transaction> findAllByAccountId(String accountId) throws SQLException {
+        String sql = "SELECT id, origin_id, target_id, created_at, type, amount, description, balance_after " +
+                "FROM transaction " +
+                "WHERE origin_id = ? OR target_id = ? " +
+                "ORDER BY created_at DESC";
+
+        List<Transaction> transactions = new ArrayList<>();
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, accountId);
+            stmt.setString(2, accountId);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Transaction transaction = new Transaction(
+                        rs.getString("id"),
+                        rs.getString("origin_id"),
+                        rs.getString("target_id"),
+                        rs.getString("type"),
+                        rs.getBigDecimal("amount"),
+                        rs.getString("description"),
+                        rs.getBigDecimal("balance_after"),
+                        rs.getTimestamp("created_at").toLocalDateTime());
+
+                transactions.add(transaction);
+            }
+        }
+
+        return transactions;
     }
 }

@@ -67,12 +67,12 @@ public class TransferController extends HttpServlet {
         } else {
             try {
                 // Forçar ponto como separador decimal (ex: 200.00)
-                amount = new BigDecimal(amountStr);
+                amount = new BigDecimal(amountStr.replace(".", "").replace(",", "."));
                 if (amount.compareTo(BigDecimal.ZERO) <= 0) {
                     error = "O valor da transferência deve ser maior que zero.";
                 }
             } catch (NumberFormatException e) {
-                error = "Formato inválido. Use ponto como separador decimal (ex: 200.00)";
+                error = "Formato do valor inválido.";
             }
         }
 
@@ -83,7 +83,8 @@ public class TransferController extends HttpServlet {
                 AccountsRepository accRepo = new AccountsRepository(conn);
                 TransfersRepository transRepo = new TransfersRepository(conn);
 
-                Account recipient = accRepo.findOneByCpf(cpf);
+                String formattedCpf = cpf.replaceAll("\\D", "");
+                Account recipient = accRepo.findOneByCpf(formattedCpf);
 
                 if (recipient == null) {
                     error = "Destinatário não encontrado.";
