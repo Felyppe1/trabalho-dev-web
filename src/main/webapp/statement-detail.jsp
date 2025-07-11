@@ -51,22 +51,23 @@
                     String accountId = ((com.trabalho.devweb.domain.Account) session.getAttribute("account")).getId();
 
                     for (Transaction t : transactions) {
-                        boolean isSent = t.getType().equalsIgnoreCase("transfer") && t.getOriginId().equals(((com.trabalho.devweb.domain.Account) session.getAttribute("account")).getId());
-                        String cssClass = isSent ? "negative" : "positive";
-                        String label = isSent ? "Para" : "De";
+                        String tipo = t.getType().toUpperCase();
+                        String cssClass = tipo.equals("TRANSFER_OUT") ? "negative" : tipo.equals("TRANSFER_IN") ? "positive" : "";
+                        String label = tipo.equals("TRANSFER_OUT") ? "Para" : tipo.equals("TRANSFER_IN") ? "De" : "";
                         String formattedDate = t.getCreatedAt().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
-            %>
+                %>
 
-            <div class="transfer-item <%= cssClass %>">
-                <div class="info">
-                    <strong><%= t.getType().toUpperCase() %> <%= label %>: <%= isSent ? "Conta destino" : "Conta origem" %></strong><br />
-                    <span>Valor: R$ <%= String.format("%.2f", t.getAmount()) %></span><br />
-                    <span class="status">✔️ Concluída · <%= formattedDate %></span>
+                <div class="transfer-item <%= cssClass %>">
+                    <div class="info">
+                        <strong><%= tipo %> <%= label %>: Conta <%= label.toLowerCase() %> </strong><br />
+                        <span>Valor: R$ <%= String.format("%.2f", t.getAmount()) %></span><br />
+                        <span class="status">✔️ Concluída · <%= formattedDate %></span>
+                    </div>
+                    <div>
+                        Saldo após: R$ <%= String.format("%.2f", t.getBalanceAfter()) %>
+                    </div>
                 </div>
-                <div>
-                    Saldo após: R$ <%= String.format("%.2f", t.getBalanceAfter()) %>
-                </div>
-            </div>
+
 
             <%
                     }
