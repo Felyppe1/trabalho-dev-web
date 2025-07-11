@@ -28,8 +28,7 @@
     <meta charset="UTF-8">
     <title>Extrato de <%= MonthName %> <%= year %></title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/global.css">    
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/components/header.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/global.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/components/header.css">    
     <link rel="stylesheet" href="${pageContext.request.contextPath}/statement-detail.css">
 </head>
 <body>
@@ -38,8 +37,8 @@
     <h1 class="page-title">Extrato de <%= MonthName %> <%= year %></h1>
     <div class="statements">
         <div class="statements__header">
-            <h1 class="statements__title">Extrato de <%= MonthName %> <%= year %></h1>
-            <p class="status">Gerado em <%= nowFormatted %></p>
+            <h1 class="statements__title">Lançamentos </h1>
+            <p class="status">Última atualização em <%= nowFormatted %></p>
         </div>
         <div class="transfer-list">
             <%
