@@ -96,8 +96,8 @@ public class RedeemInvestmentService {
             account.credit(totalRedeemed);
             accountRepository.updateAccount(account);
 
-            String description = String.format("Resgate de %s %d - Valor: R$ %.2f",
-                    category, year, totalRedeemed);
+            String description = String.format("Resgate de %s %d",
+                    category, year);
             Transaction transaction = Transaction.create(null,
                     account.getId(), "REDEMPTION", totalRedeemed, description, account.getBalance());
             transactionRepository.save(transaction);

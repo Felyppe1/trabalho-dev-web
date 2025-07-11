@@ -55,18 +55,10 @@
                     <span class="balance__amount">R$ <%= account.getFormattedBalance() %></span>
                     <span class="balance__available">Saldo Disponível</span>
                 </div>
-                <div class="balance__updated-container">
-                    <a href="?action=deposit" class="balance__button button button--outline">Adicionar Dinheiro</a>
-                    <div>
-                        <span>
-                            Atualizado
-                        </span>
-                        <span>
-                            Hoje, 13:31
-                        </span>
-                    </div>
-                </div>
             </section>
+            
+            <%@ include file="components/deposit.jsp" %>
+
             <section class="card transactions">
                 <h2>Transações recentes</h2>
                 <ul class="transactions__list">
@@ -131,8 +123,6 @@
                     %>
                 </ul>
             </section>
-            
-            <%@ include file="components/deposit.jsp" %>
         </div>
     </main>
   </body>
