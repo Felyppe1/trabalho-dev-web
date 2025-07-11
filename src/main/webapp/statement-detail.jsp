@@ -51,15 +51,24 @@
                     String accountId = ((com.trabalho.devweb.domain.Account) session.getAttribute("account")).getId();
 
                     for (Transaction t : transactions) {
-                        String tipo = t.getType().toUpperCase();
-                        String cssClass = tipo.equals("TRANSFER_OUT") ? "negative" : tipo.equals("TRANSFER_IN") ? "positive" : "";
-                        String label = tipo.equals("TRANSFER_OUT") ? "Para" : tipo.equals("TRANSFER_IN") ? "De" : "";
-                        String formattedDate = t.getCreatedAt().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
+        String type = t.getType() != null ? t.getType().toUpperCase() : "";
+        String cssClass = type.equals("TRANSFER_OUT") ? "negative" :
+                          type.equals("TRANSFER_IN") ? "positive" : "";
+
+        String label = type.equals("TRANSFER_OUT") ? "Para" :
+                       type.equals("TRANSFER_IN") ? "De" : "";
+
+        String relatedAccountId = type.equals("TRANSFER_OUT") ? t.getTargetId() :
+                                  type.equals("TRANSFER_IN") ? t.getOriginId() : "";
+
+        String formattedDate = t.getCreatedAt() != null
+            ? t.getCreatedAt().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"))
+            : "Data desconhecida";
                 %>
 
                 <div class="transfer-item <%= cssClass %>">
                     <div class="info">
-                        <strong><%= tipo %> <%= label %>: Conta <%= label.toLowerCase() %> </strong><br />
+                        <strong><%= type %> <%= label %>: <%= relatedAccountId %></strong><br />
                         <span>Valor: R$ <%= String.format("%.2f", t.getAmount()) %></span><br />
                         <span class="status">✔️ Concluída · <%= formattedDate %></span>
                     </div>
