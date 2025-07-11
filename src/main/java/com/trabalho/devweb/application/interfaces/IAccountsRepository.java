@@ -8,6 +8,8 @@ public interface IAccountsRepository {
 
     void updateAccount(Account account) throws SQLException;
 
+    void update(Account account) throws SQLException;
+    
     Account findById(String id) throws SQLException;
 
     Account findOneByCpf(String cpf) throws SQLException;
@@ -17,4 +19,6 @@ public interface IAccountsRepository {
     Account findOneByCellphoneNumber(String cellphoneNumber) throws SQLException;
 
     boolean checkIfAlreadyExists(String cpf, String email, String cellphoneNumber) throws SQLException;
+
+    boolean checkIfAlreadyExistsForUpdate(String id, String email, String cellphoneNumber) throws SQLException;
 }

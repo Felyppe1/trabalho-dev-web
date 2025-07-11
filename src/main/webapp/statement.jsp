@@ -1,13 +1,17 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.trabalho.devweb.domain.Transaction" %>
+<%@ page import="java.time.LocalDate" %>
+<%@ page import="java.time.format.TextStyle" %>
+<%@ page import="java.util.Locale" %>
+
 
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BankX - Statements</title>
+  <title>DevBank - Statements</title>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/global.css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/statement.css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/components/header.css">
@@ -19,7 +23,7 @@
   <main class="container">
     <section class="statements">
       <div class="statements__header">
-        <h1 class="statements__title">Bank Statements</h1>
+        <h1 class="statements__title">Account Statement</h1>
         <button class="btn btn--primary">
           <span class="btn__icon">📄</span> Request Statement
         </button>
@@ -31,32 +35,42 @@
         </select>
       </div>
 
-      <ul class="statements__list">
-        
-        <!--JSP de recuperação das listas-->
+      <ul class="statements__list">           
+
+        <%
+          java.time.YearMonth currentMonth = java.time.YearMonth.now();
+          for (int i = 1; i <= currentMonth.getMonthValue(); i++) {
+            java.time.YearMonth monthYear = java.time.YearMonth.of(currentMonth.getYear(), i);
+            String month = String.format("%02d", i);
+        %>
 
         <li class="statement">
           <div class="statement__info">
             <div class="statement__icon">📄</div>
             <div>
-              <strong>April 2025 Statement</strong>
+              <strong> <%= monthYear.getMonth() %>/<%= monthYear.getYear() %> Extrato</strong>
               <p>Generated on Apr 1, 2025 • 245 KB</p>
             </div>
           </div>
           <div class="statement__actions">
             <form action="extrato/view" method="get">
-              <input type="hidden" name="id" value="">
+                <input type="hidden" name="month" value="<%= month %>">
+                <input type="hidden" name="year" value="<%= monthYear.getYear() %>">
               <button class="btn btn--secondary">👁️ View</button>
             </form>
             <form action="extrato/download" method="get">
-              <input type="hidden" name="id" value="">
+              <input type="hidden" name="month" value="<%= month %>">
+              <input type="hidden" name="year" value="<%= monthYear.getYear() %>">
               <button class="btn btn--secondary">⬇️ Download</button>
             </form>
           </div>
+        <%
+          }
+        %>
           <!-- Lista das trasações no html-->
       <%
           List<Transaction> transactions = (List<Transaction>) request.getAttribute("transactions");
-          if( transactions.size() == 0){
+          if( transactions == null){
             %>
              <p>Não houve transações realizadas nesse mês<p></p>
             <%
