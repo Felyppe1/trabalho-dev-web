@@ -2,6 +2,7 @@ package com.trabalho.devweb.domain;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 public class Transaction {
@@ -71,5 +72,57 @@ public class Transaction {
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
+    }
+
+    public void setBalanceAfter(BigDecimal balanceAfter) {
+        this.balanceAfter = balanceAfter;
+    }
+
+    // Helper methods for display
+    public String getFormattedAmount() {
+        return String.format("%.2f", amount.doubleValue());
+    }
+
+    public String getFormattedDate() {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime today = now.toLocalDate().atStartOfDay();
+        LocalDateTime yesterday = today.minusDays(1);
+
+        if (createdAt.isAfter(today)) {
+            return "Hoje, " + createdAt.format(DateTimeFormatter.ofPattern("HH:mm"));
+        } else if (createdAt.isAfter(yesterday)) {
+            return "Ontem, " + createdAt.format(DateTimeFormatter.ofPattern("HH:mm"));
+        } else {
+            return createdAt.format(DateTimeFormatter.ofPattern("dd/MM, HH:mm"));
+        }
+    }
+
+    public String getDisplayName() {
+        if (description != null && !description.trim().isEmpty()) {
+            return description;
+        }
+
+        switch (type.toUpperCase()) {
+            case "DEPOSIT":
+                return "Depósito";
+            case "WITHDRAW":
+                return "Saque";
+            case "TRANSFER":
+                return "Transferência";
+            default:
+                return type;
+        }
+    }
+
+    public boolean isIncoming(String accountId) {
+        return accountId.equals(targetId) && !accountId.equals(originId);
+    }
+
+    public boolean isOutgoing(String accountId) {
+        return accountId.equals(originId) && !accountId.equals(targetId);
+    }
+
+    public boolean isInternal(String accountId) {
+        return accountId.equals(originId) && accountId.equals(targetId);
     }
 }
