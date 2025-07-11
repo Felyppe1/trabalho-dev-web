@@ -53,8 +53,7 @@ public class MyInvestmentsController extends HttpServlet {
             session.removeAttribute("error");
         }
 
-        try {
-            Connection connection = PostgresConnection.getConnection();
+        try (Connection connection = PostgresConnection.getConnection()) {
             IInvestmentRepository investmentRepository = new InvestmentsRepository(connection);
             GetMyInvestmentsService getMyInvestmentsService = new GetMyInvestmentsService(investmentRepository);
             List<MyInvestment> myInvestments = getMyInvestmentsService.execute(accountId);
@@ -93,25 +92,27 @@ public class MyInvestmentsController extends HttpServlet {
             }
 
             // Configurar repositórios e serviço
-            Connection connection = PostgresConnection.getConnection();
-            IAccountsRepository accountRepository = new AccountsRepository(connection);
-            IInvestmentRepository investmentRepository = new InvestmentsRepository(connection);
-            IApplicationRepository applicationRepository = new ApplicationRepository(connection);
-            ITransactionRepository transactionRepository = new TransactionRepository(connection);
+            try (Connection connection = PostgresConnection.getConnection()) {
+                IAccountsRepository accountRepository = new AccountsRepository(connection);
+                IInvestmentRepository investmentRepository = new InvestmentsRepository(connection);
+                IApplicationRepository applicationRepository = new ApplicationRepository(connection);
+                ITransactionRepository transactionRepository = new TransactionRepository(connection);
 
-            RedeemInvestmentService redeemService = new RedeemInvestmentService(
-                    connection,
-                    accountRepository,
-                    investmentRepository,
-                    transactionRepository,
-                    applicationRepository);
+                RedeemInvestmentService redeemService = new RedeemInvestmentService(
+                        connection,
+                        accountRepository,
+                        investmentRepository,
+                        transactionRepository,
+                        applicationRepository);
 
-            BigDecimal redeemedValue = redeemService.execute(account.getId(), category, year, amount);
+                BigDecimal redeemedValue = redeemService.execute(account.getId(), category, year, amount);
 
-            if (redeemedValue != null) {
-                session.setAttribute("success", String.format("Resgate de R$ %.2f realizado com sucesso!", redeemedValue));
-            } else {
-                session.setAttribute("error", "Erro interno no processamento do resgate");
+                if (redeemedValue != null) {
+                    session.setAttribute("success",
+                            String.format("Resgate de R$ %.2f realizado com sucesso!", redeemedValue));
+                } else {
+                    session.setAttribute("error", "Erro interno no processamento do resgate");
+                }
             }
 
         } catch (NumberFormatException e) {

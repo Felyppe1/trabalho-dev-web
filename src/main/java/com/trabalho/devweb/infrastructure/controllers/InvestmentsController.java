@@ -37,8 +37,7 @@ public class InvestmentsController extends HttpServlet {
             session.removeAttribute("error");
         }
 
-        try {
-            Connection connection = PostgresConnection.getConnection();
+        try (Connection connection = PostgresConnection.getConnection()) {
             IInvestmentRepository investmentRepository = new InvestmentsRepository(connection);
 
             GetAvailableInvestmentsService getAvailableInvestmentsService = new GetAvailableInvestmentsService(

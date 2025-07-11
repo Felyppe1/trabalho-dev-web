@@ -62,18 +62,19 @@ public class BuyInvestmentController extends HttpServlet {
                 return;
             }
 
-            Connection connection = PostgresConnection.getConnection();
-            IInvestmentRepository investmentRepository = new InvestmentsRepository(connection);
+            try (Connection connection = PostgresConnection.getConnection()) {
+                IInvestmentRepository investmentRepository = new InvestmentsRepository(connection);
 
-            Investment investment = investmentRepository.findInvestmentByCategoryAndYear(category, year);
+                Investment investment = investmentRepository.findInvestmentByCategoryAndYear(category, year);
 
-            if (investment == null) {
-                session.setAttribute("error", "Investimento não encontrado: " + investmentId);
-                response.sendRedirect(request.getContextPath() + "/investimentos");
-                return;
+                if (investment == null) {
+                    session.setAttribute("error", "Investimento não encontrado: " + investmentId);
+                    response.sendRedirect(request.getContextPath() + "/investimentos");
+                    return;
+                }
+
+                request.setAttribute("investment", investment);
             }
-
-            request.setAttribute("investment", investment);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -121,23 +122,25 @@ public class BuyInvestmentController extends HttpServlet {
             BigDecimal amount = new BigDecimal(amountStr);
             int year = Integer.parseInt(yearStr);
 
-            Connection connection = PostgresConnection.getConnection();
-            BuyInvestmentService buyInvestmentService = new BuyInvestmentService(
-                    connection,
-                    new com.trabalho.devweb.infrastructure.repositories.AccountsRepository(connection),
-                    new InvestmentsRepository(connection),
-                    new com.trabalho.devweb.infrastructure.repositories.TransactionRepository(connection),
-                    new com.trabalho.devweb.infrastructure.repositories.ApplicationRepository(connection));
+            try (Connection connection = PostgresConnection.getConnection()) {
+                BuyInvestmentService buyInvestmentService = new BuyInvestmentService(
+                        connection,
+                        new com.trabalho.devweb.infrastructure.repositories.AccountsRepository(connection),
+                        new InvestmentsRepository(connection),
+                        new com.trabalho.devweb.infrastructure.repositories.TransactionRepository(connection),
+                        new com.trabalho.devweb.infrastructure.repositories.ApplicationRepository(connection));
 
-            boolean success = buyInvestmentService.execute(account.getId(), category, year, amount);
+                boolean success = buyInvestmentService.execute(account.getId(), category, year, amount);
 
-            if (success) {
-                session.setAttribute("success",
-                        "Investimento no valor de R$ " + amount.toString().replace('.', ',') + " realizado com sucesso!");
+                if (success) {
+                    session.setAttribute("success",
+                            "Investimento no valor de R$ " + amount.toString().replace('.', ',')
+                                    + " realizado com sucesso!");
 
-                response.sendRedirect(request.getContextPath() + "/eu/investimentos");
-            } else {
-                request.setAttribute("error", "Falha ao processar investimento");
+                    response.sendRedirect(request.getContextPath() + "/eu/investimentos");
+                } else {
+                    request.setAttribute("error", "Falha ao processar investimento");
+                }
                 doGet(request, response);
             }
 
