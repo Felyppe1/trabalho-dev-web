@@ -51,18 +51,47 @@
 
                     for (Transaction t : transactions) {
                         String type = t.getType() != null ? t.getType().toUpperCase() : "";
-                        String cssClass = type.equals("TRANSFER_OUT") ? "negative" :
-                                        type.equals("TRANSFER_IN") ? "positive" : "";
-
-                        String typeTransaction = type.equals("TRANSFER_OUT") ? "Transferência enviada" :
-                                    type.equals("TRANSFER_IN") ? "Transferência recebida" : "";
-
-                        String label = type.equals("TRANSFER_OUT") ? "Para" :
-                                    type.equals("TRANSFER_IN") ? "De" : "";
                         
+                        // Determinar se é transferência enviada ou recebida baseado nos IDs
+                        boolean isTransferOut = type.equals("TRANSFER") && accountId.equals(t.getOriginId());
+                        boolean isTransferIn = type.equals("TRANSFER") && accountId.equals(t.getTargetId());
+                        boolean isDeposit = type.equals("DEPOSIT");
+                        boolean isWithdraw = type.equals("WITHDRAW");
+                        boolean isInvestment = type.equals("INVESTMENT");
+                        boolean isRedemption = type.equals("REDEMPTION");
+                        
+                        String cssClass = (isTransferOut || isWithdraw || isInvestment) ? "negative" : 
+                                        (isTransferIn || isDeposit || isRedemption) ? "positive" : "";
 
-                        String relatedAccountId = type.equals("TRANSFER_OUT") ? t.getTargetId() :
-                                                type.equals("TRANSFER_IN") ? t.getOriginId() : "";
+                        String typeTransaction = "";
+                        String label = "";
+                        String relatedAccountId = "";
+                        
+                        if (isTransferOut) {
+                            typeTransaction = "Transferência enviada";
+                            label = "Para";
+                            relatedAccountId = t.getTargetId();
+                        } else if (isTransferIn) {
+                            typeTransaction = "Transferência recebida";
+                            label = "De";
+                            relatedAccountId = t.getOriginId();
+                        } else if (isDeposit) {
+                            typeTransaction = "Depósito";
+                            label = "";
+                            relatedAccountId = "";
+                        } else if (isWithdraw) {
+                            typeTransaction = "Saque";
+                            label = "";
+                            relatedAccountId = "";
+                        } else if (isInvestment) {
+                            typeTransaction = "Compra de investimento";
+                            label = "";
+                            relatedAccountId = "";
+                        } else if (isRedemption) {
+                            typeTransaction = "Venda de investimento";
+                            label = "";
+                            relatedAccountId = "";
+                        }
 
                         String formattedDate = t.getCreatedAt() != null
                             ? t.getCreatedAt().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"))
@@ -71,7 +100,11 @@
 
                 <div class="transfer-item <%= cssClass %>">
                     <div class="info">
-                        <strong><%= typeTransaction %> <%= label %>: <%= relatedAccountId %></strong>
+                        <% if (isTransferOut || isTransferIn) { %>
+                            <strong><%= typeTransaction %> <%= label %> : <%= relatedAccountId %></strong>
+                        <% } else { %>
+                            <strong><%= typeTransaction %></strong>
+                        <% } %>
                         <strong>Valor: R$ <%= String.format("%.2f", t.getAmount()) %></strong> <br />
                         <span>Descrição: <%= t.getDescription() %></span>                       
                         <span class="status">✔️ Concluída · <%= formattedDate %></span>

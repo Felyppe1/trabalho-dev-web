@@ -24,6 +24,7 @@ public class TransfersRepository implements ITransfersRepository {
         WHERE (? = t.origin_id OR ? = t.target_id)
           AND t.origin_id IS NOT NULL
           AND t.target_id IS NOT NULL
+          AND UPPER(t.type) = 'TRANSFER'
     """;
 
     if ("sent".equalsIgnoreCase(direction)) {
@@ -150,6 +151,7 @@ public class TransfersRepository implements ITransfersRepository {
             FROM transaction t
             JOIN account a ON a.id = t.target_id
             WHERE t.origin_id = ?
+            AND UPPER(t.type) = 'TRANSFER'
             GROUP BY a.name, a.number, a.digit
             ORDER BY total DESC
             LIMIT ?
@@ -174,7 +176,7 @@ public class TransfersRepository implements ITransfersRepository {
 
     @Override
     public BigDecimal getTotalSent(String accountId) throws SQLException {
-        String sql = "SELECT COALESCE(SUM(amount), 0) FROM transaction WHERE origin_id = ?";
+        String sql = "SELECT COALESCE(SUM(amount), 0) FROM transaction WHERE origin_id = ? AND (UPPER(type) = 'TRANSFER')";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, accountId);
             try (ResultSet rs = stmt.executeQuery()) {
@@ -185,7 +187,7 @@ public class TransfersRepository implements ITransfersRepository {
 
     @Override
     public BigDecimal getTotalReceived(String accountId) throws SQLException {
-        String sql = "SELECT COALESCE(SUM(amount), 0) FROM transaction WHERE target_id = ?";
+        String sql = "SELECT COALESCE(SUM(amount), 0) FROM transaction WHERE target_id = ? AND (UPPER(type) = 'TRANSFER')";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, accountId);
             try (ResultSet rs = stmt.executeQuery()) {

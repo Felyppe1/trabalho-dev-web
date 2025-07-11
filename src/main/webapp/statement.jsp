@@ -67,12 +67,12 @@
             <form action="extrato/view" method="get">
                 <input type="hidden" name="month" value="<%= month %>">
                 <input type="hidden" name="year" value="<%= monthYear.getYear() %>">
-              <button class="btn btn--secondary">👁️ View</button>
+              <button class="btn btn--secondary">Visualizar</button>
             </form>
             <form action="extrato/download" method="get">
               <input type="hidden" name="month" value="<%= month %>">
               <input type="hidden" name="year" value="<%= monthYear.getYear() %>">
-              <button class="btn btn--secondary">⬇️ Download</button>
+              <button class="btn btn--secondary">Download</button>
             </form>
           </div>
         <%

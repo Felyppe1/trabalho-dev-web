@@ -145,7 +145,7 @@ public class WithdrawController extends HttpServlet {
 
                     stmt.setString(1, transactionId); // id da transação
                     stmt.setString(2, accountId); // origin_id is the account making the withdrawal
-                    stmt.setString(3, accountId); // target_id is the account for internal withdrawal
+                    stmt.setString(3, null); // target_id is null for withdrawals (no target account)
                     stmt.setString(4, "WITHDRAW");
                     stmt.setBigDecimal(5, amount);
 

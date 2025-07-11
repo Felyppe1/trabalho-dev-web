@@ -130,7 +130,7 @@ public class DepositController extends HttpServlet {
                     String transactionId = java.util.UUID.randomUUID().toString();
 
                     stmt.setString(1, transactionId); // id da transação
-                    stmt.setString(2, accountId); // origin_id is the account for internal deposit
+                    stmt.setString(2, null); // origin_id is null for deposits (no origin account)
                     stmt.setString(3, accountId); // target_id is the account receiving the deposit
                     stmt.setString(4, "DEPOSIT");
                     stmt.setBigDecimal(5, amount);
