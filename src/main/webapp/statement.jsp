@@ -30,20 +30,28 @@
       </div>
 
       <div class="statements__year-select">
-        <select>
-          <option selected>2025</option>
+        <form method="get" action="extrato">
+        <select name="year" onchange="this.form.submit()">
+          <option value="2023" <%= "2023".equals(request.getParameter("year")) ? "selected" : "" %>>2023</option>
+          <option value="2024" <%= "2024".equals(request.getParameter("year")) ? "selected" : "" %>>2024</option>
+          <option value="2025" <%= "2025".equals(request.getParameter("year")) || request.getParameter("year") == null ? "selected" : "" %>>2025</option>
         </select>
+  </form>
       </div>
 
       <ul class="statements__list">           
 
         <%
+          String yearParam = request.getParameter("year");
+          int selectedYear = (yearParam != null) ? Integer.parseInt(yearParam) : java.time.Year.now().getValue();
+
           java.time.YearMonth currentMonth = java.time.YearMonth.now();
-          for (int i = 1; i <= currentMonth.getMonthValue(); i++) {
-            java.time.YearMonth monthYear = java.time.YearMonth.of(currentMonth.getYear(), i);
+          int lastMonth = currentMonth.getYear() == selectedYear ? currentMonth.getMonthValue() : 12;
+
+          for (int i = 1; i <= lastMonth; i++) {
+            java.time.YearMonth monthYear = java.time.YearMonth.of(selectedYear, i);
             String month = String.format("%02d", i);
         %>
-
         <li class="statement">
           <div class="statement__info">
             <div class="statement__icon">📄</div>
