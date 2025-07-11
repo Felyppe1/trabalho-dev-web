@@ -85,7 +85,7 @@ public class MyInvestmentsController extends HttpServlet {
                 throw new RuntimeException("Parâmetros obrigatórios não informados");
             }
 
-            BigDecimal amount = new BigDecimal(amountStr.replace(",", "."));
+            BigDecimal amount = new BigDecimal(amountStr.replace(".", "").replace(",", "."));
             int year = Integer.parseInt(yearStr);
 
             if (amount.compareTo(BigDecimal.ZERO) <= 0) {
