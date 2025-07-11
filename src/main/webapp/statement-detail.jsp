@@ -17,6 +17,9 @@
         "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
     };
     String MonthName = (month >= 1 && month <= 12) ? MonthsNames[month] : "Mês Desconhecido";
+    
+    String nowFormatted = LocalDateTime.now(java.time.ZoneId.of("America/Sao_Paulo"))
+        .format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
 %>
 
 <!DOCTYPE html>
@@ -24,46 +27,52 @@
 <head>
     <meta charset="UTF-8">
     <title>Extrato de <%= MonthName %> <%= year %></title>
-      <link rel="stylesheet" href="${pageContext.request.contextPath}/global.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/statement.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/transfer.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/global.css">    
     <link rel="stylesheet" href="${pageContext.request.contextPath}/components/header.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/global.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/statement-detail.css">
 </head>
 <body>
     <%@ include file="components/header.jsp" %>
 
     <h1 class="page-title">Extrato de <%= MonthName %> <%= year %></h1>
-
-    <div class="transfer-list">
-        <%
-            if (transactions == null || transactions.isEmpty()) {
-        %>
-            <p>❌ Nenhuma transação encontrada para esse mês.</p>
-        <%
-            } else {
-                for (Transaction t : transactions) {
-                    boolean isSent = t.getType().equalsIgnoreCase("transfer") && t.getOriginId().equals(((com.trabalho.devweb.domain.Account) session.getAttribute("account")).getId());
-                    String cssClass = isSent ? "negative" : "positive";
-                    String label = isSent ? "Para" : "De";
-                    String formattedDate = t.getCreatedAt().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
-        %>
-
-        <div class="transfer-item <%= cssClass %>">
-            <div class="info">
-                <strong><%= t.getType().toUpperCase() %> <%= label %>: <%= isSent ? "Conta destino" : "Conta origem" %></strong><br />
-                <span>Valor: R$ <%= String.format("%.2f", t.getAmount()) %></span><br />
-                <span class="status">✔️ Concluída · <%= formattedDate %></span>
-            </div>
-            <div>
-                Saldo após: R$ <%= String.format("%.2f", t.getBalanceAfter()) %>
-            </div>
+    <div class="statements">
+        <div class="statements__header">
+            <h1 class="statements__title">Extrato de <%= MonthName %> <%= year %></h1>
+            <p class="status">Gerado em <%= nowFormatted %></p>
         </div>
+        <div class="transfer-list">
+            <%
+                if (transactions == null || transactions.isEmpty()) {
+            %>
+                <p>❌ Nenhuma transação encontrada para esse mês.</p>
+            <%
+                } else {
+                    String accountId = ((com.trabalho.devweb.domain.Account) session.getAttribute("account")).getId();
 
-        <%
+                    for (Transaction t : transactions) {
+                        boolean isSent = t.getType().equalsIgnoreCase("transfer") && t.getOriginId().equals(((com.trabalho.devweb.domain.Account) session.getAttribute("account")).getId());
+                        String cssClass = isSent ? "negative" : "positive";
+                        String label = isSent ? "Para" : "De";
+                        String formattedDate = t.getCreatedAt().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
+            %>
+
+            <div class="transfer-item <%= cssClass %>">
+                <div class="info">
+                    <strong><%= t.getType().toUpperCase() %> <%= label %>: <%= isSent ? "Conta destino" : "Conta origem" %></strong><br />
+                    <span>Valor: R$ <%= String.format("%.2f", t.getAmount()) %></span><br />
+                    <span class="status">✔️ Concluída · <%= formattedDate %></span>
+                </div>
+                <div>
+                    Saldo após: R$ <%= String.format("%.2f", t.getBalanceAfter()) %>
+                </div>
+            </div>
+
+            <%
+                    }
                 }
-            }
-        %>
+            %>
+        </div>
     </div>
-
 </body>
 </html>
