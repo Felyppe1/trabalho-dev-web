@@ -27,16 +27,10 @@
       ZonedDateTime now = ZonedDateTime.now(ZoneId.of("America/Sao_Paulo"));
       String generatedTime = now.format(DateTimeFormatter.ofPattern("dd/MM/yyyy • HH:mm"));
     %>
-
-
-
   <main class="container">
     <section class="statements">
       <div class="statements__header">
-        <h1 class="statements__title">Account Statement</h1>
-        <button class="btn btn--primary">
-          <span class="btn__icon">📄</span> Request Statement
-        </button>
+        <h1 class="statements__title">Account Statement</h1>        
       </div>
 
       <div class="statements__year-select">
