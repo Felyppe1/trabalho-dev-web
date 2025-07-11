@@ -4,6 +4,11 @@
 <%@ page import="java.time.LocalDate" %>
 <%@ page import="java.time.format.TextStyle" %>
 <%@ page import="java.util.Locale" %>
+<%@ page import="java.time.ZonedDateTime" %>
+<%@ page import="java.time.ZoneId" %>
+<%@ page import="java.time.format.DateTimeFormatter" %>
+
+
 
 
 <!DOCTYPE html>
@@ -18,6 +23,11 @@
 </head>
 <body>
     <%@ include file="components/header.jsp" %>
+    <%
+      ZonedDateTime now = ZonedDateTime.now(ZoneId.of("America/Sao_Paulo"));
+      String generatedTime = now.format(DateTimeFormatter.ofPattern("dd/MM/yyyy • HH:mm"));
+    %>
+
 
 
   <main class="container">
@@ -40,7 +50,6 @@
       </div>
 
       <ul class="statements__list">           
-
         <%
           String yearParam = request.getParameter("year");
           int selectedYear = (yearParam != null) ? Integer.parseInt(yearParam) : java.time.Year.now().getValue();
@@ -57,7 +66,7 @@
             <div class="statement__icon">📄</div>
             <div>
               <strong> <%= monthYear.getMonth() %>/<%= monthYear.getYear() %> Extrato</strong>
-              <p>Generated on Apr 1, 2025 • 245 KB</p>
+              <p>Atualizado em <%= generatedTime %> </p>
             </div>
           </div>
           <div class="statement__actions">
