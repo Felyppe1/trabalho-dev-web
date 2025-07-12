@@ -195,3 +195,15 @@
   padding: 0 0.5rem;
   font-size: 1.2rem;
 }
+
+.balance {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    background-color: var(--color-light-gray);
+    border-radius: var(--radius);
+}
+
+.balance > span {
+    font-weight: 600;
+}

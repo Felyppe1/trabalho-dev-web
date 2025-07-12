@@ -46,17 +46,17 @@
     <div class="layout">
       <div class="sidebar">
         <div class="card transfer-summary">
+          <div class="balance">
+            <h3>Saldo</h3>
+            <span><%= balancePrefix + String.format("%.2f", balance.abs()) %></span>
+          </div>
           <div class="summary-item sent">
-            <span>Debitado</span>
+            <span>Enviado</span>
             <span>- R$ <%= String.format("%.2f", totalSent) %></span>
           </div>
           <div class="summary-item received">
             <span>Recebido</span>
             <span>+ R$ <%= String.format("%.2f", totalReceived) %></span>
-          </div>
-          <div class="summary-item <%= balanceClass %>">
-            <span>Saldo</span>
-            <span><%= balancePrefix + String.format("%.2f", balance.abs()) %></span>
           </div>
         </div>
 
