@@ -34,9 +34,9 @@
 <head>
   <meta charset="UTF-8" />
   <title>Transferências - DevBank</title>
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/global.css">
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/components/header.css">
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/transfers.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/global.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/transfers.css">
 </head>
 <body>
   <%@ include file="components/header.jsp" %>

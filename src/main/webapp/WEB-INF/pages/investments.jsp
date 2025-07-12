@@ -45,11 +45,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Investimentos - Digital Bank</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/global.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/components/header.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/components/investment-summary.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/my-investments.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/investments.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/global.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/investments.css">
 </head>
 <body>
     <% String error = (String) request.getAttribute("error"); %>

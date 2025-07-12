@@ -17,9 +17,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DevBank - Statements</title>
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/global.css">
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/statement.css">
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/components/header.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/global.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/statement.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css">
 </head>
 <body>
     <%@ include file="components/header.jsp" %>
@@ -30,7 +30,7 @@
   <main class="container">
     <section class="statements">
       <div class="statements__header">
-        <h1 class="statements__title">Account Statement</h1>        
+        <h1 class="statements__title">Extrato da Conta</h1>        
       </div>
 
       <div class="statements__year-select">

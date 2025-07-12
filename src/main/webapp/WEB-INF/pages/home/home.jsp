@@ -8,9 +8,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/global.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/home/home.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/components/header.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/global.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/home.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css">
     <title>DevBank</title>
 </head>
 <body>
@@ -139,7 +139,7 @@
                     <li class="transactions__item">
                         <div>
                             <span class="transactions__icon <%= iconClass %>">
-                                <%@ include file="../icons/card-send.svg" %>
+                                <%@ include file="../../icons/card-send.svg" %>
                             </span>
                             <div>
                                 <span class="transactions__name"><%= transaction.getDisplayName() %></span>
@@ -155,7 +155,7 @@
                     <li class="transactions__item">
                         <div>
                             <span class="transactions__icon transactions__icon--success">
-                                <%@ include file="../icons/card-send.svg" %>
+                                <%@ include file="../../icons/card-send.svg" %>
                             </span>
                             <div>
                                 <span class="transactions__name">Nenhuma transação encontrada</span>

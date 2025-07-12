@@ -14,9 +14,9 @@
     <meta charset="UTF-8">
     <title>DevBank - Realizar Transferência</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/global.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/transfer.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/components/header.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/global.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/transfer.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css">
 </head>
 <body>
     <% String error = (String) request.getAttribute("error"); %>

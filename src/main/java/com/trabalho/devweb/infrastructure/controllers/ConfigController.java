@@ -24,7 +24,7 @@ public class ConfigController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/settings/settings.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/pages/settings/settings.jsp");
         dispatcher.forward(request, response);
     }
 
@@ -71,7 +71,7 @@ public class ConfigController extends HttpServlet {
             request.setAttribute("errorMessage", "Erro interno do servidor. Tente novamente.");
         }
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/settings/settings.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/pages/settings/settings.jsp");
         dispatcher.forward(request, response);
     }
 }

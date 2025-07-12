@@ -44,7 +44,7 @@ public class WithdrawController extends HttpServlet {
         if (amountStr == null || amountStr.trim().isEmpty()) {
             request.setAttribute("errorMessage", "Valor é obrigatório");
             request.setAttribute("action", "withdraw");
-            request.getRequestDispatcher("/home/home.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/pages/home/home.jsp").forward(request, response);
             return;
         }
 
@@ -57,7 +57,7 @@ public class WithdrawController extends HttpServlet {
         } catch (NumberFormatException e) {
             request.setAttribute("errorMessage", "Valor inválido");
             request.setAttribute("action", "withdraw");
-            request.getRequestDispatcher("/home/home.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/pages/home/home.jsp").forward(request, response);
             return;
         }
 
@@ -65,7 +65,7 @@ public class WithdrawController extends HttpServlet {
         if (amount.compareTo(account.getBalance()) > 0) {
             request.setAttribute("errorMessage", "Saldo insuficiente");
             request.setAttribute("action", "withdraw");
-            request.getRequestDispatcher("/home/home.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/pages/home/home.jsp").forward(request, response);
             return;
         }
 
@@ -99,7 +99,7 @@ public class WithdrawController extends HttpServlet {
         }
 
         request.setAttribute("action", "withdraw");
-        request.getRequestDispatcher("/home/home.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/pages/home/home.jsp").forward(request, response);
     }
 
     private boolean processWithdraw(String accountId, BigDecimal amount, String description) throws SQLException {

@@ -44,7 +44,7 @@ public class DepositController extends HttpServlet {
         if (amountStr == null || amountStr.trim().isEmpty()) {
             request.setAttribute("errorMessage", "Valor é obrigatório");
             request.setAttribute("action", "deposit");
-            request.getRequestDispatcher("/home/home.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/pages/home/home.jsp").forward(request, response);
             return;
         }
 
@@ -57,7 +57,7 @@ public class DepositController extends HttpServlet {
         } catch (NumberFormatException e) {
             request.setAttribute("errorMessage", "Valor inválido");
             request.setAttribute("action", "deposit");
-            request.getRequestDispatcher("/home/home.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/pages/home/home.jsp").forward(request, response);
             return;
         }
 
@@ -91,7 +91,7 @@ public class DepositController extends HttpServlet {
         }
 
         request.setAttribute("action", "deposit");
-        request.getRequestDispatcher("/home/home.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/pages/home/home.jsp").forward(request, response);
     }
 
     private boolean processDeposit(String accountId, BigDecimal amount, String description) throws SQLException {

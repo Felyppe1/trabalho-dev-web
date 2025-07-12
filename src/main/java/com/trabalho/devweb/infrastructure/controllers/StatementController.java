@@ -17,7 +17,6 @@ import jakarta.servlet.http.HttpSession;
 
 @WebServlet(name = "StatementController", urlPatterns = "/extrato")
 public class StatementController extends HttpServlet {
-   
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -28,7 +27,7 @@ public class StatementController extends HttpServlet {
             response.sendRedirect("login.jsp");
             return;
         }
-        
-        request.getRequestDispatcher("/statement.jsp").forward(request, response);               
+
+        request.getRequestDispatcher("/WEB-INF/pages/statement.jsp").forward(request, response);
     }
 }

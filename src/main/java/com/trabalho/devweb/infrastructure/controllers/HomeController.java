@@ -21,16 +21,16 @@ import jakarta.servlet.http.HttpSession;
 public class HomeController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute("account");
-        
+
         // Preserve action parameter for tab highlighting
         String action = request.getParameter("action");
         if (action != null) {
             request.setAttribute("action", action);
         }
-        
+
         if (account != null) {
             try (Connection connection = PostgresConnection.getConnection()) {
                 TransactionRepository transactionRepository = new TransactionRepository(connection);
@@ -41,8 +41,8 @@ public class HomeController extends HttpServlet {
                 // Log error but continue - transactions section will be empty
             }
         }
-        
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/home/home.jsp");
+
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/pages/home/home.jsp");
         dispatcher.forward(request, response);
     }
 }

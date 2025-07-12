@@ -40,7 +40,7 @@ public class TransferController extends HttpServlet {
             req.setAttribute("error", "Erro ao carregar transferências recentes.");
         }
 
-        req.getRequestDispatcher("/transfer.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/pages/transfer.jsp").forward(req, resp);
     }
 
     @Override
@@ -145,6 +145,6 @@ public class TransferController extends HttpServlet {
 
         req.setAttribute("error", error);
         req.setAttribute("success", success);
-        req.getRequestDispatcher("/transfer.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/pages/transfer.jsp").forward(req, resp);
     }
 }

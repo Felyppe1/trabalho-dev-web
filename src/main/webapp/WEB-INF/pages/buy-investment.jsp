@@ -10,9 +10,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comprar Investimento - Digital Bank</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/global.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/components/header.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/buy-investment.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/global.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/buy-investment.css">
 </head>
 <body>
     <% String error = (String) request.getAttribute("error"); %>

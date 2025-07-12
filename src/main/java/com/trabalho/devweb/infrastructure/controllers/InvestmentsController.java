@@ -55,7 +55,7 @@ public class InvestmentsController extends HttpServlet {
             request.setAttribute("myInvestments", new java.util.ArrayList<MyInvestment>());
         }
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/investments.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/pages/investments.jsp");
         dispatcher.forward(request, response);
     }
 }

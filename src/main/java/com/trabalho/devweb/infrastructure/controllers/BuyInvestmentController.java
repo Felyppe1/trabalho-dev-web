@@ -83,7 +83,7 @@ public class BuyInvestmentController extends HttpServlet {
             return;
         }
 
-        request.getRequestDispatcher("/buy-investment.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/pages/buy-investment.jsp").forward(request, response);
     }
 
     @Override

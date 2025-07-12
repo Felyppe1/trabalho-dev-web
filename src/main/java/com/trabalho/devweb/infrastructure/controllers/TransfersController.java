@@ -39,7 +39,8 @@ public class TransfersController extends HttpServlet {
 
             int offset = (page - 1) * PAGE_SIZE;
 
-            List<Transfer> transfers = repo.findTransfersByAccount(account.getId(), offset, PAGE_SIZE, direction, nameFilter);
+            List<Transfer> transfers = repo.findTransfersByAccount(account.getId(), offset, PAGE_SIZE, direction,
+                    nameFilter);
             int total = repo.countTransfersByAccount(account.getId(), direction, nameFilter);
             int totalPages = (int) Math.ceil((double) total / PAGE_SIZE);
 
@@ -59,11 +60,11 @@ public class TransfersController extends HttpServlet {
             req.setAttribute("filterType", direction);
             req.setAttribute("nameFilter", nameFilter);
 
-            req.getRequestDispatcher("/transfers.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/pages/transfers.jsp").forward(req, resp);
         } catch (Exception e) {
             e.printStackTrace();
             req.setAttribute("error", "Erro ao carregar transferências.");
-            req.getRequestDispatcher("/error.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/pages/error.jsp").forward(req, resp);
         }
     }
 }

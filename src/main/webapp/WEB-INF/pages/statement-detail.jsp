@@ -27,9 +27,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Extrato de <%= MonthName %> <%= year %></title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/global.css">    
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/components/header.css">    
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/statement-detail.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/global.css">    
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css">    
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/statement-detail.css">
 </head>
 <body>
     <%@ include file="components/header.jsp" %>

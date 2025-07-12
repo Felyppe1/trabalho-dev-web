@@ -38,17 +38,16 @@ public class StatementDetailController extends HttpServlet {
         Integer month = Integer.parseInt(monthParam);
         Integer year = Integer.parseInt(yearParam);
 
-
         try (Connection connection = PostgresConnection.getConnection()) {
             TransactionRepository transactionRepository = new TransactionRepository(connection);
 
-            List<Transaction> transactions = transactionRepository.findByAccountIdAndMonth(account.getId(), month, year);
+            List<Transaction> transactions = transactionRepository.findByAccountIdAndMonth(account.getId(), month,
+                    year);
             request.setAttribute("transactions", transactions);
-            request.getRequestDispatcher("/statement-detail.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/pages/statement-detail.jsp").forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        
     }
 }
